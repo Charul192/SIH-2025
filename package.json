@@ -1,0 +1,30 @@
+{
+  "name": "sih-2025",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Charul192/SIH-2025.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Charul192/SIH-2025/issues"
+  },
+  "homepage": "https://github.com/Charul192/SIH-2025#readme",
+  "description": "",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
