@@ -1,0 +1,20 @@
+.box{
+  margin: 5rem auto;
+  height: 40vh;
+  width: 60vw;
+  border: 2px solid #6c5a5a7a;
+  border-radius: 2rem;
+  background-color: #6e66664f;
+}
+
+.number{
+    margin: 25px;
+    font-size: 20px;
+    color: rgb(14, 14, 162);
+}
+
+.sourcedest{
+    margin: 25px;
+    font-size: 20px;
+    color: rgb(14, 14, 162);
+}
