@@ -4,7 +4,7 @@ import Hero from './components/Hero';
 
 function App() {
   return (
-    // Main container with a dark background
+    // The "font-sans" class is crucial here!
     <div className="min-h-screen bg-[#0A0A0A] text-white font-sans">
       <div className="container mx-auto px-4">
         <Navbar />
