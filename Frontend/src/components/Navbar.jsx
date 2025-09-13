@@ -5,9 +5,13 @@ const Navbar = () => {
     <nav className="flex items-center justify-between py-6">
       {/* Logo */}
       <div className="flex items-center gap-2">
-        {/* You can replace this with an actual SVG logo */}
-        <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
-        <span className="text-xl font-bold">DotTrack</span>
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/029/887/719/small_2x/minimal-and-abstract-logo-of-bus-icon-school-bus-silhouette-isolated-design-dark-bus-vector.jpg"
+          alt="Bus Track Logo"
+          // Added the 'invert' class here
+          className="w-8 h-8 invert"
+        />
+        <span className="text-xl font-bold">Bus Track</span>
       </div>
 
       {/* Navigation Buttons */}
