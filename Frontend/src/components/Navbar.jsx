@@ -3,27 +3,15 @@
 const Navbar = () => {
   return (
     <nav className="flex items-center justify-between py-6">
-      {/* Logo */}
-      <div className="flex items-center gap-2">
-        <img
-          src="https://static.vecteezy.com/system/resources/thumbnails/029/887/719/small_2x/minimal-and-abstract-logo-of-bus-icon-school-bus-silhouette-isolated-design-dark-bus-vector.jpg"
-          alt="Bus Track Logo"
-          // Added the 'invert' class here
-          className="w-8 h-8 invert"
-        />
-        {/* Button */}
-        <span className="text-xl font-bold">Bus Track</span>
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="flex items-center gap-4">
-        <button className="text-gray-300 hover:text-white transition-colors">
-          Login
-        </button>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors">
-          Get Started
-        </button>
-      </div>
+        <div className="fixed flex flex-wrap justify-center top-8 inset-x-0 px-2">
+          <div className='flex flex-wrap justify-center gap-3 shadow-lg bg-slate-800 rounded-2xl px-3 py-2 '>
+            <button onClick={() => setColor("White")} className='outline-none px-4 py-1 rounded-2xl text-white shadow-lg' style={{ backgroundColor: "black" }}>Home</button>
+            <button onClick={() => setColor("beige")} className='outline-none px-4 py-1 rounded-2xl text-white shadow-lg' style={{ backgroundColor: "black" }}>Track</button>
+            <button onClick={() => setColor("olive")} className='outline-none px-4 py-1 rounded-2xl text-white shadow-lg' style={{ backgroundColor: "black" }}>Plan</button>
+            <button onClick={() => setColor("olive")} className='outline-none px-4 py-1 rounded-2xl text-white shadow-lg' style={{ backgroundColor: "black" }}>Schedule</button>
+            <button onClick={() => setColor("grey")} className='outline-none px-4 py-1 rounded-2xl text-white shadow-lg' style={{ backgroundColor: "black" }}>About</button>
+          </div>
+        </div>
     </nav>
   );
 };
