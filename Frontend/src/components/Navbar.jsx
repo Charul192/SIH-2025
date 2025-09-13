@@ -11,6 +11,7 @@ const Navbar = () => {
           // Added the 'invert' class here
           className="w-8 h-8 invert"
         />
+        {/* Button */}
         <span className="text-xl font-bold">Bus Track</span>
       </div>
 
