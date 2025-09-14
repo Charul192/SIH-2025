@@ -1,7 +1,7 @@
 import React from "react";
 import {createRoot} from "react-dom/client"
 import {APIProvider, Map} from "@vis.gl/react-google-maps"
-const App = () => {
+const map = () => {
     return (
         < APIProvider apiKey={"AIzaSyARSqYspchcCQGDRl1izB0_GaqQ6A2Yz6w"}>
             <Map 
@@ -12,6 +12,6 @@ const App = () => {
         </ APIProvider>
     );
 }
-const root = createRoot(document.getElementById('map') as HTMLElement);
-root.render(<App />)
-export default App
+// const root = createRoot(document.getElementById('map') as HTMLElement);
+// // root.render(<App />)
+export default map
