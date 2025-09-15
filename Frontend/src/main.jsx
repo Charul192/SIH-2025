@@ -4,10 +4,11 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Router,
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
+
+// Import your components
 import Layout from "./Layout.jsx";
 import Home from "./components/Home/Home";
 import About from "./components/About/About";
@@ -15,9 +16,12 @@ import Bustracker from "./components/Bustracker/Bustracker.jsx";
 import Schedule from "./components/Schedule/Schedule.jsx";
 import Planyoutrip from "./components/Planyourtrip/PlanyouTrip.jsx";
 
+// 1. Create the router configuration
 const router = createBrowserRouter(
   createRoutesFromElements(
+    // The parent route uses the Layout component
     <Route path="/" element={<Layout />}>
+      {/* Child routes are nested and will be rendered in the Outlet */}
       <Route path="" element={<Home />} />
       <Route path="bus-tracker" element={<Bustracker />} />
       <Route path="schedule" element={<Schedule />} />
@@ -27,7 +31,9 @@ const router = createBrowserRouter(
   )
 );
 
-createRoot(document.getElementById("root")).render(
+// 2. Render the app using the RouterProvider
+const root = createRoot(document.getElementById("root"));
+root.render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>
