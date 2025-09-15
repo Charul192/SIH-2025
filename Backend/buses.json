@@ -1,0 +1,402 @@
+[
+  {
+    "busNumber": "PB-08-X-4812",
+    "operator": "Singh Travels",
+    "phoneNumber": "+91 1860 30010201",
+    "headsign": "Volvo A/C Sleeper (2+1)",
+    "route": {
+      "start": {
+        "name": "Amritsar",
+        "lat": 31.633980,
+        "lng": 74.872261
+      },
+      "end": {
+        "name": "Ludhiana",
+        "lat": 30.900965,
+        "lng": 75.857270
+      }
+    },
+    "startTime": "2025-09-15T06:30:00Z",
+    "eta": "2h 45m"
+  },
+  {
+    "busNumber": "PB-11-Y-9876",
+    "operator": "Punjab Roadways",
+    "phoneNumber": "+91 1860 30010202",
+    "headsign": "Non-A/C Seater (3+2)",
+    "route": {
+      "start": {
+        "name": "Patiala",
+        "lat": 30.3398,
+        "lng": 76.3869
+      },
+      "end": {
+        "name": "Chandigarh",
+        "lat": 30.7333,
+        "lng": 76.7794
+      }
+    },
+    "startTime": "2025-09-15T07:15:00Z",
+    "eta": "1h 30m"
+  },
+  {
+    "busNumber": "PB-03-A-1122",
+    "operator": "Golden Temple Express",
+    "phoneNumber": "+91 1860 30010203",
+    "headsign": "Mercedes Benz A/C Seater (2+2)",
+    "route": {
+      "start": {
+        "name": "Jalandhar",
+        "lat": 31.3260,
+        "lng": 75.5762
+      },
+      "end": {
+        "name": "Pathankot",
+        "lat": 32.2618,
+        "lng": 75.6669
+      }
+    },
+    "startTime": "2025-09-15T08:00:00Z",
+    "eta": "2h 15m"
+  },
+  {
+    "busNumber": "PB-06-C-3344",
+    "operator": "Bhawani Travels",
+    "phoneNumber": "+91 1860 30010204",
+    "headsign": "A/C Seater / Sleeper (2+2)",
+    "route": {
+      "start": {
+        "name": "Bathinda",
+        "lat": 30.2072,
+        "lng": 74.9455
+      },
+      "end": {
+        "name": "Ferozepur",
+        "lat": 30.9254,
+        "lng": 74.6190
+      }
+    },
+    "startTime": "2025-09-15T09:45:00Z",
+    "eta": "1h 55m"
+  },
+  {
+    "busNumber": "PB-12-B-5566",
+    "operator": "Khalsa Transport",
+    "phoneNumber": "+91 1860 30010205",
+    "headsign": "Non-A/C Sleeper",
+    "route": {
+      "start": {
+        "name": "Hoshiarpur",
+        "lat": 31.5334,
+        "lng": 75.9189
+      },
+      "end": {
+        "name": "Jalandhar",
+        "lat": 31.3260,
+        "lng": 75.5762
+      }
+    },
+    "startTime": "2025-09-15T10:30:00Z",
+    "eta": "1h 10m"
+  },
+  {
+    "busNumber": "PB-01-D-7788",
+    "operator": "Pritam Bus Service",
+    "phoneNumber": "+91 1860 30010206",
+    "headsign": "A/C Sleeper (2+1)",
+    "route": {
+      "start": {
+        "name": "Ludhiana",
+        "lat": 30.900965,
+        "lng": 75.857270
+      },
+      "end": {
+        "name": "Moga",
+        "lat": 30.8172,
+        "lng": 75.1704
+      }
+    },
+    "startTime": "2025-09-15T11:00:00Z",
+    "eta": "1h 40m"
+  },
+  {
+    "busNumber": "PB-07-E-9900",
+    "operator": "Travel Hub",
+    "phoneNumber": "+91 1860 30010207",
+    "headsign": "A/C Seater (2+2)",
+    "route": {
+      "start": {
+        "name": "Mohali",
+        "lat": 30.7046,
+        "lng": 76.7179
+      },
+      "end": {
+        "name": "Patiala",
+        "lat": 30.3398,
+        "lng": 76.3869
+      }
+    },
+    "startTime": "2025-09-15T12:20:00Z",
+    "eta": "1h 25m"
+  },
+  {
+    "busNumber": "PB-10-F-1235",
+    "operator": "Janta Roadways",
+    "phoneNumber": "+91 1860 30010208",
+    "headsign": "Non-A/C Seater (3+2)",
+    "route": {
+      "start": {
+        "name": "Sangrur",
+        "lat": 30.255,
+        "lng": 75.842
+      },
+      "end": {
+        "name": "Bathinda",
+        "lat": 30.2072,
+        "lng": 74.9455
+      }
+    },
+    "startTime": "2025-09-15T13:15:00Z",
+    "eta": "2h 05m"
+  },
+  {
+    "busNumber": "PB-02-G-6543",
+    "operator": "Happy Journey Tours",
+    "phoneNumber": "+91 1860 30010209",
+    "headsign": "Volvo A/C Seater (2+2)",
+    "route": {
+      "start": {
+        "name": "Pathankot",
+        "lat": 32.2618,
+        "lng": 75.6669
+      },
+      "end": {
+        "name": "Amritsar",
+        "lat": 31.633980,
+        "lng": 74.872261
+      }
+    },
+    "startTime": "2025-09-15T14:00:00Z",
+    "eta": "2h 30m"
+  },
+  {
+    "busNumber": "PB-09-H-8765",
+    "operator": "Royal Express",
+    "phoneNumber": "+91 1860 30010210",
+    "headsign": "A/C Sleeper (2+1)",
+    "route": {
+      "start": {
+        "name": "Kapurthala",
+        "lat": 31.3789,
+        "lng": 75.3853
+      },
+      "end": {
+        "name": "Ludhiana",
+        "lat": 30.900965,
+        "lng": 75.857270
+      }
+    },
+    "startTime": "2025-09-15T15:45:00Z",
+    "eta": "1h 50m"
+  },
+  {
+    "busNumber": "PB-13-I-2468",
+    "operator": "Singh Travels",
+    "phoneNumber": "+91 1860 30010211",
+    "headsign": "Non-A/C Seater (3+2)",
+    "route": {
+      "start": {
+        "name": "Ferozepur",
+        "lat": 30.9254,
+        "lng": 74.6190
+      },
+      "end": {
+        "name": "Moga",
+        "lat": 30.8172,
+        "lng": 75.1704
+      }
+    },
+    "startTime": "2025-09-15T16:10:00Z",
+    "eta": "1h 15m"
+  },
+  {
+    "busNumber": "PB-04-J-1357",
+    "operator": "Punjab Roadways",
+    "phoneNumber": "+91 1860 30010212",
+    "headsign": "A/C Seater (2+2)",
+    "route": {
+      "start": {
+        "name": "Ropar",
+        "lat": 30.9704,
+        "lng": 76.5369
+      },
+      "end": {
+        "name": "Chandigarh",
+        "lat": 30.7333,
+        "lng": 76.7794
+      }
+    },
+    "startTime": "2025-09-15T17:00:00Z",
+    "eta": "1h 05m"
+  },
+  {
+    "busNumber": "PB-14-K-8642",
+    "operator": "Bhawani Travels",
+    "phoneNumber": "+91 1860 30010213",
+    "headsign": "Volvo A/C Sleeper (2+1)",
+    "route": {
+      "start": {
+        "name": "Ludhiana",
+        "lat": 30.900965,
+        "lng": 75.857270
+      },
+      "end": {
+        "name": "Jalandhar",
+        "lat": 31.3260,
+        "lng": 75.5762
+      }
+    },
+    "startTime": "2025-09-15T18:30:00Z",
+    "eta": "1h 20m"
+  },
+  {
+    "busNumber": "PB-05-L-1928",
+    "operator": "Golden Temple Express",
+    "phoneNumber": "+91 1860 30010214",
+    "headsign": "Mercedes Benz A/C Seater (2+2)",
+    "route": {
+      "start": {
+        "name": "Amritsar",
+        "lat": 31.633980,
+        "lng": 74.872261
+      },
+      "end": {
+        "name": "Gurdaspur",
+        "lat": 32.0416,
+        "lng": 75.4053
+      }
+    },
+    "startTime": "2025-09-15T19:00:00Z",
+    "eta": "1h 45m"
+  },
+  {
+    "busNumber": "PB-15-M-7531",
+    "operator": "Pritam Bus Service",
+    "phoneNumber": "+91 1860 30010215",
+    "headsign": "Non-A/C Sleeper",
+    "route": {
+      "start": {
+        "name": "Bathinda",
+        "lat": 30.2072,
+        "lng": 74.9455
+      },
+      "end": {
+        "name": "Patiala",
+        "lat": 30.3398,
+        "lng": 76.3869
+      }
+    },
+    "startTime": "2025-09-15T20:15:00Z",
+    "eta": "2h 50m"
+  },
+  {
+    "busNumber": "PB-18-N-4826",
+    "operator": "Happy Journey Tours",
+    "phoneNumber": "+91 1860 30010216",
+    "headsign": "A/C Seater / Sleeper (2+2)",
+    "route": {
+      "start": {
+        "name": "Chandigarh",
+        "lat": 30.7333,
+        "lng": 76.7794
+      },
+      "end": {
+        "name": "Hoshiarpur",
+        "lat": 31.5334,
+        "lng": 75.9189
+      }
+    },
+    "startTime": "2025-09-15T21:00:00Z",
+    "eta": "2h 40m"
+  },
+  {
+    "busNumber": "PB-20-O-1597",
+    "operator": "Khalsa Transport",
+    "phoneNumber": "+91 1860 30010217",
+    "headsign": "Non-A/C Seater (3+2)",
+    "route": {
+      "start": {
+        "name": "Moga",
+        "lat": 30.8172,
+        "lng": 75.1704
+      },
+      "end": {
+        "name": "Amritsar",
+        "lat": 31.633980,
+        "lng": 74.872261
+      }
+    },
+    "startTime": "2025-09-16T05:45:00Z",
+    "eta": "2h 35m"
+  },
+  {
+    "busNumber": "PB-16-P-8520",
+    "operator": "Travel Hub",
+    "phoneNumber": "+91 1860 30010218",
+    "headsign": "Volvo A/C Seater (2+2)",
+    "route": {
+      "start": {
+        "name": "Jalandhar",
+        "lat": 31.3260,
+        "lng": 75.5762
+      },
+      "end": {
+        "name": "Kapurthala",
+        "lat": 31.3789,
+        "lng": 75.3853
+      }
+    },
+    "startTime": "2025-09-16T07:00:00Z",
+    "eta": "0h 45m"
+  },
+  {
+    "busNumber": "PB-22-Q-9630",
+    "operator": "Janta Roadways",
+    "phoneNumber": "+91 1860 30010219",
+    "headsign": "A/C Sleeper (2+1)",
+    "route": {
+      "start": {
+        "name": "Gurdaspur",
+        "lat": 32.0416,
+        "lng": 75.4053
+      },
+      "end": {
+        "name": "Pathankot",
+        "lat": 32.2618,
+        "lng": 75.6669
+      }
+    },
+    "startTime": "2025-09-16T08:20:00Z",
+    "eta": "1h 00m"
+  },
+  {
+    "busNumber": "PB-19-R-7410",
+    "operator": "Royal Express",
+    "phoneNumber": "+91 1860 30010220",
+    "headsign": "Non-A/C Sleeper",
+    "route": {
+      "start": {
+        "name": "Patiala",
+        "lat": 30.3398,
+        "lng": 76.3869
+      },
+      "end": {
+        "name": "Sangrur",
+        "lat": 30.255,
+        "lng": 75.842
+      }
+    },
+    "startTime": "2025-09-16T09:00:00Z",
+    "eta": "1h 35m"
+  }
+]
