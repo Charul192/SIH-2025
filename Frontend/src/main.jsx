@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
+import {BrowserRouter} from 'react-router-dom'
 
 // Import your components
 import Layout from "./Layout.jsx";
