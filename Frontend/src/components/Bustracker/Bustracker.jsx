@@ -1,5 +1,17 @@
 import React from "react";
+import MapC from "../LIve_Location/Map.jsx"
+import axios from "axios"
+function handleClick(){
+  let value = document.getElementById("lookup").value;
+  const isFiveDigitNumber = (input) => {
+    return /^\d{5}$/.test(input);
+  };
+  if(!value || !isFiveDigitNumber(value)){
+    console.log("You haven't entered anything in the input");
+  }
+  axios.post(`http://localhost:3000/trackbus/${value}`, )
 
+}
 export default function Bustracker() {
   return (
     <div className="w-full bg-black text-white">
@@ -25,6 +37,8 @@ export default function Bustracker() {
             />
             <button
               type="submit"
+              id={"lookup"}
+              onClick={handleClick}
               className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105"
             >
               Search
@@ -35,7 +49,8 @@ export default function Bustracker() {
         <div className="mx-auto mt-16 max-w-4xl">
           <div className="aspect-h-9 aspect-w-16">
             <div className="flex h-full w-full items-center justify-center rounded-lg border border-gray-700 bg-zinc-900">
-              <p className="text-gray-500">Map Placeholder</p>
+              {/*<p className="text-gray-500">Map Placeholder</p>*/}
+              <MapC />
             </div>
           </div>
 
