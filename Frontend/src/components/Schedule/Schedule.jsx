@@ -36,20 +36,6 @@ export default function Schedule() {
                     Bus Number
                   </label>
                 </div>
-                <div className="flex items-center gap-x-2">
-                  <input
-                    id="search-stop"
-                    name="search-type"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 bg-white/5 text-blue-600 focus:ring-blue-600 focus:ring-offset-black"
-                  />
-                  <label
-                    htmlFor="search-stop"
-                    className="block text-sm font-medium leading-6 text-white"
-                  >
-                    Bus Stop
-                  </label>
-                </div>
               </div>
             </fieldset>
 
