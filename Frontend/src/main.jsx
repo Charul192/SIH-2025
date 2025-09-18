@@ -16,6 +16,7 @@ import About from "./components/About/About";
 import Bustracker from "./components/Bustracker/Bustracker.jsx";
 import Schedule from "./components/Schedule/Schedule.jsx";
 import Planyoutrip from "./components/Planyourtrip/PlanyouTrip.jsx";
+import Developer from "./components/Developers_Page/developer.jsx"
 
 // 1. Create the router configuration
 const router = createBrowserRouter(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
       <Route path="schedule" element={<Schedule />} />
       <Route path="plan-your-trip" element={<Planyoutrip />} />
       <Route path="about" element={<About />} />
+      <Route path="devpage" element={<Developer />} />
     </Route>
   )
 );
