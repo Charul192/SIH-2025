@@ -3,7 +3,7 @@ import React from "react";
 export default function Schedule() {
   return (
     <div className="w-full bg-black text-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-40 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
             View Bus Schedules
@@ -16,29 +16,6 @@ export default function Schedule() {
 
         <div className="mx-auto mt-10 max-w-xl">
           <form className="space-y-6">
-            <fieldset>
-              <legend className="text-sm font-semibold leading-6 text-white">
-                Search by:
-              </legend>
-              <div className="mt-2 flex gap-x-8">
-                <div className="flex items-center gap-x-2">
-                  <input
-                    id="search-bus"
-                    name="search-type"
-                    type="radio"
-                    defaultChecked
-                    className="h-4 w-4 border-gray-300 bg-white/5 text-blue-600 focus:ring-blue-600 focus:ring-offset-black"
-                  />
-                  <label
-                    htmlFor="search-bus"
-                    className="block text-sm font-medium leading-6 text-white"
-                  >
-                    Bus Number
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-
             <div className="flex items-center gap-x-4">
               <input
                 type="text"
