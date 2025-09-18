@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
 import 'dotenv/config';
+import { readFileSync } from 'fs';
 
 // The full, correct data for all 20 buses.
 const busesData = [
@@ -609,8 +610,24 @@ const busesData = [
   }
 ];
 
+// Apni service key file ko yahan import karein
+// import serviceAccount from './serviceAccountKey.json' assert { type: 'json' };
+
+// // Firebase Admin SDK ko credentials ke saath initialize karein
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount)
+// });
+
+
+const serviceAccount = JSON.parse(readFileSync('./serviceAccountKey.json'));
+console.log('✅ Script is using Project ID:', serviceAccount.project_id);
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 // Initialize Firebase Admin SDK
-admin.initializeApp();
+// admin.initializeApp();
 const db = admin.firestore();
 
 async function importDirectData() {
