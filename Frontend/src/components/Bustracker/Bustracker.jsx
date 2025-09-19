@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect} from "react";
+import {Map, AdvancedMarker, APIProvider, Pin} from "@vis.gl/react-google-maps"
+import {createRoot} from "react-dom/client";
 // The backend server URL.
 const API_URL = "http://localhost:8000";
 
 export default function Bustracker() {
+  // const [location, setLocation] = useState({lat: 31323, lng: 2313});
   const [searchTerm, setSearchTerm] = useState("");
   const [foundBus, setFoundBus] = useState(null); // null: initial, false: not found, object: found
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +18,34 @@ export default function Bustracker() {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+  const MapRender = (location)=>{
 
+    const App = ()=>{
+      return(
+          <APIProvider apiKey="AIzaSyARSqYspchcCQGDRl1izB0_GaqQ6A2Yz6w" onLoad={() => console.log('Maps API has loaded.')}>
+            <Map
+                defaultZoom={13}
+                defaultCenter={ { lat: -33.860664, lng: 151.208138 }}
+                style={{ width: "1000px", height: "500px" }}
+                mapId="roadmap"
+            >
+              <AdvancedMarker
+              position={{ lat: -33.860664, lng: 151.208138 }} >
+                <Pin
+                background={'#4285F4'}
+                borderColor={'#ffffff'}
+                glyphColor={'#ffffff'}>
+                </Pin>
+              </AdvancedMarker>
+            </Map>
+          </APIProvider>
+          );
+
+    };
+    const root = createRoot(document.getElementById('map'));
+    root.render(<App />);
+
+  }
   const handleSearch = async (event) => {
     event.preventDefault();
     if (!searchTerm.trim()) return;
@@ -46,6 +75,7 @@ export default function Bustracker() {
         }))
       };
       setFoundBus(formattedBusData);
+      MapRender(busData.currentLocation);
 
     } catch (error) {
       console.error("Error fetching bus data:", error.message);
@@ -117,7 +147,7 @@ export default function Bustracker() {
             {/* It will work without changes. I am including it for completeness. */}
             <div className="aspect-h-9 aspect-w-16">
               <div className="flex h-full w-full items-center justify-center rounded-lg border border-gray-700 bg-zinc-900">
-                <p className="text-gray-500">Map Placeholder</p>
+                <p className="text-gray-500" id="map"></p>
               </div>
             </div>
             {foundBus === false && (
