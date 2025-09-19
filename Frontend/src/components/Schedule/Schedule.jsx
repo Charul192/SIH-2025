@@ -54,7 +54,7 @@ export default function Schedule() {
   }
   return (
     <div className="w-full bg-black text-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-40 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
             View Bus Schedules
@@ -67,14 +67,6 @@ export default function Schedule() {
 
         <div className="mx-auto mt-10 max-w-xl">
           <form className="space-y-6">
-            <fieldset>
-              <div className="mt-2 flex gap-x-8">
-                <div className="flex items-center gap-x-2">
-                  <p className="block text-sm font-medium leading-6 text-white">Enter the number of the bus</p>
-                </div>
-              </div>
-            </fieldset>
-
             <div className="flex items-center gap-x-4">
               <input
                 type="text"
