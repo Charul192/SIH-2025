@@ -1,6 +1,6 @@
 import React, { useState } from "react"; // 1. useState ko import karein
 import { Link, NavLink } from "react-router-dom";
-import Logo from "../Logo/Logo";
+import Logo from "../logo/logo";
 
 export default function Header() {
   // 2. Menu ki state (khula/band) ko manage karne ke liye
