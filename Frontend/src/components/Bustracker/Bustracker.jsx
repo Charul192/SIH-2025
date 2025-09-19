@@ -11,6 +11,11 @@ export default function Bustracker() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [mapCenter, setMapCenter] = useState(null);
 
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
   const formatTime = (date) => {
     if (!date) return "--:--";
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
@@ -87,11 +92,11 @@ export default function Bustracker() {
 
   return (
     <div className="w-full min-h-screen bg-black text-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        {/* Search form remains the same */}
+      <div className="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Track Your Bus</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">Enter a bus ID below to get its real-time location and arrival information.</p>
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">Track Your Bus</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-400">Enter a bus ID below to get its real-time location and arrival information.</p>
+
         </div>
         <div className="mx-auto mt-10 max-w-xl">
           <form className="flex items-center gap-x-4" onSubmit={handleSearch}>
@@ -99,13 +104,13 @@ export default function Bustracker() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full rounded-md border-0 bg-white/5 py-2.5 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 bg-white/5 py-3 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6"
               placeholder="Enter Bus ID (e.g., 1, 2, 3...)"
             />
             <button
               type="submit"
               disabled={isLoading}
-              className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105 disabled:opacity-50 disabled:scale-100"
+              className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-lg font-semibold text-white shadow-sm transition-transform hover:scale-105 disabled:opacity-50 disabled:scale-100"
             >
               {isLoading ? "Searching..." : "Search"}
             </button>
@@ -113,54 +118,56 @@ export default function Bustracker() {
         </div>
 
         <div className="mx-auto mt-16 max-w-4xl">
+          {foundBus === false && (
+             <div className="rounded-lg border border-red-700/40 bg-red-900/20 p-8 text-center text-red-300">
+                <p className="text-xl">Bus not found. Please check the Bus ID and try again.</p>
+             </div>
+          )}
+
           {foundBus && (
             <div className="rounded-lg border border-gray-700 bg-zinc-900 p-6">
-              {/* Bus header */}
               <div className="sm:flex sm:items-start sm:justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">{`Bus ${foundBus.busId} - ${foundBus.headsign}`}</h2>
-                  <p className="mt-1 text-sm text-gray-400">Operated by {foundBus.operator}</p>
+                  <h2 className="text-4xl font-bold text-white">{`Bus ${foundBus.busId} - ${foundBus.headsign}`}</h2>
+                  <p className="mt-2 text-lg text-gray-400">Operated by {foundBus.operator}</p>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-6 sm:text-right">
-                  <p className="text-lg font-medium text-green-400">On Time</p>
-                  <p className="mt-1 text-sm text-gray-300">Last updated: {formatTime(currentTime)}</p>
+                  <p className="text-2xl font-medium text-green-400">On Time</p>
+                  <p className="mt-1 text-lg text-gray-300">Last updated: {formatTime(currentTime)}</p>
                 </div>
               </div>
               
-              {/* Route info and map button */}
               <div className="mt-6 flex justify-between items-center border-t border-gray-700 pt-6">
-                <p className="text-sm font-medium text-gray-400">{routeName}</p>
+                <p className="text-lg font-medium text-gray-400">{routeName}</p>
                 <button
                   onClick={() => navigate('/map', { state: { location: mapCenter } })}
-                  className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500"
+                  className="rounded-md bg-blue-600 px-4 py-2 text-lg font-semibold text-white shadow-sm hover:bg-blue-500"
                 >
                   View on Map
                 </button>
               </div>
 
-              {/* --- THIS SECTION WAS MISSING --- */}
-              <div className="mt-6 grid grid-cols-1 gap-6 border-t border-gray-700 pt-6 sm:grid-cols-3">
+              <div className="mt-6 grid grid-cols-1 gap-8 border-t border-gray-700 pt-6 sm:grid-cols-3">
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Current Status</p>
-                  <p className="mt-1 font-semibold text-white">{currentStatus}</p>
+                  <p className="text-lg font-medium text-gray-400">Current Status</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{currentStatus}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Next Stop</p>
-                  <p className="mt-1 font-semibold text-white">{nextStopInfo}</p>
+                  <p className="text-lg font-medium text-gray-400">Next Stop</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{nextStopInfo}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-400">ETA for Next Stop</p>
-                  <p className="mt-1 font-semibold text-white">{etaInfo}</p>
+                  <p className="text-lg font-medium text-gray-400">ETA for Next Stop</p>
+                  <p className="mt-1 text-xl font-semibold text-white">{etaInfo}</p>
                 </div>
               </div>
 
-              {/* --- AND THIS TIMELINE SECTION WAS MISSING --- */}
               <div className="mt-6 border-t border-gray-700 pt-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Route Timeline</h3>
+                <h3 className="text-3xl font-semibold text-white mb-4">Route Timeline</h3>
                 <div className="flow-root">
                   <ul className="-mb-8">
                     {foundBus.route.map((stop, stopIdx) => {
-                      const hasDeparted = stop.departureTime && currentTime.getTime() > stop.departureTime.getTime();
+                      const hasDeparted = stop.departureTime && currentTime > stop.departureTime;
                       const isLastStop = stopIdx === foundBus.route.length - 1;
 
                       return (
@@ -172,15 +179,17 @@ export default function Bustracker() {
                             <div className="relative flex items-start space-x-3">
                               <div>
                                 <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-zinc-900 ${hasDeparted ? 'bg-blue-600' : 'bg-gray-600'}`}>
-                                  {/* Icon can be changed later */}
-                                  <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v4.59L7.3 9.24a.75.75 0 00-1.1 1.02l3.25 3.5a.75.75 0 001.1 0l3.25-3.5a.75.75 0 10-1.1-1.02l-1.95 2.1V6.75z" clipRule="evenodd" /></svg>
+
+                                  <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v4.59L7.3 9.24a.75.75 0 00-1.1 1.02l3.25 3.5a.75.75 0 001.1 0l3.25-3.5a.75.75 0 10-1.1-1.02l-1.95 2.1V6.75z" clipRule="evenodd" /></svg>
                                 </span>
                               </div>
                               <div className="min-w-0 flex-1 md:flex justify-between items-center">
                                 <div>
-                                  <p className="text-md font-semibold text-white">{stop.name}</p>
+
+                                  <p className="text-xl font-semibold text-white">{stop.name}</p>
                                 </div>
-                                <div className="mt-2 md:mt-0 text-sm text-gray-400 text-left md:text-right">
+                                <div className="mt-2 md:mt-0 text-lg text-gray-400 text-left md:text-right">
+
                                   <p>Arrival: {formatTime(stop.arrivalTime)}</p>
                                   <p>Departure: {formatTime(stop.departureTime)}</p>
                                 </div>

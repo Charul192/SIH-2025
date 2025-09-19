@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen w-full flex-col bg-black text-white">
-      <div className="pt-24 pb-32 sm:pt-32 sm:pb-40">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="mb-6 inline-flex items-center justify-center rounded-full border border-blue-500/30 bg-blue-950/30 px-4 py-1.5 text-sm text-blue-300 backdrop-blur-sm">
-              <span className="mr-2 h-2 w-2 animate-pulse rounded-full bg-blue-500"></span>
-              Live tracking for smarter travel
-            </div>
+    <div className="w-full bg-black text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Yeh line change hui hai */}
+        <div className="flex min-h-screen flex-col items-center justify-start pt-25 text-center">
+          <div className="mb-6 inline-flex items-center justify-center rounded-full border border-blue-500/30 bg-blue-950/30 px-4 py-1.5 text-sm text-blue-300 backdrop-blur-sm">
+            <span className="mr-2 h-2 w-2 animate-pulse rounded-full bg-blue-500"></span>
+            Live tracking for smarter travel
+          </div>
 
             <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl">
               Real-Time Routes,
@@ -40,5 +40,5 @@ export default function Home() {
       </div>
     </div>
   );
-}
 
+}
