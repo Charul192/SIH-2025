@@ -1,29 +1,31 @@
 import React, { useState } from "react";
-import axios from 'axios'; // Import axios
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+// The environment variable is now accessed in a more compatible way
+const base_URL = import.meta.env.VITE_API_URL;
 
 export default function PlanyouTrip() {
-  // State for form inputs, results, loading, and errors
+  const navigate = useNavigate();
   const [startLocation, setStartLocation] = useState("");
   const [endLocation, setEndLocation] = useState("");
   const [foundRoutes, setFoundRoutes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [searched, setSearched] = useState(false); // To know if a search has been made
+  const [searched, setSearched] = useState(false);
 
-  // Form submission handler
   const handleFindBuses = async (event) => {
-    event.preventDefault(); // Prevent page reload
+    event.preventDefault();
     setIsLoading(true);
     setError(null);
     setSearched(true);
     setFoundRoutes([]);
 
     try {
-      // Call your backend API
-      const response = await axios.get(`http://localhost:3001/find-routes`, {
+      const response = await axios.get(`${base_URL}/api/routes`, {
         params: { from: startLocation, to: endLocation }
       });
-      setFoundRoutes(response.data.routes || []);
+      setFoundRoutes(response.data);
     } catch (err) {
       setError("Could not fetch routes. Please try again later.");
       console.error(err);
@@ -32,7 +34,6 @@ export default function PlanyouTrip() {
     }
   };
 
-  // Helper component to render a single bus card
   const BusCard = ({ bus }) => (
     <div className="rounded-lg border border-gray-700 bg-zinc-900 p-4 sm:flex sm:items-center sm:justify-between">
       <div>
@@ -40,8 +41,13 @@ export default function PlanyouTrip() {
         <p className="text-sm text-gray-400">Route: {bus.route[0].name} &rarr; {bus.route[bus.route.length - 1].name}</p>
       </div>
       <div className="mt-3 sm:mt-0 text-left sm:text-right">
-        <p className="text-sm text-gray-300">ETA: {bus.eta}</p>
-        <a href="#" className="text-sm font-semibold text-blue-400 hover:text-blue-300">View Details &rarr;</a>
+        <p className="text-sm text-gray-300">Type: {bus.headsign}</p>
+        <button
+          onClick={() => navigate('/schedule', { state: { busId: bus.busId } })}
+          className="text-sm font-semibold text-blue-400 hover:text-blue-300 mt-1"
+        >
+          View Details &rarr;
+        </button>
       </div>
     </div>
   );
@@ -55,7 +61,6 @@ export default function PlanyouTrip() {
             Enter your starting point and final destination to find all available bus routes.
           </p>
         </div>
-
         <div className="mx-auto mt-10 max-w-2xl">
           <form className="space-y-6" onSubmit={handleFindBuses}>
             <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
@@ -69,7 +74,7 @@ export default function PlanyouTrip() {
                     value={startLocation}
                     onChange={(e) => setStartLocation(e.target.value)}
                     className="block w-full rounded-md border-0 bg-white/5 py-2.5 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
-                    placeholder="Enter starting bus stop..."
+                    placeholder="e.g., Amritsar Bus Stand"
                     required
                   />
                 </div>
@@ -84,7 +89,7 @@ export default function PlanyouTrip() {
                     value={endLocation}
                     onChange={(e) => setEndLocation(e.target.value)}
                     className="block w-full rounded-md border-0 bg-white/5 py-2.5 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
-                    placeholder="Enter final destination..."
+                    placeholder="e.g., Ludhiana Bus Stand"
                     required
                   />
                 </div>
@@ -101,20 +106,16 @@ export default function PlanyouTrip() {
             </div>
           </form>
         </div>
-
-        {/* --- DYNAMIC RESULTS SECTION --- */}
         <div className="mx-auto mt-16 max-w-4xl">
-          <h2 className="text-2xl font-bold text-center">Available Routes</h2>
-          <div className="mt-6 space-y-4">
+           <h2 className="text-2xl font-bold text-center">Available Routes</h2>
+           <div className="mt-6 space-y-4">
             {isLoading && <p className="text-center text-gray-400">Finding the best routes for you...</p>}
             {error && <p className="text-center text-red-500">{error}</p>}
-
             {!isLoading && !error && searched && foundRoutes.length === 0 && (
               <div className="rounded-lg border border-dashed border-gray-700 p-8 text-center text-gray-500">
                 <p>No direct or connecting buses found for this route.</p>
               </div>
             )}
-
             {!isLoading && !error && foundRoutes.map((route, index) => {
               if (route.type === 'direct') {
                 return <BusCard key={route.busId} bus={route} />;
@@ -131,16 +132,15 @@ export default function PlanyouTrip() {
               }
               return null;
             })}
-
             {!searched && !isLoading && (
                <div className="rounded-lg border border-dashed border-gray-700 p-8 text-center text-gray-500">
                  <p>Enter your locations to find available buses.</p>
                </div>
             )}
-          </div>
-        </div>
-
+           </div>
+         </div>
       </div>
     </div>
   );
 }
+
