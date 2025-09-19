@@ -15,7 +15,7 @@ import Home from "./components/Home/Home";
 import About from "./components/About/About";
 import Bustracker from "./components/Bustracker/Bustracker.jsx";
 import Schedule from "./components/Schedule/Schedule.jsx";
-import Planyoutrip from "./components/Planyourtrip/PlanyouTrip.jsx";
+import Planyoutrip from "./components/Planyourtrip/Planyoutrip.jsx";
 import Developer from "./components/Developers_Page/developer.jsx"
 
 // 1. Create the router configuration
