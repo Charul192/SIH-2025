@@ -1,6 +1,7 @@
 import React from 'react';
 
 // Make sure to replace './path-to-your-logo.png' with the actual path to your image file.
+
 import logoImage from '../../../public/logo.jpg'
 function Logo() {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+// import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 // You can replace this with the actual path to your image
 const developerImageUrl = "https://via.placeholder.com/150"; 

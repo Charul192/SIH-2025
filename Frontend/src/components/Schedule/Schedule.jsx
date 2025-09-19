@@ -18,7 +18,6 @@ export default function Schedule() {
       const html = (stop, arrTime, depTime) =>{
           return `
             <tr>
-            
               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
                 ${stop}
               </td>
