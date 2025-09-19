@@ -145,11 +145,11 @@ export default function Bustracker() {
         <div className="mx-auto mt-16 max-w-4xl">
             {/* ... The rest of your JSX from the previous step goes here ... */}
             {/* It will work without changes. I am including it for completeness. */}
-            <div className="aspect-h-9 aspect-w-16">
+            {/* <div className="aspect-h-9 aspect-w-16">
               <div className="flex h-full w-full items-center justify-center rounded-lg border border-gray-700 bg-zinc-900">
                 <p className="text-gray-500" id="map"></p>
               </div>
-            </div>
+            </div> */}
             {foundBus === false && (
               <div className="mt-8 text-center text-lg text-yellow-400">
                   Bus not found. Please check the ID and try again.

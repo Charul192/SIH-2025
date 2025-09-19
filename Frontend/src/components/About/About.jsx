@@ -56,11 +56,11 @@ export default function About() {
             </p>
           </div>
           <div className="aspect-[3/2] w-full">
-            <img
+            {/* <img
               className="h-full w-full rounded-2xl bg-gray-700 object-cover"
               src="https://images.unsplash.com/photo-1620773662373-59617639b740?q=80&w=2832&auto=format&fit=crop"
               alt="People waiting at a bus stop in India"
-            />
+            /> */}
           </div>
         </div>
 
