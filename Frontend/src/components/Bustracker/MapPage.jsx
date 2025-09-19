@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { APIProvider, Map, AdvancedMarker, Pin } from '@vis.gl/react-google-maps';
+const API_KEY = import.meta.env.VITE_API_KEY;
+const MAPS_KEY = import.meta.env.VITE_MAPS_KEY;
 
 export default function MapPage() {
   const navigate = useNavigate();
@@ -25,11 +27,11 @@ export default function MapPage() {
 
   return (
     <div className="relative w-full h-screen bg-black">
-      <APIProvider apiKey="AIzaSyARSqYspchcCQGDRl1izB0_GaqQ6A2Yz6w">
+      <APIProvider apiKey={API_KEY}>
         <Map
           defaultZoom={15}
           defaultCenter={busLocation}
-          mapId="43b870af48005989f31cfc28"
+          mapId={MAPS_KEY}
           className="w-full h-full"
         >
           <AdvancedMarker position={busLocation}>
