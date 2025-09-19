@@ -1,4 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+// The environment variable is now accessed in a more compatible way
+const base_URL = import.meta.env.VITE_API_URL;
 
 // Helper for Icons (from Heroicons)
 const LocationPinIcon = () => (
@@ -27,27 +32,79 @@ const ClockIcon = () => (
 
 
 export default function PlanyouTrip() {
+  const navigate = useNavigate();
+  const [startLocation, setStartLocation] = useState("");
+  const [endLocation, setEndLocation] = useState("");
+  const [foundRoutes, setFoundRoutes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [searched, setSearched] = useState(false);
+
+  const handleFindBuses = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    setSearched(true);
+    setFoundRoutes([]);
+
+    try {
+      const response = await axios.get(`${base_URL}/api/routes`, {
+        params: { from: startLocation, to: endLocation }
+      });
+      setFoundRoutes(response.data);
+    } catch (err) {
+      setError("Could not fetch routes. Please try again later.");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const BusCard = ({ bus }) => (
+    <div className="rounded-lg border border-gray-700 bg-zinc-900 p-4 sm:flex sm:items-center sm:justify-between">
+      <div>
+        <p className="text-lg font-bold text-white">Bus {bus.busId} ({bus.operator})</p>
+        <p className="text-sm text-gray-400">Route: {bus.route[0].name} &rarr; {bus.route[bus.route.length - 1].name}</p>
+      </div>
+      <div className="mt-3 sm:mt-0 text-left sm:text-right">
+        <p className="text-sm text-gray-300">Type: {bus.headsign}</p>
+        <button
+          onClick={() => navigate('/schedule', { state: { busId: bus.busId } })}
+          className="text-sm font-semibold text-blue-400 hover:text-blue-300 mt-1"
+        >
+          View Details &rarr;
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="w-full min-h-screen bg-black text-white">
       <div className="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">
-            Plan Your Trip
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-400">
-            Enter your starting point and final destination to find all
-            available bus routes.
+
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Plan Your Trip</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
+            Enter your starting point and final destination to find all available bus routes.
           </p>
         </div>
+        <div className="mx-auto mt-10 max-w-2xl">
+          <form className="space-y-6" onSubmit={handleFindBuses}>
+            <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="start-location" className="block text-sm font-medium leading-6 text-white">From</label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="start-location"
+                    id="start-location"
+                    value={startLocation}
+                    onChange={(e) => setStartLocation(e.target.value)}
+                    className="block w-full rounded-md border-0 bg-white/5 py-2.5 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
+                    placeholder="e.g., Amritsar Bus Stand"
+                    required
+                  />
 
-        {/* --- Updated Form Section --- */}
-        <div className="mx-auto mt-12 max-w-3xl">
-          <form className="space-y-6">
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-2">
-              {/* From Input */}
-              <div className="relative w-full">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                  <LocationPinIcon />
                 </div>
                 <input
                   type="text"
@@ -56,15 +113,19 @@ export default function PlanyouTrip() {
                 />
               </div>
 
-              {/* Swap Button */}
-              <button type="button" className="rounded-full p-2 text-gray-400 transition hover:bg-white/10 hover:text-white">
-                <SwapIcon />
-              </button>
-
-              {/* To Input */}
-              <div className="relative w-full">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                  <LocationPinIcon />
+              <div>
+                <label htmlFor="end-location" className="block text-sm font-medium leading-6 text-white">To</label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="end-location"
+                    id="end-location"
+                    value={endLocation}
+                    onChange={(e) => setEndLocation(e.target.value)}
+                    className="block w-full rounded-md border-0 bg-white/5 py-2.5 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6"
+                    placeholder="e.g., Ludhiana Bus Stand"
+                    required
+                  />
                 </div>
                 <input
                   type="text"
@@ -73,13 +134,13 @@ export default function PlanyouTrip() {
                 />
               </div>
             </div>
-
             <div className="flex justify-center pt-4">
               <button
                 type="submit"
                 className="w-full sm:w-auto rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-10 py-4 text-lg font-semibold text-white shadow-lg transition-transform hover:scale-105"
+
               >
-                Find Buses
+                {isLoading ? "Searching..." : "Find Buses"}
               </button>
             </div>
           </form>

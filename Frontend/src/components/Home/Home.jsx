@@ -12,31 +12,33 @@ export default function Home() {
             Live tracking for smarter travel
           </div>
 
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl">
-            Real-Time Routes,
-            <br />
-            <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-              Real-Life Freedom
-            </span>
-          </h1>
+            <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl">
+              Real-Time Routes,
+              <br />
+              <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                Real-Life Freedom
+              </span>
+            </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-500">
-            Take the guesswork out of your commute. Our app helps you see live
-            vehicle locations, get accurate arrival times, and plan your journey
-            with confidence using our intuitive real-time tracking system.
-          </p>
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-500">
+              Take the guesswork out of your commute. Our app helps you see live
+              vehicle locations, get accurate arrival times, and plan your journey
+              with confidence using our intuitive real-time tracking system.
+            </p>
 
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link
-              to="/bus-tracker"
-              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105"
-            >
-              Start Tracking Now
-              <span className="ml-2">→</span>
-            </Link>
+            <div className="mt-10 flex items-center justify-center gap-x-6">
+              <Link
+                to="/bus-tracker"
+                className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105"
+              >
+                Start Tracking Now
+                <span className="ml-2">→</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
+
 }

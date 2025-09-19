@@ -69,7 +69,7 @@ export default function Bustracker() {
     let nextStop = null;
 
     for (const stop of foundBus.route) {
-        if (stop.arrivalTime && stop.arrivalTime > currentTime) {
+        if (stop.arrivalTime && stop.arrivalTime.getTime() > currentTime.getTime()) {
             nextStop = stop;
             break;
         }
@@ -96,6 +96,7 @@ export default function Bustracker() {
         <div className="text-center">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">Track Your Bus</h1>
           <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-400">Enter a bus ID below to get its real-time location and arrival information.</p>
+
         </div>
         <div className="mx-auto mt-10 max-w-xl">
           <form className="flex items-center gap-x-4" onSubmit={handleSearch}>
@@ -178,14 +179,17 @@ export default function Bustracker() {
                             <div className="relative flex items-start space-x-3">
                               <div>
                                 <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-zinc-900 ${hasDeparted ? 'bg-blue-600' : 'bg-gray-600'}`}>
+
                                   <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v4.59L7.3 9.24a.75.75 0 00-1.1 1.02l3.25 3.5a.75.75 0 001.1 0l3.25-3.5a.75.75 0 10-1.1-1.02l-1.95 2.1V6.75z" clipRule="evenodd" /></svg>
                                 </span>
                               </div>
                               <div className="min-w-0 flex-1 md:flex justify-between items-center">
                                 <div>
+
                                   <p className="text-xl font-semibold text-white">{stop.name}</p>
                                 </div>
                                 <div className="mt-2 md:mt-0 text-lg text-gray-400 text-left md:text-right">
+
                                   <p>Arrival: {formatTime(stop.arrivalTime)}</p>
                                   <p>Departure: {formatTime(stop.departureTime)}</p>
                                 </div>

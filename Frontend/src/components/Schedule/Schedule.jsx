@@ -1,39 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const base_URL = "http://localhost:8000";
+const base_URL = import.meta.env.VITE_API_URL;
 
 export default function Schedule() {
-  const [busNum, setBusNum] = useState("");
-  const [schedule, setSchedule] = useState([]); // State to hold schedule data
-  const [searchedBus, setSearchedBus] = useState(""); // State to show which bus was searched
+  const [bus, setBus] = useState(null);
+  const [schedule, setSchedule] = useState([]);
+  const [bus_num, setBus_num] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 30000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // --- THIS IS THE NEW, SMARTER FUNCTION ---
+  const formatTime = (timeData) => {
+    if (!timeData) return "--:--";
+
+    let date;
+    // Case 1: Handle Firestore Timestamp object { _seconds: ... }
+    if (typeof timeData === 'object' && typeof timeData._seconds === 'number') {
+      date = new Date(timeData._seconds * 1000);
+    } 
+    // Case 2: Handle ISO date string "2025-09-17T10:00:00Z"
+    else if (typeof timeData === 'string') {
+      date = new Date(timeData);
+    } 
+    // If format is unknown, return placeholder
+    else {
+      return "--:--";
+    }
+
+    // Final check if the created date is valid
+    if (isNaN(date.getTime())) {
+      return "--:--";
+    }
+
+    return date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+  };
+
+  const formatFrequency = (freq) => {
+    if (freq === 127) return "Runs Daily";
+    const days = ['Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'];
+    let activeDays = [];
+    for (let i = 0; i < 7; i++) {
+      if ((freq >> i) & 1) {
+        activeDays.push(days[i]);
+      }
+    }
+    return activeDays.reverse().join(', ');
+  };
 
   const handleQuery = async (event) => {
     event.preventDefault();
-    if (!busNum) return; // Don't search if input is empty
+    if (!bus_num.trim()) return;
+
+    setIsLoading(true);
+    setBus(null);
+    setSchedule([]);
 
     try {
-      const response = await axios.get(`${base_URL}/api/bus/${busNum}`);
-      const routes = response.data.route;
-
-      // Format the data before setting it to state
-      const formattedRoutes = routes.map(route => {
-        const arrivalTime = new Date(route.arrivalTime._seconds * 1000);
-        const departureTime = new Date(route.departureTime._seconds * 1000);
-        return {
-          name: route.name,
-          arrival: arrivalTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-          departure: departureTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-        };
-      });
-
-      setSchedule(formattedRoutes); // Update state with fetched data
-      setSearchedBus(busNum); // Set the searched bus number for display
-      
+      const response = await axios.get(`${base_URL}/api/bus/${bus_num}`);
+      setBus(response.data);
+      // We store the raw route data, the new formatTime will handle it
+      setSchedule(response.data.route);
     } catch (err) {
       console.log(err);
-      setSchedule([]); // Clear schedule on error
-      setSearchedBus("");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,7 +89,6 @@ export default function Schedule() {
             number or a stop name to begin.
           </p>
         </div>
-
         <div className="mx-auto mt-10 max-w-xl">
           <form onSubmit={handleQuery} className="flex items-center gap-x-4">
             <input
@@ -58,16 +97,38 @@ export default function Schedule() {
               value={busNum}
               onChange={(e) => setBusNum(e.target.value)}
               className="block w-full rounded-md border-0 bg-white/5 py-3 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6"
+
               placeholder="Enter bus number..."
             />
             <button
               type="submit"
-              className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-lg font-semibold text-white shadow-sm transition-transform hover:scale-105"
+
+              disabled={isLoading}
+              className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105 disabled:opacity-50"
             >
-              Find
+              {isLoading ? 'Searching...' : 'Find'}
             </button>
           </form>
         </div>
+        
+        {bus && schedule.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold">Schedule Details</h2>
+            <p className="mt-1 text-gray-400">
+              Showing schedule for:{" "}
+              <span className="font-medium text-white">{`${bus.busId} - ${bus.headsign}`}</span>
+            </p>
+            <p className="mt-1 text-gray-400">
+              Frequency:{" "}
+              <span className="font-medium text-white">{formatFrequency(bus.frequency)}</span>
+            </p>
+            <div className="mt-8 flow-root">
+              <ul className="-mb-8">
+                {schedule.map((stop, stopIdx) => {
+                  // --- UPDATED: This logic now also handles both data types ---
+                  const departureDate = stop.departureTime ? (stop.departureTime._seconds ? new Date(stop.departureTime._seconds * 1000) : new Date(stop.departureTime)) : null;
+                  const hasDeparted = departureDate && departureDate.getTime() < currentTime.getTime();
+                  const isLastStop = stopIdx === schedule.length - 1;
 
         <div className="mt-16">
           <h2 className="text-4xl font-bold">Schedule Details</h2>
@@ -116,7 +177,7 @@ export default function Schedule() {
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
