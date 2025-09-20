@@ -2,18 +2,20 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { db } from "./firebase.js";
+import { Client } from "@googlemaps/google-maps-services-js";
 
-// Load environment variables
+// .env file se environment variables load karein
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8000;
+const googleMapsClient = new Client({});
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// --- Middleware ---
+app.use(cors()); // Frontend se requests allow karne ke liye
+app.use(express.json()); // JSON data ko samajhne ke liye
 
-// --- Reusable Logic to Find Bus Routes ---
+// --- Helper Function: Bus Routes Dhoondne Ke Liye ---
 async function findBusRoutes(from, to) {
   const fromLower = from.toLowerCase();
   const toLower = to.toLowerCase();
@@ -25,7 +27,7 @@ async function findBusRoutes(from, to) {
   }
   const allBuses = snapshot.docs.map(doc => doc.data());
 
-  // Find Direct Routes
+  // Step 1: Seedhe (Direct) routes dhoondein
   const directRoutes = [];
   allBuses.forEach(bus => {
     const fromIndex = bus.route.findIndex(stop => stop.name.toLowerCase() === fromLower);
@@ -39,15 +41,17 @@ async function findBusRoutes(from, to) {
     return directRoutes;
   }
 
-  // Find Connecting Routes
+  // Step 2: Agar direct route na mile, toh connecting routes dhoondein
   const connectingRoutes = [];
   const startBuses = allBuses.filter(bus => bus.route.some(stop => stop.name.toLowerCase() === fromLower));
   const endBuses = allBuses.filter(bus => bus.route.some(stop => stop.name.toLowerCase() === toLower));
 
   startBuses.forEach(startBus => {
     endBuses.forEach(endBus => {
-      if (startBus.busId === endBus.busId) return;
+      if (startBus.busId === endBus.busId) return; // Ek hi bus connect nahi kar sakti
+
       const fromIndexInStartBus = startBus.route.findIndex(s => s.name.toLowerCase() === fromLower);
+      
       startBus.route.slice(fromIndexInStartBus + 1).forEach(transferStop => {
         const toIndexInEndBus = endBus.route.findIndex(s => s.name.toLowerCase() === toLower);
         const transferIndexInEndBus = endBus.route.findIndex(s => s.name.toLowerCase() === transferStop.name.toLowerCase());
@@ -66,7 +70,41 @@ async function findBusRoutes(from, to) {
 
 // --- API Endpoints ---
 
-// GET a single bus by its ID
+// GET: Google Maps se directions (raasta) lene ke liye
+app.get('/api/directions', async (req, res) => {
+  const { origin, destination } = req.query;
+  if (!origin || !destination) {
+    return res.status(400).json({ error: 'Origin and destination are required.' });
+  }
+
+  try {
+    const response = await googleMapsClient.directions({
+      params: {
+        origin,
+        destination,
+        mode: 'driving',
+        key: import.meta.VITE_API_KEY, // Yeh key .env file se aayegi
+      },
+      timeout: 2000,
+    });
+
+    if (response.data.routes.length > 0) {
+      const route = response.data.routes[0];
+      const leg = route.legs[0];
+      res.json({
+        polyline: route.overview_polyline.points,
+        duration: leg.duration.value, // Safar ka samay seconds mein
+      });
+    } else {
+      res.status(404).json({ error: 'No routes found.' });
+    }
+  } catch (error) {
+    console.error('Error fetching directions:', error.response?.data || error.message);
+    res.status(500).json(error.response?.data || { error: 'Failed to fetch directions.' });
+  }
+});
+
+// GET: Ek bus ki jaankari ID se lene ke liye
 app.get('/api/bus/:id', async (req, res) => {
   try {
     const busId = Number(req.params.id);
@@ -84,7 +122,7 @@ app.get('/api/bus/:id', async (req, res) => {
   }
 });
 
-// GET all buses (useful for other parts of the app)
+// GET: Sabhi buses ki list lene ke liye
 app.get('/api/buses', async (req, res) => {
   try {
     const snapshot = await db.collection('buses').get();
@@ -96,11 +134,11 @@ app.get('/api/buses', async (req, res) => {
   }
 });
 
-// GET routes for the trip planner
+// GET: Trip planner ke liye routes dhoondne ke liye
 app.get('/api/routes', async (req, res) => {
   const { from, to } = req.query;
   if (!from || !to) return res.status(400).json({ error: 'Start and end locations are required.' });
-
+  
   try {
     const routes = await findBusRoutes(from, to);
     res.json(routes);
@@ -110,6 +148,7 @@ app.get('/api/routes', async (req, res) => {
   }
 });
 
+// Server ko start karein
 app.listen(port, () => {
   console.log(`✅ Backend server is running at http://localhost:${port}`);
 });

@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.4.2",
     "@googlemaps/markerclusterer": "^2.6.2",
     "@heroicons/react": "^2.2.0",
+    "@mapbox/polyline": "^1.2.1",
     "@tailwindcss/vite": "^4.1.13",
     "@vis.gl/react-google-maps": "^1.5.5",
     "axios": "^1.12.2",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/mapbox__polyline": "^1.0.5",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
