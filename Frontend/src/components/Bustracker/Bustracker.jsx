@@ -145,7 +145,7 @@ export default function Bustracker() {
               type="text"
               value={searchTerm}
               onChange={handleInputChange}
-              className="block w-full rounded-md border-0 bg-white/5 py-3 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6"
+              className={`block w-full rounded-md border-0 bg-white/5 py-3 px-4 ${Dark?'text-white':'text-black'} shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6`}
               placeholder="Enter Bus ID (e.g., 1, 2, 3...)"
               autoComplete="off"
             />
@@ -158,7 +158,7 @@ export default function Bustracker() {
             </button>
           </form>
           {suggestions.length > 0 && (
-            <ul className="absolute z-10 w-full bg-zinc-800 border border-zinc-700 rounded-md mt-1 max-h-60 overflow-auto">
+            <ul className={`absolute z-10 w-full ${Dark?'bg-black':'bg-white'} border border-zinc-700 rounded-md mt-1 max-h-60 overflow-auto`}>
               {suggestions.map((id) => (
                 <li
                   key={id}
