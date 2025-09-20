@@ -18,6 +18,7 @@ import Schedule from "./components/Schedule/Schedule.jsx";
 import Planyoutrip from "./components/Planyourtrip/Planyoutrip.jsx";
 import Developer from "./components/Developers_Page/developer.jsx"
 import MapPage from "./components/Bustracker/MapPage.jsx";
+import Feedback from "./Feedback/Feedback.jsx";
 
 // 1. Create the router configuration
 const router = createBrowserRouter(
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
        <Route path="/map" element={<MapPage />} />
       <Route path="about" element={<About />} />
       <Route path="devpage" element={<Developer />} />
+      <Route path="/feedback" element={<Feedback />} />
     </Route>
   )
 );
