@@ -8,7 +8,7 @@ import { AppContext } from "../../context/AppContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { Dark, setDark } = useContext(AppContext);
+  const { Dark, setDark,setCookie } = useContext(AppContext);
 
   // Helper function to create dynamic NavLink classes
   const getNavLinkClass = ({ isActive }) => {
@@ -79,7 +79,9 @@ export default function Header() {
             <li>
               {/* FIX: Theme toggle hover effect is now dynamic */}
               <button
-                onClick={() => setDark(prev => !prev)}
+                onClick={() => {setDark(prev => !prev);
+                  setCookie('Dark', !prev, 30);
+                }}
                 className={`rounded-full p-2 transition-colors duration-300 ${Dark ? 'hover:bg-slate-700' : 'hover:bg-slate-200'}`}
                 aria-label="Toggle theme"
               >
