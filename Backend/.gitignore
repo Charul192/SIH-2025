@@ -2,6 +2,9 @@
 .env.local
 .env.*.local
 my-maps-project-154d6-firebase-adminsdk-fbsvc-862737e7c0.json
+<<<<<<< HEAD
+=======
 Backend/my-maps-project-154d6-firebase-adminsdk-fbsvc-862737e7c0.json
+>>>>>>> ca0ab0dae21e23684ade04470ec1a2898982798e
 
 node_modules/

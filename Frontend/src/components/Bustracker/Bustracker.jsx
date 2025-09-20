@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "http://localhost:8000";
 
 export default function Bustracker() {
   const navigate = useNavigate();
@@ -141,7 +141,7 @@ export default function Bustracker() {
               <div className="mt-6 flex justify-between items-center border-t border-gray-700 pt-6">
                 <p className="text-lg font-medium text-gray-400">{routeName}</p>
                 <button
-                  onClick={() => navigate('/map', { state: { location: mapCenter } })}
+                  onClick={() => navigate('/map', { state: { location: mapCenter, routes: [] } })}
                   className="rounded-md bg-blue-600 px-4 py-2 text-lg font-semibold text-white shadow-sm hover:bg-blue-500"
                 >
                   View on Map
@@ -193,6 +193,7 @@ export default function Bustracker() {
 
                                   <p>Arrival: {formatTime(stop.arrivalTime)}</p>
                                   <p>Departure: {formatTime(stop.departureTime)}</p>
+                                  <p>Delay: --</p>
                                 </div>
                               </div>
                             </div>

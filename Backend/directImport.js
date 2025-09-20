@@ -1,4 +1,613 @@
 import admin from 'firebase-admin';
+<<<<<<< HEAD
+
+// IMPORTANT: Paste your entire array of bus objects directly here.
+// I have included the first and last objects as an example.
+// You must replace this with your full list of 20 buses.
+const busesData = [
+  {
+    "busNumber": 1,
+    "operator": "Bhawani Travels",
+    "phoneNumber": "+91 1860 30010101",
+    "headsign": "Volvo A/C Sleeper (2+1)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Amritsar",
+        "lat": 31.63398,
+        "lng": 74.872261
+      },
+      "stops": [
+        {
+          "name": "Beas",
+          "lat": 31.515,
+          "lng": 75.291,
+          "eta": "2025-09-13T16:55:00Z"
+        },
+        {
+          "name": "Kartarpur",
+          "lat": 31.441,
+          "lng": 75.498,
+          "eta": "2025-09-13T17:20:00Z"
+        }
+      ],
+      "end": {
+        "name": "Jalandhar",
+        "lat": 31.326,
+        "lng": 75.5762
+      }
+    },
+    "startTime": "2025-09-13T16:00:00Z",
+    "eta": "1h 45m",
+    "endTime": "2025-09-13T17:45:00Z"
+  },
+  {
+    "busNumber": 2,
+    "operator": "Pritam Bus Service",
+    "phoneNumber": "+91 1860 30010102",
+    "headsign": "Non-A/C Seater (3+2)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Ludhiana",
+        "lat": 30.900965,
+        "lng": 75.85727
+      },
+      "stops": [
+        {
+          "name": "Doraha",
+          "lat": 30.8,
+          "lng": 76.03,
+          "eta": "2025-09-13T18:10:00Z"
+        },
+        {
+          "name": "Sirhind",
+          "lat": 30.6432,
+          "lng": 76.3842,
+          "eta": "2025-09-13T18:55:00Z"
+        }
+      ],
+      "end": {
+        "name": "Patiala",
+        "lat": 30.3398,
+        "lng": 76.3869
+      }
+    },
+    "startTime": "2025-09-13T17:30:00Z",
+    "eta": "2h 10m",
+    "endTime": "2025-09-13T19:40:00Z"
+  },
+  {
+    "busNumber": 3,
+    "operator": "Chandigarh Travels",
+    "phoneNumber": "+91 1860 30010103",
+    "headsign": "Mercedes Benz A/C Seater (2+2)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Chandigarh",
+        "lat": 30.7333,
+        "lng": 76.7794
+      },
+      "stops": [
+        {
+          "name": "Kharar",
+          "lat": 30.75,
+          "lng": 76.64,
+          "eta": "2025-09-13T19:10:00Z"
+        },
+        {
+          "name": "Ropar",
+          "lat": 30.9664,
+          "lng": 76.5331,
+          "eta": "2025-09-13T19:55:00Z"
+        },
+        {
+          "name": "Hoshiarpur",
+          "lat": 31.51,
+          "lng": 75.91,
+          "eta": "2025-09-13T21:10:00Z"
+        },
+        {
+          "name": "Dasuya",
+          "lat": 31.81,
+          "lng": 75.66,
+          "eta": "2025-09-13T21:55:00Z"
+        }
+      ],
+      "end": {
+        "name": "Pathankot",
+        "lat": 32.2618,
+        "lng": 75.6669
+      }
+    },
+    "startTime": "2025-09-13T18:45:00Z",
+    "eta": "4h 0m",
+    "endTime": "2025-09-13T22:45:00Z"
+  },
+  {
+    "busNumber": 4,
+    "operator": "Happy Journey Tours",
+    "phoneNumber": "+91 1860 30010104",
+    "headsign": "A/C Seater / Sleeper (2+2)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Bathinda",
+        "lat": 30.2072,
+        "lng": 74.9455
+      },
+      "stops": [
+        {
+          "name": "Faridkot",
+          "lat": 30.675,
+          "lng": 74.754,
+          "eta": "2025-09-13T20:35:00Z"
+        },
+        {
+          "name": "Tarn Taran Sahib",
+          "lat": 31.4491,
+          "lng": 74.9205,
+          "eta": "2025-09-13T21:50:00Z"
+        }
+      ],
+      "end": {
+        "name": "Amritsar",
+        "lat": 31.63398,
+        "lng": 74.872261
+      }
+    },
+    "startTime": "2025-09-13T19:15:00Z",
+    "eta": "3h 30m",
+    "endTime": "2025-09-13T22:45:00Z"
+  },
+  {
+    "busNumber": 5,
+    "operator": "Khalsa Transport",
+    "phoneNumber": "+91 1860 30010105",
+    "headsign": "Non-A/C Sleeper",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Hoshiarpur",
+        "lat": 31.5334,
+        "lng": 75.9189
+      },
+      "stops": [
+        {
+          "name": "Adampur",
+          "lat": 31.433,
+          "lng": 75.722,
+          "eta": "2025-09-13T20:35:00Z"
+        },
+        {
+          "name": "Phagwara",
+          "lat": 31.22,
+          "lng": 75.77,
+          "eta": "2025-09-13T21:15:00Z"
+        }
+      ],
+      "end": {
+        "name": "Ludhiana",
+        "lat": 30.900965,
+        "lng": 75.85727
+      }
+    },
+    "startTime": "2025-09-13T20:00:00Z",
+    "eta": "1h 55m",
+    "endTime": "2025-09-13T21:55:00Z"
+  },
+  {
+    "busNumber": 6,
+    "operator": "Bhawani Travels",
+    "phoneNumber": "+91 1860 30010106",
+    "headsign": "Volvo A/C Sleeper (2+1)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Jalandhar",
+        "lat": 31.326,
+        "lng": 75.5762
+      },
+      "stops": [
+        {
+          "name": "Phagwara",
+          "lat": 31.22,
+          "lng": 75.77,
+          "eta": "2025-09-13T21:25:00Z"
+        },
+        {
+          "name": "Goraya",
+          "lat": 31.12,
+          "lng": 75.77,
+          "eta": "2025-09-13T21:40:00Z"
+        },
+        {
+          "name": "Phillaur",
+          "lat": 31.02,
+          "lng": 75.78,
+          "eta": "2025-09-13T21:50:00Z"
+        }
+      ],
+      "end": {
+        "name": "Ludhiana",
+        "lat": 30.900965,
+        "lng": 75.85727
+      }
+    },
+    "startTime": "2025-09-13T21:00:00Z",
+    "eta": "1h 10m",
+    "endTime": "2025-09-13T22:10:00Z"
+  },
+  {
+    "busNumber": 7,
+    "operator": "Travel Hub",
+    "phoneNumber": "+91 1860 30010107",
+    "headsign": "A/C Seater (2+2)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Patiala",
+        "lat": 30.3398,
+        "lng": 76.3869
+      },
+      "stops": [
+        {
+          "name": "Sangrur",
+          "lat": 30.2458,
+          "lng": 75.8421,
+          "eta": "2025-09-13T23:40:00Z"
+        },
+        {
+          "name": "Barnala",
+          "lat": 30.38,
+          "lng": 75.55,
+          "eta": "2025-09-14T00:25:00Z"
+        }
+      ],
+      "end": {
+        "name": "Bathinda",
+        "lat": 30.2072,
+        "lng": 74.9455
+      }
+    },
+    "startTime": "2025-09-13T22:30:00Z",
+    "eta": "2h 40m",
+    "endTime": "2025-09-14T01:10:00Z"
+  },
+  {
+    "busNumber": 8,
+    "operator": "Prince Travels",
+    "phoneNumber": "+91 1860 30010108",
+    "headsign": "Non-A/C Seater (3+2)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Ropar",
+        "lat": 30.9704,
+        "lng": 76.5369
+      },
+      "stops": [
+        {
+          "name": "Nawanshahr",
+          "lat": 31.13,
+          "lng": 76.12,
+          "eta": "2025-09-14T06:45:00Z"
+        },
+        {
+          "name": "Jalandhar",
+          "lat": 31.326,
+          "lng": 75.5762,
+          "eta": "2025-09-14T07:45:00Z"
+        },
+        {
+          "name": "Beas",
+          "lat": 31.515,
+          "lng": 75.291,
+          "eta": "2025-09-14T08:25:00Z"
+        }
+      ],
+      "end": {
+        "name": "Amritsar",
+        "lat": 31.63398,
+        "lng": 74.872261
+      }
+    },
+    "startTime": "2025-09-14T06:00:00Z",
+    "eta": "3h 0m",
+    "endTime": "2025-09-14T09:00:00Z"
+  },
+  {
+    "busNumber": 9,
+    "operator": "Janta Roadways",
+    "phoneNumber": "+91 1860 30010109",
+    "headsign": "A/C Seater (2+2)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Mohali",
+        "lat": 30.7046,
+        "lng": 76.7179
+      },
+      "stops": [
+        {
+          "name": "Sirhind",
+          "lat": 30.6432,
+          "lng": 76.3842,
+          "eta": "2025-09-14T08:05:00Z"
+        },
+        {
+          "name": "Ludhiana",
+          "lat": 30.9,
+          "lng": 75.86,
+          "eta": "2025-09-14T09:05:00Z"
+        },
+        {
+          "name": "Jagraon",
+          "lat": 30.79,
+          "lng": 75.47,
+          "eta": "2025-09-14T09:40:00Z"
+        }
+      ],
+      "end": {
+        "name": "Moga",
+        "lat": 30.8172,
+        "lng": 75.1704
+      }
+    },
+    "startTime": "2025-09-14T07:15:00Z",
+    "eta": "2h 50m",
+    "endTime": "2025-09-14T10:05:00Z"
+  },
+  {
+    "busNumber": 10,
+    "operator": "Bhawani Travels",
+    "phoneNumber": "+91 1860 30010110",
+    "headsign": "Volvo A/C Sleeper (2+1)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Ferozepur",
+        "lat": 30.9254,
+        "lng": 74.619
+      },
+      "stops": [
+        {
+          "name": "Zira",
+          "lat": 30.97,
+          "lng": 74.99,
+          "eta": "2025-09-14T09:15:00Z"
+        },
+        {
+          "name": "Nakodar",
+          "lat": 31.13,
+          "lng": 75.48,
+          "eta": "2025-09-14T10:10:00Z"
+        }
+      ],
+      "end": {
+        "name": "Jalandhar",
+        "lat": 31.326,
+        "lng": 75.5762
+      }
+    },
+    "startTime": "2025-09-14T08:30:00Z",
+    "eta": "2h 30m",
+    "endTime": "2025-09-14T11:00:00Z"
+  },
+  {
+    "busNumber": 11,
+    "operator": "Royal Express",
+    "phoneNumber": "+91 1860 30010111",
+    "headsign": "Non-A/C Seater (3+2)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Kapurthala",
+        "lat": 31.3789,
+        "lng": 75.3853
+      },
+      "stops": [
+        {
+          "name": "Phagwara",
+          "lat": 31.22,
+          "lng": 75.77,
+          "eta": "2025-09-14T10:30:00Z"
+        },
+        {
+          "name": "Banga",
+          "lat": 31.2,
+          "lng": 76,
+          "eta": "2025-09-14T10:55:00Z"
+        },
+        {
+          "name": "Ropar",
+          "lat": 30.9664,
+          "lng": 76.5331,
+          "eta": "2025-09-14T11:55:00Z"
+        }
+      ],
+      "end": {
+        "name": "Chandigarh",
+        "lat": 30.7333,
+        "lng": 76.7794
+      }
+    },
+    "startTime": "2025-09-14T09:45:00Z",
+    "eta": "3h 15m",
+    "endTime": "2025-09-14T13:00:00Z"
+  },
+  {
+    "busNumber": 12,
+    "operator": "Pritam Bus Service",
+    "phoneNumber": "+91 1860 30010112",
+    "headsign": "A/C Sleeper (2+1)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Pathankot",
+        "lat": 32.2618,
+        "lng": 75.6669
+      },
+      "stops": [
+        {
+          "name": "Mukerian",
+          "lat": 31.95,
+          "lng": 75.62,
+          "eta": "2025-09-14T12:00:00Z"
+        },
+        {
+          "name": "Dasuya",
+          "lat": 31.81,
+          "lng": 75.66,
+          "eta": "2025-09-14T12:30:00Z"
+        },
+        {
+          "name": "Jalandhar",
+          "lat": 31.326,
+          "lng": 75.5762,
+          "eta": "2025-09-14T14:00:00Z"
+        }
+      ],
+      "end": {
+        "name": "Ludhiana",
+        "lat": 30.900965,
+        "lng": 75.85727
+      }
+    },
+    "startTime": "2025-09-14T11:00:00Z",
+    "eta": "4h 30m",
+    "endTime": "2025-09-14T15:30:00Z"
+  },
+  {
+    "busNumber": 13,
+    "operator": "Happy Journey Tours",
+    "phoneNumber": "+91 1860 30010113",
+    "headsign": "A/C Seater (2+2)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Moga",
+        "lat": 30.8172,
+        "lng": 75.1704
+      },
+      "stops": [
+        {
+          "name": "Barnala",
+          "lat": 30.38,
+          "lng": 75.55,
+          "eta": "2025-09-14T13:40:00Z"
+        },
+        {
+          "name": "Dhuri",
+          "lat": 30.37,
+          "lng": 75.86,
+          "eta": "2025-09-14T14:10:00Z"
+        },
+        {
+          "name": "Sangrur",
+          "lat": 30.2458,
+          "lng": 75.8421,
+          "eta": "2025-09-14T14:40:00Z"
+        }
+      ],
+      "end": {
+        "name": "Patiala",
+        "lat": 30.3398,
+        "lng": 76.3869
+      }
+    },
+    "startTime": "2025-09-14T12:30:00Z",
+    "eta": "3h 40m",
+    "endTime": "2025-09-14T16:10:00Z"
+  },
+  {
+    "busNumber": 14,
+    "operator": "Khalsa Transport",
+    "phoneNumber": "+91 1860 30010114",
+    "headsign": "Non-A/C Sleeper",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Bathinda",
+        "lat": 30.2072,
+        "lng": 74.9455
+      },
+      "stops": [
+        {
+          "name": "Sangrur",
+          "lat": 30.2458,
+          "lng": 75.8421,
+          "eta": "2025-09-14T15:45:00Z"
+        },
+        {
+          "name": "Patiala",
+          "lat": 30.34,
+          "lng": 76.39,
+          "eta": "2025-09-14T16:55:00Z"
+        },
+        {
+          "name": "Rajpura",
+          "lat": 30.48,
+          "lng": 76.59,
+          "eta": "2025-09-14T17:30:00Z"
+        }
+      ],
+      "end": {
+        "name": "Chandigarh",
+        "lat": 30.7333,
+        "lng": 76.7794
+      }
+    },
+    "startTime": "2025-09-14T14:00:00Z",
+    "eta": "4h 15m",
+    "endTime": "2025-09-14T18:15:00Z"
+  },
+  {
+    "busNumber": 15,
+    "operator": "Janta Roadways",
+    "phoneNumber": "+91 1860 30010115",
+    "headsign": "Volvo A/C Sleeper (2+1)",
+    "frequency": "Daily",
+    "route": {
+      "start": {
+        "name": "Jalandhar",
+        "lat": 31.326,
+        "lng": 75.5762
+      },
+      "stops": [
+        {
+          "name": "Kartarpur",
+          "lat": 31.441,
+          "lng": 75.498,
+          "eta": "2025-09-14T15:55:00Z"
+        },
+        {
+          "name": "Beas",
+          "lat": 31.515,
+          "lng": 75.291,
+          "eta": "2025-09-14T16:25:00Z"
+        }
+      ],
+      "end": {
+        "name": "Amritsar",
+        "lat": 31.63398,
+        "lng": 74.872261
+      }
+    },
+    "startTime": "2025-09-14T15:30:00Z",
+    "eta": "1h 50m",
+    "endTime": "2025-09-14T17:20:00Z"
+  }
+];
+
+
+// --- The rest of the script remains the same ---
+
+// Initialize Firebase using the environment variable
+import 'dotenv/config';
+admin.initializeApp();
+=======
 import 'dotenv/config';
 import { readFileSync } from 'fs';
 
@@ -11,29 +620,14 @@ const busesData = [
     "headsign": "Volvo A/C Sleeper (2+1)",
     "frequency": 127,
     "currentLocation": { "lat": 31.63398, "lng": 74.872261 },
-    "startTime": "2025-09-17T06:30:00Z",
+    "startTime": "2025-09-20T06:30:00Z",
     "eta": "2h 45m",
     "route": [
-      {
-        "name": "Amritsar Bus Stand", "lat": 31.63398, "lng": 74.872261, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T06:30:00Z"
-      },
-      {
-        "name": "Beas", "lat": 31.5174, "lng": 75.2913, "isCrossed": false,
-        "arrivalTime": "2025-09-17T07:10:00Z", "departureTime": "2025-09-17T07:12:00Z"
-      },
-      {
-        "name": "Jalandhar (Rama Mandi Chowk)", "lat": 31.2988, "lng": 75.6033, "isCrossed": false,
-        "arrivalTime": "2025-09-17T07:50:00Z", "departureTime": "2025-09-17T08:00:00Z"
-      },
-      {
-        "name": "Phillaur", "lat": 31.0263, "lng": 75.7865, "isCrossed": false,
-        "arrivalTime": "2025-09-17T08:40:00Z", "departureTime": "2025-09-17T08:42:00Z"
-      },
-      {
-        "name": "Ludhiana Bus Stand", "lat": 30.900965, "lng": 75.85727, "isCrossed": false,
-        "arrivalTime": "2025-09-17T09:15:00Z", "departureTime": null
-      }
+      { "name": "Amritsar Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T06:30:00Z" },
+      { "name": "Beas", "arrivalTime": "2025-09-20T07:10:00Z", "departureTime": "2025-09-20T07:12:00Z" },
+      { "name": "Jalandhar (Rama Mandi Chowk)", "arrivalTime": "2025-09-20T07:50:00Z", "departureTime": "2025-09-20T08:00:00Z" },
+      { "name": "Phillaur", "arrivalTime": "2025-09-20T08:40:00Z", "departureTime": "2025-09-20T08:42:00Z" },
+      { "name": "Ludhiana Bus Stand", "arrivalTime": "2025-09-20T09:15:00Z", "departureTime": null }
     ]
   },
   {
@@ -43,25 +637,13 @@ const busesData = [
     "headsign": "Non-A/C Seater (3+2)",
     "frequency": 127,
     "currentLocation": { "lat": 30.3398, "lng": 76.3869 },
-    "startTime": "2025-09-17T07:15:00Z",
+    "startTime": "2025-09-20T07:15:00Z",
     "eta": "1h 30m",
     "route": [
-      {
-        "name": "Patiala Bus Stand", "lat": 30.3398, "lng": 76.3869, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T07:15:00Z"
-      },
-      {
-        "name": "Rajpura Town", "lat": 30.4811, "lng": 76.5950, "isCrossed": false,
-        "arrivalTime": "2025-09-17T07:45:00Z", "departureTime": "2025-09-17T07:50:00Z"
-      },
-      {
-        "name": "Zirakpur Crossing", "lat": 30.6483, "lng": 76.8171, "isCrossed": false,
-        "arrivalTime": "2025-09-17T08:20:00Z", "departureTime": "2025-09-17T08:25:00Z"
-      },
-      {
-        "name": "Chandigarh (ISBT Sector 43)", "lat": 30.7333, "lng": 76.7794, "isCrossed": false,
-        "arrivalTime": "2025-09-17T08:45:00Z", "departureTime": null
-      }
+      { "name": "Patiala Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T07:15:00Z" },
+      { "name": "Rajpura Town", "arrivalTime": "2025-09-20T07:45:00Z", "departureTime": "2025-09-20T07:50:00Z" },
+      { "name": "Zirakpur Crossing", "arrivalTime": "2025-09-20T08:20:00Z", "departureTime": "2025-09-20T08:25:00Z" },
+      { "name": "Chandigarh (ISBT Sector 43)", "arrivalTime": "2025-09-20T08:45:00Z", "departureTime": null }
     ]
   },
   {
@@ -71,25 +653,13 @@ const busesData = [
     "headsign": "Mercedes Benz A/C Seater (2+2)",
     "frequency": 127,
     "currentLocation": { "lat": 31.3260, "lng": 75.5762 },
-    "startTime": "2025-09-17T08:00:00Z",
+    "startTime": "2025-09-20T08:00:00Z",
     "eta": "2h 15m",
     "route": [
-      {
-        "name": "Jalandhar Bus Stand", "lat": 31.3260, "lng": 75.5762, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T08:00:00Z"
-      },
-      {
-        "name": "Dasuya", "lat": 31.8172, "lng": 75.6565, "isCrossed": false,
-        "arrivalTime": "2025-09-17T09:00:00Z", "departureTime": "2025-09-17T09:05:00Z"
-      },
-      {
-        "name": "Mukerian", "lat": 31.9515, "lng": 75.6173, "isCrossed": false,
-        "arrivalTime": "2025-09-17T09:25:00Z", "departureTime": "2025-09-17T09:30:00Z"
-      },
-      {
-        "name": "Pathankot Bus Stand", "lat": 32.2618, "lng": 75.6669, "isCrossed": false,
-        "arrivalTime": "2025-09-17T10:15:00Z", "departureTime": null
-      }
+      { "name": "Jalandhar Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T08:00:00Z" },
+      { "name": "Dasuya", "arrivalTime": "2025-09-20T09:00:00Z", "departureTime": "2025-09-20T09:05:00Z" },
+      { "name": "Mukerian", "arrivalTime": "2025-09-20T09:25:00Z", "departureTime": "2025-09-20T09:30:00Z" },
+      { "name": "Pathankot Bus Stand", "arrivalTime": "2025-09-20T10:15:00Z", "departureTime": null }
     ]
   },
   {
@@ -99,29 +669,14 @@ const busesData = [
     "headsign": "A/C Seater / Sleeper (2+2)",
     "frequency": 127,
     "currentLocation": { "lat": 30.2072, "lng": 74.9455 },
-    "startTime": "2025-09-17T09:45:00Z",
+    "startTime": "2025-09-20T09:45:00Z",
     "eta": "1h 55m",
     "route": [
-      {
-        "name": "Bathinda Bus Stand", "lat": 30.2072, "lng": 74.9455, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T09:45:00Z"
-      },
-      {
-        "name": "Goniana", "lat": 30.3151, "lng": 74.9082, "isCrossed": false,
-        "arrivalTime": "2025-09-17T10:05:00Z", "departureTime": "2025-09-17T10:07:00Z"
-      },
-      {
-        "name": "Kot Kapura", "lat": 30.5843, "lng": 74.8252, "isCrossed": false,
-        "arrivalTime": "2025-09-17T10:35:00Z", "departureTime": "2025-09-17T10:40:00Z"
-      },
-      {
-        "name": "Faridkot", "lat": 30.6751, "lng": 74.7552, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:00:00Z", "departureTime": "2025-09-17T11:05:00Z"
-      },
-      {
-        "name": "Ferozepur Cantt", "lat": 30.9254, "lng": 74.6190, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:40:00Z", "departureTime": null
-      }
+      { "name": "Bathinda Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T09:45:00Z" },
+      { "name": "Goniana", "arrivalTime": "2025-09-20T10:05:00Z", "departureTime": "2025-09-20T10:07:00Z" },
+      { "name": "Kot Kapura", "arrivalTime": "2025-09-20T10:35:00Z", "departureTime": "2025-09-20T10:40:00Z" },
+      { "name": "Faridkot", "arrivalTime": "2025-09-20T11:00:00Z", "departureTime": "2025-09-20T11:05:00Z" },
+      { "name": "Ferozepur Cantt", "arrivalTime": "2025-09-20T11:40:00Z", "departureTime": null }
     ]
   },
   {
@@ -131,25 +686,13 @@ const busesData = [
     "headsign": "Non-A/C Sleeper",
     "frequency": 127,
     "currentLocation": { "lat": 31.5334, "lng": 75.9189 },
-    "startTime": "2025-09-17T10:30:00Z",
+    "startTime": "2025-09-20T10:30:00Z",
     "eta": "1h 10m",
     "route": [
-      {
-        "name": "Hoshiarpur Bus Stand", "lat": 31.5334, "lng": 75.9189, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T10:30:00Z"
-      },
-      {
-        "name": "Adampur Doaba", "lat": 31.4331, "lng": 75.7247, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:05:00Z", "departureTime": "2025-09-17T11:10:00Z"
-      },
-      {
-        "name": "Jalandhar Cantt", "lat": 31.2781, "lng": 75.6209, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:30:00Z", "departureTime": "2025-09-17T11:32:00Z"
-      },
-      {
-        "name": "Jalandhar Bus Stand", "lat": 31.3260, "lng": 75.5762, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:40:00Z", "departureTime": null
-      }
+      { "name": "Hoshiarpur Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T10:30:00Z" },
+      { "name": "Adampur Doaba", "arrivalTime": "2025-09-20T11:05:00Z", "departureTime": "2025-09-20T11:10:00Z" },
+      { "name": "Jalandhar Cantt", "arrivalTime": "2025-09-20T11:30:00Z", "departureTime": "2025-09-20T11:32:00Z" },
+      { "name": "Jalandhar Bus Stand", "arrivalTime": "2025-09-20T11:40:00Z", "departureTime": null }
     ]
   },
   {
@@ -159,25 +702,13 @@ const busesData = [
     "headsign": "A/C Sleeper (2+1)",
     "frequency": 127,
     "currentLocation": { "lat": 30.900965, "lng": 75.857270 },
-    "startTime": "2025-09-17T11:00:00Z",
+    "startTime": "2025-09-20T11:00:00Z",
     "eta": "1h 40m",
     "route": [
-      {
-        "name": "Ludhiana Bus Stand", "lat": 30.900965, "lng": 75.857270, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T11:00:00Z"
-      },
-      {
-        "name": "Mullanpur Dakha", "lat": 30.8647, "lng": 75.6885, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:30:00Z", "departureTime": "2025-09-17T11:32:00Z"
-      },
-      {
-        "name": "Jagraon", "lat": 30.7876, "lng": 75.4789, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:55:00Z", "departureTime": "2025-09-17T12:00:00Z"
-      },
-      {
-        "name": "Moga Bus Stand", "lat": 30.8172, "lng": 75.1704, "isCrossed": false,
-        "arrivalTime": "2025-09-17T12:40:00Z", "departureTime": null
-      }
+      { "name": "Ludhiana Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T11:00:00Z" },
+      { "name": "Mullanpur Dakha", "arrivalTime": "2025-09-20T11:30:00Z", "departureTime": "2025-09-20T11:32:00Z" },
+      { "name": "Jagraon", "arrivalTime": "2025-09-20T11:55:00Z", "departureTime": "2025-09-20T12:00:00Z" },
+      { "name": "Moga Bus Stand", "arrivalTime": "2025-09-20T12:40:00Z", "departureTime": null }
     ]
   },
   {
@@ -187,29 +718,14 @@ const busesData = [
     "headsign": "Volvo A/C Seater (2+2)",
     "frequency": 127,
     "currentLocation": { "lat": 32.2618, "lng": 75.6669 },
-    "startTime": "2025-09-17T14:00:00Z",
+    "startTime": "2025-09-20T14:00:00Z",
     "eta": "2h 30m",
     "route": [
-      {
-        "name": "Pathankot Bus Stand", "lat": 32.2618, "lng": 75.6669, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T14:00:00Z"
-      },
-      {
-        "name": "Dinanagar", "lat": 32.1386, "lng": 75.4764, "isCrossed": false,
-        "arrivalTime": "2025-09-17T14:25:00Z", "departureTime": "2025-09-17T14:27:00Z"
-      },
-      {
-        "name": "Gurdaspur", "lat": 32.0416, "lng": 75.4053, "isCrossed": false,
-        "arrivalTime": "2025-09-17T14:55:00Z", "departureTime": "2025-09-17T15:00:00Z"
-      },
-      {
-        "name": "Batala", "lat": 31.8185, "lng": 75.2026, "isCrossed": false,
-        "arrivalTime": "2025-09-17T15:40:00Z", "departureTime": "2025-09-17T15:45:00Z"
-      },
-      {
-        "name": "Amritsar Bus Stand", "lat": 31.633980, "lng": 74.872261, "isCrossed": false,
-        "arrivalTime": "2025-09-17T16:30:00Z", "departureTime": null
-      }
+      { "name": "Pathankot Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T14:00:00Z" },
+      { "name": "Dinanagar", "arrivalTime": "2025-09-20T14:25:00Z", "departureTime": "2025-09-20T14:27:00Z" },
+      { "name": "Gurdaspur", "arrivalTime": "2025-09-20T14:55:00Z", "departureTime": "2025-09-20T15:00:00Z" },
+      { "name": "Batala", "arrivalTime": "2025-09-20T15:40:00Z", "departureTime": "2025-09-20T15:45:00Z" },
+      { "name": "Amritsar Bus Stand", "arrivalTime": "2025-09-20T16:30:00Z", "departureTime": null }
     ]
   },
   {
@@ -219,21 +735,12 @@ const busesData = [
     "headsign": "Non-A/C Sleeper",
     "frequency": 127,
     "currentLocation": { "lat": 30.3398, "lng": 76.3869 },
-    "startTime": "2025-09-17T09:00:00Z",
+    "startTime": "2025-09-20T09:00:00Z",
     "eta": "1h 35m",
     "route": [
-      {
-        "name": "Patiala Bus Stand", "lat": 30.3398, "lng": 76.3869, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T09:00:00Z"
-      },
-      {
-        "name": "Bhawanigarh", "lat": 30.2915, "lng": 76.0421, "isCrossed": false,
-        "arrivalTime": "2025-09-17T09:40:00Z", "departureTime": "2025-09-17T09:42:00Z"
-      },
-      {
-        "name": "Sangrur Bus Stand", "lat": 30.255, "lng": 75.842, "isCrossed": false,
-        "arrivalTime": "2025-09-17T10:35:00Z", "departureTime": null
-      }
+      { "name": "Patiala Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T09:00:00Z" },
+      { "name": "Bhawanigarh", "arrivalTime": "2025-09-20T09:40:00Z", "departureTime": "2025-09-20T09:42:00Z" },
+      { "name": "Sangrur Bus Stand", "arrivalTime": "2025-09-20T10:35:00Z", "departureTime": null }
     ]
   },
   {
@@ -243,21 +750,12 @@ const busesData = [
     "headsign": "A/C Sleeper (2+1)",
     "frequency": 127,
     "currentLocation": { "lat": 32.0416, "lng": 75.4053 },
-    "startTime": "2025-09-17T08:20:00Z",
+    "startTime": "2025-09-20T08:20:00Z",
     "eta": "1h 00m",
     "route": [
-      {
-        "name": "Gurdaspur", "lat": 32.0416, "lng": 75.4053, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T08:20:00Z"
-      },
-      {
-        "name": "Dinanagar", "lat": 32.1386, "lng": 75.4764, "isCrossed": false,
-        "arrivalTime": "2025-09-17T08:45:00Z", "departureTime": "2025-09-17T08:47:00Z"
-      },
-      {
-        "name": "Pathankot Bus Stand", "lat": 32.2618, "lng": 75.6669, "isCrossed": false,
-        "arrivalTime": "2025-09-17T09:20:00Z", "departureTime": null
-      }
+      { "name": "Gurdaspur", "arrivalTime": null, "departureTime": "2025-09-20T08:20:00Z" },
+      { "name": "Dinanagar", "arrivalTime": "2025-09-20T08:45:00Z", "departureTime": "2025-09-20T08:47:00Z" },
+      { "name": "Pathankot Bus Stand", "arrivalTime": "2025-09-20T09:20:00Z", "departureTime": null }
     ]
   },
   {
@@ -267,29 +765,14 @@ const busesData = [
     "headsign": "HIM-GOURAV A/C (2+2)",
     "frequency": 127,
     "currentLocation": { "lat": 30.7333, "lng": 76.7794 },
-    "startTime": "2025-09-17T09:00:00Z",
+    "startTime": "2025-09-20T09:00:00Z",
     "eta": "4h 30m",
     "route": [
-      {
-        "name": "Chandigarh (ISBT Sector 43)", "lat": 30.7333, "lng": 76.7794, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T09:00:00Z"
-      },
-      {
-        "name": "Kalka", "lat": 30.8351, "lng": 76.9351, "isCrossed": false,
-        "arrivalTime": "2025-09-17T09:45:00Z", "departureTime": "2025-09-17T09:50:00Z"
-      },
-      {
-        "name": "Dharampur", "lat": 30.9023, "lng": 77.0205, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:00:00Z", "departureTime": "2025-09-17T11:05:00Z"
-      },
-      {
-        "name": "Solan", "lat": 30.9079, "lng": 77.0984, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:45:00Z", "departureTime": "2025-09-17T11:50:00Z"
-      },
-      {
-        "name": "Shimla (ISBT Tutikandi)", "lat": 31.0967, "lng": 77.1466, "isCrossed": false,
-        "arrivalTime": "2025-09-17T13:30:00Z", "departureTime": null
-      }
+      { "name": "Chandigarh (ISBT Sector 43)", "arrivalTime": null, "departureTime": "2025-09-20T09:00:00Z" },
+      { "name": "Kalka", "arrivalTime": "2025-09-20T09:45:00Z", "departureTime": "2025-09-20T09:50:00Z" },
+      { "name": "Dharampur", "arrivalTime": "2025-09-20T11:00:00Z", "departureTime": "2025-09-20T11:05:00Z" },
+      { "name": "Solan", "arrivalTime": "2025-09-20T11:45:00Z", "departureTime": "2025-09-20T11:50:00Z" },
+      { "name": "Shimla (ISBT Tutikandi)", "arrivalTime": "2025-09-20T13:30:00Z", "departureTime": null }
     ]
   },
   {
@@ -299,37 +782,16 @@ const busesData = [
     "headsign": "Mercedes-Benz Super Luxury",
     "frequency": 127,
     "currentLocation": { "lat": 31.63398, "lng": 74.872261 },
-    "startTime": "2025-09-17T21:00:00Z",
+    "startTime": "2025-09-20T21:00:00Z",
     "eta": "8h 15m",
     "route": [
-      {
-        "name": "Amritsar (Opp. Bus Stand)", "lat": 31.63398, "lng": 74.872261, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T21:00:00Z"
-      },
-      {
-        "name": "Jalandhar Bypass", "lat": 31.2988, "lng": 75.6033, "isCrossed": false,
-        "arrivalTime": "2025-09-17T22:15:00Z", "departureTime": "2025-09-17T22:20:00Z"
-      },
-      {
-        "name": "Ludhiana (Samrala Chowk)", "lat": 30.9084, "lng": 75.8783, "isCrossed": false,
-        "arrivalTime": "2025-09-17T23:20:00Z", "departureTime": "2025-09-17T23:25:00Z"
-      },
-      {
-        "name": "Ambala Cantt", "lat": 30.3475, "lng": 76.8436, "isCrossed": false,
-        "arrivalTime": "2025-09-18T01:00:00Z", "departureTime": "2025-09-18T01:15:00Z"
-      },
-      {
-        "name": "Karnal Bypass", "lat": 29.7027, "lng": 76.9926, "isCrossed": false,
-        "arrivalTime": "2025-09-18T02:20:00Z", "departureTime": "2025-09-18T02:22:00Z"
-      },
-      {
-        "name": "Sonipat (Murthal Dhaba)", "lat": 29.0289, "lng": 77.0658, "isCrossed": false,
-        "arrivalTime": "2025-09-18T03:30:00Z", "departureTime": "2025-09-18T03:35:00Z"
-      },
-      {
-        "name": "Delhi (ISBT Kashmiri Gate)", "lat": 28.6672, "lng": 77.2323, "isCrossed": false,
-        "arrivalTime": "2025-09-18T05:15:00Z", "departureTime": null
-      }
+      { "name": "Amritsar (Opp. Bus Stand)", "arrivalTime": null, "departureTime": "2025-09-20T21:00:00Z" },
+      { "name": "Jalandhar Bypass", "arrivalTime": "2025-09-20T22:15:00Z", "departureTime": "2025-09-20T22:20:00Z" },
+      { "name": "Ludhiana (Samrala Chowk)", "arrivalTime": "2025-09-20T23:20:00Z", "departureTime": "2025-09-20T23:25:00Z" },
+      { "name": "Ambala Cantt", "arrivalTime": "2025-09-21T01:00:00Z", "departureTime": "2025-09-21T01:15:00Z" },
+      { "name": "Karnal Bypass", "arrivalTime": "2025-09-21T02:20:00Z", "departureTime": "2025-09-21T02:22:00Z" },
+      { "name": "Sonipat (Murthal Dhaba)", "arrivalTime": "2025-09-21T03:30:00Z", "departureTime": "2025-09-21T03:35:00Z" },
+      { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": "2025-09-21T05:15:00Z", "departureTime": null }
     ]
   },
   {
@@ -339,25 +801,13 @@ const busesData = [
     "headsign": "Ordinary Seater (3+2)",
     "frequency": 127,
     "currentLocation": { "lat": 30.900965, "lng": 75.85727 },
-    "startTime": "2025-09-17T13:00:00Z",
+    "startTime": "2025-09-20T13:00:00Z",
     "eta": "2h 00m",
     "route": [
-      {
-        "name": "Ludhiana Bus Stand", "lat": 30.900965, "lng": 75.85727, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T13:00:00Z"
-      },
-      {
-        "name": "Doraha", "lat": 30.7963, "lng": 76.0264, "isCrossed": false,
-        "arrivalTime": "2025-09-17T13:35:00Z", "departureTime": "2025-09-17T13:37:00Z"
-      },
-      {
-        "name": "Sirhind", "lat": 30.6231, "lng": 76.3881, "isCrossed": false,
-        "arrivalTime": "2025-09-17T14:15:00Z", "departureTime": "2025-09-17T14:20:00Z"
-      },
-      {
-        "name": "Patiala Bus Stand", "lat": 30.3398, "lng": 76.3869, "isCrossed": false,
-        "arrivalTime": "2025-09-17T15:00:00Z", "departureTime": null
-      }
+      { "name": "Ludhiana Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T13:00:00Z" },
+      { "name": "Doraha", "arrivalTime": "2025-09-20T13:35:00Z", "departureTime": "2025-09-20T13:37:00Z" },
+      { "name": "Sirhind", "arrivalTime": "2025-09-20T14:15:00Z", "departureTime": "2025-09-20T14:20:00Z" },
+      { "name": "Patiala Bus Stand", "arrivalTime": "2025-09-20T15:00:00Z", "departureTime": null }
     ]
   },
   {
@@ -367,25 +817,13 @@ const busesData = [
     "headsign": "Ordinary Bus",
     "frequency": 127,
     "currentLocation": { "lat": 30.2072, "lng": 74.9455 },
-    "startTime": "2025-09-17T15:30:00Z",
+    "startTime": "2025-09-20T15:30:00Z",
     "eta": "2h 10m",
     "route": [
-      {
-        "name": "Bathinda Bus Stand", "lat": 30.2072, "lng": 74.9455, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T15:30:00Z"
-      },
-      {
-        "name": "Kalanwali", "lat": 29.8354, "lng": 74.9602, "isCrossed": false,
-        "arrivalTime": "2025-09-17T16:15:00Z", "departureTime": "2025-09-17T16:17:00Z"
-      },
-      {
-        "name": "Mandi Dabwali", "lat": 29.9536, "lng": 74.7262, "isCrossed": false,
-        "arrivalTime": "2025-09-17T16:40:00Z", "departureTime": "2025-09-17T16:45:00Z"
-      },
-      {
-        "name": "Sirsa Bus Stand", "lat": 29.5352, "lng": 75.0232, "isCrossed": false,
-        "arrivalTime": "2025-09-17T17:40:00Z", "departureTime": null
-      }
+      { "name": "Bathinda Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T15:30:00Z" },
+      { "name": "Kalanwali", "arrivalTime": "2025-09-20T16:15:00Z", "departureTime": "2025-09-20T16:17:00Z" },
+      { "name": "Mandi Dabwali", "arrivalTime": "2025-09-20T16:40:00Z", "departureTime": "2025-09-20T16:45:00Z" },
+      { "name": "Sirsa Bus Stand", "arrivalTime": "2025-09-20T17:40:00Z", "departureTime": null }
     ]
   },
   {
@@ -395,25 +833,13 @@ const busesData = [
     "headsign": "A/C Mini Coach (2+1)",
     "frequency": 84,
     "currentLocation": { "lat": 32.2618, "lng": 75.6669 },
-    "startTime": "2025-09-17T10:00:00Z",
+    "startTime": "2025-09-20T10:00:00Z",
     "eta": "2h 30m",
     "route": [
-      {
-        "name": "Pathankot Cantt", "lat": 32.2618, "lng": 75.6669, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T10:00:00Z"
-      },
-      {
-        "name": "Dunera", "lat": 32.4173, "lng": 75.8672, "isCrossed": false,
-        "arrivalTime": "2025-09-17T10:50:00Z", "departureTime": "2025-09-17T10:52:00Z"
-      },
-      {
-        "name": "Banikhet", "lat": 32.5516, "lng": 75.9529, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:45:00Z", "departureTime": "2025-09-17T11:50:00Z"
-      },
-      {
-        "name": "Dalhousie Bus Stand", "lat": 32.5323, "lng": 75.9796, "isCrossed": false,
-        "arrivalTime": "2025-09-17T12:30:00Z", "departureTime": null
-      }
+      { "name": "Pathankot Cantt", "arrivalTime": null, "departureTime": "2025-09-20T10:00:00Z" },
+      { "name": "Dunera", "arrivalTime": "2025-09-20T10:50:00Z", "departureTime": "2025-09-20T10:52:00Z" },
+      { "name": "Banikhet", "arrivalTime": "2025-09-20T11:45:00Z", "departureTime": "2025-09-20T11:50:00Z" },
+      { "name": "Dalhousie Bus Stand", "arrivalTime": "2025-09-20T12:30:00Z", "departureTime": null }
     ]
   },
   {
@@ -423,25 +849,13 @@ const busesData = [
     "headsign": "A/C Bus",
     "frequency": 127,
     "currentLocation": { "lat": 30.7046, "lng": 76.7179 },
-    "startTime": "2025-09-17T16:00:00Z",
+    "startTime": "2025-09-20T16:00:00Z",
     "eta": "1h 45m",
     "route": [
-      {
-        "name": "Mohali Bus Stand Phase 8", "lat": 30.7046, "lng": 76.7179, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T16:00:00Z"
-      },
-      {
-        "name": "Zirakpur Crossing", "lat": 30.6483, "lng": 76.8171, "isCrossed": false,
-        "arrivalTime": "2025-09-17T16:30:00Z", "departureTime": "2025-09-17T16:35:00Z"
-      },
-      {
-        "name": "Dera Bassi", "lat": 30.5973, "lng": 76.8488, "isCrossed": false,
-        "arrivalTime": "2025-09-17T16:55:00Z", "departureTime": "2025-09-17T16:57:00Z"
-      },
-      {
-        "name": "Ambala Cantt Bus Stand", "lat": 30.3475, "lng": 76.8436, "isCrossed": false,
-        "arrivalTime": "2025-09-17T17:45:00Z", "departureTime": null
-      }
+      { "name": "Mohali Bus Stand Phase 8", "arrivalTime": null, "departureTime": "2025-09-20T16:00:00Z" },
+      { "name": "Zirakpur Crossing", "arrivalTime": "2025-09-20T16:30:00Z", "departureTime": "2025-09-20T16:35:00Z" },
+      { "name": "Dera Bassi", "arrivalTime": "2025-09-20T16:55:00Z", "departureTime": "2025-09-20T16:57:00Z" },
+      { "name": "Ambala Cantt Bus Stand", "arrivalTime": "2025-09-20T17:45:00Z", "departureTime": null }
     ]
   },
   {
@@ -451,25 +865,13 @@ const busesData = [
     "headsign": "Ordinary Bus",
     "frequency": 127,
     "currentLocation": { "lat": 30.9254, "lng": 74.6190 },
-    "startTime": "2025-09-17T12:30:00Z",
+    "startTime": "2025-09-20T12:30:00Z",
     "eta": "2h 20m",
     "route": [
-      {
-        "name": "Ferozepur Bus Stand", "lat": 30.9254, "lng": 74.6190, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T12:30:00Z"
-      },
-      {
-        "name": "Jalalabad", "lat": 30.6083, "lng": 74.2562, "isCrossed": false,
-        "arrivalTime": "2025-09-17T13:30:00Z", "departureTime": "2025-09-17T13:35:00Z"
-      },
-      {
-        "name": "Fazilka", "lat": 30.4027, "lng": 74.0264, "isCrossed": false,
-        "arrivalTime": "2025-09-17T14:10:00Z", "departureTime": "2025-09-17T14:15:00Z"
-      },
-      {
-        "name": "Abohar Bus Stand", "lat": 30.1437, "lng": 74.1952, "isCrossed": false,
-        "arrivalTime": "2025-09-17T14:50:00Z", "departureTime": null
-      }
+      { "name": "Ferozepur Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T12:30:00Z" },
+      { "name": "Jalalabad", "arrivalTime": "2025-09-20T13:30:00Z", "departureTime": "2025-09-20T13:35:00Z" },
+      { "name": "Fazilka", "arrivalTime": "2025-09-20T14:10:00Z", "departureTime": "2025-09-20T14:15:00Z" },
+      { "name": "Abohar Bus Stand", "arrivalTime": "2025-09-20T14:50:00Z", "departureTime": null }
     ]
   },
   {
@@ -479,33 +881,15 @@ const busesData = [
     "headsign": "A/C Seater (2+2)",
     "frequency": 127,
     "currentLocation": { "lat": 31.63398, "lng": 74.872261 },
-    "startTime": "2025-09-17T07:00:00Z",
+    "startTime": "2025-09-20T07:00:00Z",
     "eta": "5h 30m",
     "route": [
-      {
-        "name": "Amritsar Bus Stand", "lat": 31.63398, "lng": 74.872261, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T07:00:00Z"
-      },
-      {
-        "name": "Gurdaspur Bypass", "lat": 32.0416, "lng": 75.4053, "isCrossed": false,
-        "arrivalTime": "2025-09-17T08:30:00Z", "departureTime": "2025-09-17T08:32:00Z"
-      },
-      {
-        "name": "Pathankot", "lat": 32.2618, "lng": 75.6669, "isCrossed": false,
-        "arrivalTime": "2025-09-17T09:15:00Z", "departureTime": "2025-09-17T09:25:00Z"
-      },
-      {
-        "name": "Kathua", "lat": 32.3811, "lng": 75.5230, "isCrossed": false,
-        "arrivalTime": "2025-09-17T10:15:00Z", "departureTime": "2025-09-17T10:20:00Z"
-      },
-      {
-        "name": "Samba", "lat": 32.5638, "lng": 75.1235, "isCrossed": false,
-        "arrivalTime": "2025-09-17T11:30:00Z", "departureTime": "2025-09-17T11:32:00Z"
-      },
-      {
-        "name": "Jammu Bus Stand", "lat": 32.7056, "lng": 74.8560, "isCrossed": false,
-        "arrivalTime": "2025-09-17T12:30:00Z", "departureTime": null
-      }
+      { "name": "Amritsar Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T07:00:00Z" },
+      { "name": "Gurdaspur Bypass", "arrivalTime": "2025-09-20T08:30:00Z", "departureTime": "2025-09-20T08:32:00Z" },
+      { "name": "Pathankot", "arrivalTime": "2025-09-20T09:15:00Z", "departureTime": "2025-09-20T09:25:00Z" },
+      { "name": "Kathua", "arrivalTime": "2025-09-20T10:15:00Z", "departureTime": "2025-09-20T10:20:00Z" },
+      { "name": "Samba", "arrivalTime": "2025-09-20T11:30:00Z", "departureTime": "2025-09-20T11:32:00Z" },
+      { "name": "Jammu Bus Stand", "arrivalTime": "2025-09-20T12:30:00Z", "departureTime": null }
     ]
   },
   {
@@ -515,33 +899,15 @@ const busesData = [
     "headsign": "Volvo A/C Seater (2+2)",
     "frequency": 127,
     "currentLocation": { "lat": 30.900965, "lng": 75.85727 },
-    "startTime": "2025-09-17T23:30:00Z",
+    "startTime": "2025-09-20T23:30:00Z",
     "eta": "5h 15m",
     "route": [
-      {
-        "name": "Ludhiana Bus Stand", "lat": 30.900965, "lng": 75.85727, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T23:30:00Z"
-      },
-      {
-        "name": "Rajpura", "lat": 30.4811, "lng": 76.5950, "isCrossed": false,
-        "arrivalTime": "2025-09-18T00:50:00Z", "departureTime": "2025-09-18T00:52:00Z"
-      },
-      {
-        "name": "Ambala Cantt", "lat": 30.3475, "lng": 76.8436, "isCrossed": false,
-        "arrivalTime": "2025-09-18T01:20:00Z", "departureTime": "2025-09-18T01:30:00Z"
-      },
-      {
-        "name": "Karnal", "lat": 29.6857, "lng": 76.9905, "isCrossed": false,
-        "arrivalTime": "2025-09-18T02:30:00Z", "departureTime": "2025-09-18T02:32:00Z"
-      },
-      {
-        "name": "Panipat", "lat": 29.3909, "lng": 76.9635, "isCrossed": false,
-        "arrivalTime": "2025-09-18T03:10:00Z", "departureTime": "2025-09-18T03:12:00Z"
-      },
-      {
-        "name": "Delhi (ISBT Kashmiri Gate)", "lat": 28.6672, "lng": 77.2323, "isCrossed": false,
-        "arrivalTime": "2025-09-18T04:45:00Z", "departureTime": null
-      }
+      { "name": "Ludhiana Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T23:30:00Z" },
+      { "name": "Rajpura", "arrivalTime": "2025-09-21T00:50:00Z", "departureTime": "2025-09-21T00:52:00Z" },
+      { "name": "Ambala Cantt", "arrivalTime": "2025-09-21T01:20:00Z", "departureTime": "2025-09-21T01:30:00Z" },
+      { "name": "Karnal", "arrivalTime": "2025-09-21T02:30:00Z", "departureTime": "2025-09-21T02:32:00Z" },
+      { "name": "Panipat", "arrivalTime": "2025-09-21T03:10:00Z", "departureTime": "2025-09-21T03:12:00Z" },
+      { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": "2025-09-21T04:45:00Z", "departureTime": null }
     ]
   },
   {
@@ -551,33 +917,15 @@ const busesData = [
     "headsign": "HIM-MANI Deluxe",
     "frequency": 127,
     "currentLocation": { "lat": 30.7333, "lng": 76.7794 },
-    "startTime": "2025-09-17T20:00:00Z",
+    "startTime": "2025-09-20T20:00:00Z",
     "eta": "9h 30m",
     "route": [
-      {
-        "name": "Chandigarh (ISBT Sector 43)", "lat": 30.7333, "lng": 76.7794, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T20:00:00Z"
-      },
-      {
-        "name": "Kiratpur Sahib", "lat": 31.1818, "lng": 76.5714, "isCrossed": false,
-        "arrivalTime": "2025-09-17T21:20:00Z", "departureTime": "2025-09-17T21:22:00Z"
-      },
-      {
-        "name": "Bilaspur (HP)", "lat": 31.3316, "lng": 76.7570, "isCrossed": false,
-        "arrivalTime": "2025-09-17T22:45:00Z", "departureTime": "2025-09-17T22:55:00Z"
-      },
-      {
-        "name": "Mandi", "lat": 31.7088, "lng": 76.9324, "isCrossed": false,
-        "arrivalTime": "2025-09-18T01:00:00Z", "departureTime": "2025-09-18T01:10:00Z"
-      },
-      {
-        "name": "Kullu", "lat": 31.9576, "lng": 77.1094, "isCrossed": false,
-        "arrivalTime": "2025-09-18T03:30:00Z", "departureTime": "2025-09-18T03:40:00Z"
-      },
-      {
-        "name": "Manali (Private Bus Stand)", "lat": 32.2396, "lng": 77.1887, "isCrossed": false,
-        "arrivalTime": "2025-09-18T05:30:00Z", "departureTime": null
-      }
+      { "name": "Chandigarh (ISBT Sector 43)", "arrivalTime": null, "departureTime": "2025-09-20T20:00:00Z" },
+      { "name": "Kiratpur Sahib", "arrivalTime": "2025-09-20T21:20:00Z", "departureTime": "2025-09-20T21:22:00Z" },
+      { "name": "Bilaspur (HP)", "arrivalTime": "2025-09-20T22:45:00Z", "departureTime": "2025-09-20T22:55:00Z" },
+      { "name": "Mandi", "arrivalTime": "2025-09-21T01:00:00Z", "departureTime": "2025-09-21T01:10:00Z" },
+      { "name": "Kullu", "arrivalTime": "2025-09-21T03:30:00Z", "departureTime": "2025-09-21T03:40:00Z" },
+      { "name": "Manali (Private Bus Stand)", "arrivalTime": "2025-09-21T05:30:00Z", "departureTime": null }
     ]
   },
   {
@@ -587,25 +935,507 @@ const busesData = [
     "headsign": "A/C Seater (2+2)",
     "frequency": 127,
     "currentLocation": { "lat": 30.7046, "lng": 76.7179 },
-    "startTime": "2025-09-17T12:20:00Z",
+    "startTime": "2025-09-20T12:20:00Z",
     "eta": "1h 25m",
     "route": [
-      {
-        "name": "Mohali Bus Stand", "lat": 30.7046, "lng": 76.7179, "isCrossed": false,
-        "arrivalTime": null, "departureTime": "2025-09-17T12:20:00Z"
-      },
-      {
-        "name": "Banur", "lat": 30.5599, "lng": 76.7107, "isCrossed": false,
-        "arrivalTime": "2025-09-17T12:50:00Z", "departureTime": "2025-09-17T12:52:00Z"
-      },
-      {
-        "name": "Rajpura", "lat": 30.4811, "lng": 76.5950, "isCrossed": false,
-        "arrivalTime": "2025-09-17T13:15:00Z", "departureTime": "2025-09-17T13:20:00Z"
-      },
-      {
-        "name": "Patiala Bus Stand", "lat": 30.3398, "lng": 76.3869, "isCrossed": false,
-        "arrivalTime": "2025-09-17T13:45:00Z", "departureTime": null
-      }
+      { "name": "Mohali Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T12:20:00Z" },
+      { "name": "Banur", "arrivalTime": "2025-09-20T12:50:00Z", "departureTime": "2025-09-20T12:52:00Z" },
+      { "name": "Rajpura", "arrivalTime": "2025-09-20T13:15:00Z", "departureTime": "2025-09-20T13:20:00Z" },
+      { "name": "Patiala Bus Stand", "arrivalTime": "2025-09-20T13:45:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 21,
+    "operator": "Delhi Metro Corporation",
+    "phoneNumber": "+91 1860 30010231",
+    "headsign": "DTC Airport Express",
+    "frequency": 127,
+    "currentLocation": { "lat": 28.6139, "lng": 77.2090 },
+    "startTime": "2025-09-20T05:00:00Z",
+    "eta": "0h 45m",
+    "route": [
+        { "name": "New Delhi Metro Station", "arrivalTime": null, "departureTime": "2025-09-20T05:00:00Z" },
+        { "name": "Shivaji Stadium", "arrivalTime": "2025-09-20T05:10:00Z", "departureTime": "2025-09-20T05:12:00Z" },
+        { "name": "Dhaula Kuan", "arrivalTime": "2025-09-20T05:25:00Z", "departureTime": "2025-09-20T05:27:00Z" },
+        { "name": "Aerocity", "arrivalTime": "2025-09-20T05:35:00Z", "departureTime": "2025-09-20T05:37:00Z" },
+        { "name": "IGI Airport T3", "arrivalTime": "2025-09-20T05:45:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 22,
+    "operator": "Rajasthan State Roadways",
+    "phoneNumber": "+91 1860 30010232",
+    "headsign": "Pink Line Express",
+    "frequency": 65,
+    "currentLocation": { "lat": 26.9124, "lng": 75.7873 },
+    "startTime": "2025-09-20T18:00:00Z",
+    "eta": "5h 00m",
+    "route": [
+        { "name": "Jaipur (Sindhi Camp)", "arrivalTime": null, "departureTime": "2025-09-20T18:00:00Z" },
+        { "name": "Behror", "arrivalTime": "2025-09-20T20:00:00Z", "departureTime": "2025-09-20T20:05:00Z" },
+        { "name": "Gurugram (IFFCO Chowk)", "arrivalTime": "2025-09-20T21:30:00Z", "departureTime": "2025-09-20T21:35:00Z" },
+        { "name": "Delhi (Dhaula Kuan)", "arrivalTime": "2025-09-20T22:15:00Z", "departureTime": "2025-09-20T22:20:00Z" },
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": "2025-09-20T23:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 23,
+    "operator": "Uttar Pradesh Transport",
+    "phoneNumber": "+91 1860 30010233",
+    "headsign": "Yamuna Expressway Service",
+    "frequency": 127,
+    "currentLocation": { "lat": 28.6672, "lng": 77.2323 },
+    "startTime": "2025-09-20T12:00:00Z",
+    "eta": "3h 00m",
+    "route": [
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": null, "departureTime": "2025-09-20T12:00:00Z" },
+        { "name": "Noida Sector 37", "arrivalTime": "2025-09-20T12:45:00Z", "departureTime": "2025-09-20T12:50:00Z" },
+        { "name": "Mathura", "arrivalTime": "2025-09-20T14:30:00Z", "departureTime": "2025-09-20T14:35:00Z" },
+        { "name": "Agra (ISBT)", "arrivalTime": "2025-09-20T15:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 24,
+    "operator": "Uttarakhand Transport",
+    "phoneNumber": "+91 1860 30010234",
+    "headsign": "Devbhoomi Express",
+    "frequency": 127,
+    "currentLocation": { "lat": 28.6672, "lng": 77.2323 },
+    "startTime": "2025-09-20T22:00:00Z",
+    "eta": "6h 00m",
+    "route": [
+        { "name": "Delhi (Anand Vihar ISBT)", "arrivalTime": null, "departureTime": "2025-09-20T22:00:00Z" },
+        { "name": "Meerut Bypass", "arrivalTime": "2025-09-20T23:30:00Z", "departureTime": "2025-09-20T23:35:00Z" },
+        { "name": "Roorkee", "arrivalTime": "2025-09-21T01:30:00Z", "departureTime": "2025-09-21T01:35:00Z" },
+        { "name": "Haridwar", "arrivalTime": "2025-09-21T02:30:00Z", "departureTime": "2025-09-21T02:40:00Z" },
+        { "name": "Rishikesh", "arrivalTime": "2025-09-21T04:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 25,
+    "operator": "PEPSU (PRTC)",
+    "phoneNumber": "+91 1860 30010235",
+    "headsign": "Capital Express",
+    "frequency": 95,
+    "currentLocation": { "lat": 30.900965, "lng": 75.85727 },
+    "startTime": "2025-09-20T15:00:00Z",
+    "eta": "2h 30m",
+    "route": [
+        { "name": "Ludhiana Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T15:00:00Z" },
+        { "name": "Samrala", "arrivalTime": "2025-09-20T15:45:00Z", "departureTime": "2025-09-20T15:47:00Z" },
+        { "name": "Kharar", "arrivalTime": "2025-09-20T16:45:00Z", "departureTime": "2025-09-20T16:50:00Z" },
+        { "name": "Mohali Bus Stand Phase 8", "arrivalTime": "2025-09-20T17:15:00Z", "departureTime": "2025-09-20T17:20:00Z" },
+        { "name": "Chandigarh (ISBT Sector 43)", "arrivalTime": "2025-09-20T17:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 26,
+    "operator": "Amritsar Bus Service",
+    "phoneNumber": "+91 1860 30010236",
+    "headsign": "Local Loop",
+    "frequency": 127,
+    "currentLocation": { "lat": 31.63398, "lng": 74.872261 },
+    "startTime": "2025-09-20T09:30:00Z",
+    "eta": "1h 15m",
+    "route": [
+        { "name": "Amritsar Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T09:30:00Z" },
+        { "name": "Golden Temple", "arrivalTime": "2025-09-20T09:45:00Z", "departureTime": "2025-09-20T09:50:00Z" },
+        { "name": "Jallianwala Bagh", "arrivalTime": "2025-09-20T09:55:00Z", "departureTime": "2025-09-20T10:00:00Z" },
+        { "name": "Wagah Border", "arrivalTime": "2025-09-20T10:45:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 27,
+    "operator": "City Connect",
+    "phoneNumber": "+91 1860 30010237",
+    "headsign": "Chandigarh Tri-City",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.7333, "lng": 76.7794 },
+    "startTime": "2025-09-20T19:00:00Z",
+    "eta": "1h 00m",
+    "route": [
+        { "name": "Chandigarh (ISBT Sector 17)", "arrivalTime": null, "departureTime": "2025-09-20T19:00:00Z" },
+        { "name": "Panchkula Bus Stand", "arrivalTime": "2025-09-20T19:30:00Z", "departureTime": "2025-09-20T19:35:00Z" },
+        { "name": "Mohali Bus Stand Phase 8", "arrivalTime": "2025-09-20T20:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 28,
+    "operator": "Mountain Goat",
+    "phoneNumber": "+91 1860 30010238",
+    "headsign": "Himalayan Express",
+    "frequency": 31,
+    "currentLocation": { "lat": 32.2396, "lng": 77.1887 },
+    "startTime": "2025-09-20T08:00:00Z",
+    "eta": "7h 00m",
+    "route": [
+        { "name": "Manali (Private Bus Stand)", "arrivalTime": null, "departureTime": "2025-09-20T08:00:00Z" },
+        { "name": "Keylong", "arrivalTime": "2025-09-20T12:00:00Z", "departureTime": "2025-09-20T12:30:00Z" },
+        { "name": "Sarchu", "arrivalTime": "2025-09-20T15:00:00Z", "departureTime": "2025-09-20T15:15:00Z" },
+        { "name": "Leh", "arrivalTime": "2025-09-21T01:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 29,
+    "operator": "Punjab Roadways",
+    "phoneNumber": "+91 1860 30010239",
+    "headsign": "Inter-City Express",
+    "frequency": 127,
+    "currentLocation": { "lat": 31.63398, "lng": 74.872261 },
+    "startTime": "2025-09-20T16:00:00Z",
+    "eta": "2h 00m",
+    "route": [
+        { "name": "Amritsar Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T16:00:00Z" },
+        { "name": "Tarn Taran", "arrivalTime": "2025-09-20T16:45:00Z", "departureTime": "2025-09-20T16:50:00Z" },
+        { "name": "Harike", "arrivalTime": "2025-09-20T17:30:00Z", "departureTime": "2025-09-20T17:35:00Z" },
+        { "name": "Ferozepur Bus Stand", "arrivalTime": "2025-09-20T18:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 30,
+    "operator": "Delhi Transport",
+    "phoneNumber": "+91 1860 30010240",
+    "headsign": "Ring Road Service",
+    "frequency": 127,
+    "currentLocation": { "lat": 28.6672, "lng": 77.2323 },
+    "startTime": "2025-09-20T13:00:00Z",
+    "eta": "2h 30m",
+    "route": [
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": null, "departureTime": "2025-09-20T13:00:00Z" },
+        { "name": "Raj Ghat", "arrivalTime": "2025-09-20T13:20:00Z", "departureTime": "2025-09-20T13:22:00Z" },
+        { "name": "Sarai Kale Khan ISBT", "arrivalTime": "2025-09-20T13:50:00Z", "departureTime": "2025-09-20T13:55:00Z" },
+        { "name": "South Extension", "arrivalTime": "2025-09-20T14:30:00Z", "departureTime": "2025-09-20T14:32:00Z" },
+        { "name": "Dhaula Kuan", "arrivalTime": "2025-09-20T15:00:00Z", "departureTime": "2025-09-20T15:05:00Z" },
+        { "name": "Punjabi Bagh", "arrivalTime": "2025-09-20T15:30:00Z", "departureTime": "2025-09-20T15:32:00Z" },
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": "2025-09-20T16:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 31,
+    "operator": "Sharma Travels",
+    "phoneNumber": "+91 1860 30010241",
+    "headsign": "Chandigarh-Jaipur",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.7333, "lng": 76.7794 },
+    "startTime": "2025-09-20T19:30:00Z",
+    "eta": "9h 00m",
+    "route": [
+        { "name": "Chandigarh (ISBT Sector 43)", "arrivalTime": null, "departureTime": "2025-09-20T19:30:00Z" },
+        { "name": "Ambala Cantt", "arrivalTime": "2025-09-20T20:30:00Z", "departureTime": "2025-09-20T20:35:00Z" },
+        { "name": "Karnal", "arrivalTime": "2025-09-20T21:45:00Z", "departureTime": "2025-09-20T21:50:00Z" },
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": "2025-09-20T23:50:00Z", "departureTime": "2025-09-21T00:10:00Z" },
+        { "name": "Gurugram (IFFCO Chowk)", "arrivalTime": "2025-09-21T01:10:00Z", "departureTime": "2025-09-21T01:15:00Z" },
+        { "name": "Behror", "arrivalTime": "2025-09-21T02:45:00Z", "departureTime": "2025-09-21T02:50:00Z" },
+        { "name": "Jaipur (Sindhi Camp)", "arrivalTime": "2025-09-21T04:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 32,
+    "operator": "Jalandhar Bus Co.",
+    "phoneNumber": "+91 1860 30010242",
+    "headsign": "Jalandhar-Kapurthala",
+    "frequency": 127,
+    "currentLocation": { "lat": 31.3260, "lng": 75.5762 },
+    "startTime": "2025-09-20T10:00:00Z",
+    "eta": "0h 45m",
+    "route": [
+        { "name": "Jalandhar Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T10:00:00Z" },
+        { "name": "Kapurthala", "arrivalTime": "2025-09-20T10:45:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 33,
+    "operator": "Malwa Bus Service",
+    "phoneNumber": "+91 1860 30010243",
+    "headsign": "Bathinda-Mansa",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.2072, "lng": 74.9455 },
+    "startTime": "2025-09-20T14:00:00Z",
+    "eta": "1h 15m",
+    "route": [
+        { "name": "Bathinda Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T14:00:00Z" },
+        { "name": "Maur", "arrivalTime": "2025-09-20T14:40:00Z", "departureTime": "2025-09-20T14:42:00Z" },
+        { "name": "Mansa", "arrivalTime": "2025-09-20T15:15:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 34,
+    "operator": "Himachal Tours",
+    "phoneNumber": "+91 1860 30010244",
+    "headsign": "Dharamshala Volvo",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.7333, "lng": 76.7794 },
+    "startTime": "2025-09-20T21:30:00Z",
+    "eta": "6h 30m",
+    "route": [
+        { "name": "Chandigarh (ISBT Sector 43)", "arrivalTime": null, "departureTime": "2025-09-20T21:30:00Z" },
+        { "name": "Una", "arrivalTime": "2025-09-20T23:30:00Z", "departureTime": "2025-09-20T23:35:00Z" },
+        { "name": "Kangra", "arrivalTime": "2025-09-21T02:30:00Z", "departureTime": "2025-09-21T02:35:00Z" },
+        { "name": "Dharamshala", "arrivalTime": "2025-09-21T04:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 35,
+    "operator": "Amritsar Transport Co.",
+    "phoneNumber": "+91 1860 30010245",
+    "headsign": "Amritsar-Gurdaspur",
+    "frequency": 127,
+    "currentLocation": { "lat": 31.63398, "lng": 74.872261 },
+    "startTime": "2025-09-20T11:00:00Z",
+    "eta": "1h 30m",
+    "route": [
+        { "name": "Amritsar Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T11:00:00Z" },
+        { "name": "Batala", "arrivalTime": "2025-09-20T11:50:00Z", "departureTime": "2025-09-20T11:55:00Z" },
+        { "name": "Gurdaspur", "arrivalTime": "2025-09-20T12:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 36,
+    "operator": "Kalka-Shimla Express",
+    "phoneNumber": "+91 1860 30010246",
+    "headsign": "A/C Tempo Traveller",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.8351, "lng": 76.9351 },
+    "startTime": "2025-09-20T06:00:00Z",
+    "eta": "3h 00m",
+    "route": [
+        { "name": "Kalka", "arrivalTime": null, "departureTime": "2025-09-20T06:00:00Z" },
+        { "name": "Dharampur", "arrivalTime": "2025-09-20T07:15:00Z", "departureTime": "2025-09-20T07:20:00Z" },
+        { "name": "Solan", "arrivalTime": "2025-09-20T08:00:00Z", "departureTime": "2025-09-20T08:05:00Z" },
+        { "name": "Shimla (ISBT Tutikandi)", "arrivalTime": "2025-09-20T09:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 37,
+    "operator": "Night Rider",
+    "phoneNumber": "+91 1860 30010247",
+    "headsign": "Delhi-Amritsar Sleeper",
+    "frequency": 127,
+    "currentLocation": { "lat": 28.6672, "lng": 77.2323 },
+    "startTime": "2025-09-20T22:30:00Z",
+    "eta": "8h 00m",
+    "route": [
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": null, "departureTime": "2025-09-20T22:30:00Z" },
+        { "name": "Panipat", "arrivalTime": "2025-09-20T23:55:00Z", "departureTime": "2025-09-20T23:57:00Z" },
+        { "name": "Karnal", "arrivalTime": "2025-09-21T00:40:00Z", "departureTime": "2025-09-21T00:45:00Z" },
+        { "name": "Ambala Cantt", "arrivalTime": "2025-09-21T01:50:00Z", "departureTime": "2025-09-21T02:00:00Z" },
+        { "name": "Ludhiana Bus Stand", "arrivalTime": "2025-09-21T03:45:00Z", "departureTime": "2025-09-21T03:55:00Z" },
+        { "name": "Jalandhar Bus Stand", "arrivalTime": "2025-09-21T05:00:00Z", "departureTime": "2025-09-21T05:10:00Z" },
+        { "name": "Amritsar Bus Stand", "arrivalTime": "2025-09-21T06:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 38,
+    "operator": "Holiday Tours",
+    "phoneNumber": "+91 1860 30010248",
+    "headsign": "Pathankot-Manali",
+    "frequency": 64,
+    "currentLocation": { "lat": 32.2618, "lng": 75.6669 },
+    "startTime": "2025-09-20T19:00:00Z",
+    "eta": "10h 00m",
+    "route": [
+        { "name": "Pathankot Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T19:00:00Z" },
+        { "name": "Nurpur", "arrivalTime": "2025-09-20T20:00:00Z", "departureTime": "2025-09-20T20:05:00Z" },
+        { "name": "Mandi", "arrivalTime": "2025-09-21T01:00:00Z", "departureTime": "2025-09-21T01:15:00Z" },
+        { "name": "Kullu", "arrivalTime": "2025-09-21T03:30:00Z", "departureTime": "2025-09-21T03:40:00Z" },
+        { "name": "Manali (Private Bus Stand)", "arrivalTime": "2025-09-21T05:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 39,
+    "operator": "Ferozepur Transport",
+    "phoneNumber": "+91 1860 30010249",
+    "headsign": "Ferozepur-Ludhiana",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.9254, "lng": 74.6190 },
+    "startTime": "2025-09-20T08:30:00Z",
+    "eta": "2h 30m",
+    "route": [
+        { "name": "Ferozepur Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T08:30:00Z" },
+        { "name": "Moga Bus Stand", "arrivalTime": "2025-09-20T09:45:00Z", "departureTime": "2025-09-20T09:50:00Z" },
+        { "name": "Jagraon", "arrivalTime": "2025-09-20T10:20:00Z", "departureTime": "2025-09-20T10:22:00Z" },
+        { "name": "Ludhiana Bus Stand", "arrivalTime": "2025-09-20T11:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 40,
+    "operator": "Haryana Roadways",
+    "phoneNumber": "+91 1860 30010250",
+    "headsign": "Chandigarh-Hisar",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.7333, "lng": 76.7794 },
+    "startTime": "2025-09-20T13:30:00Z",
+    "eta": "4h 00m",
+    "route": [
+        { "name": "Chandigarh (ISBT Sector 43)", "arrivalTime": null, "departureTime": "2025-09-20T13:30:00Z" },
+        { "name": "Patiala Bus Stand", "arrivalTime": "2025-09-20T14:45:00Z", "departureTime": "2025-09-20T14:55:00Z" },
+        { "name": "Kaithal", "arrivalTime": "2025-09-20T16:30:00Z", "departureTime": "2025-09-20T16:35:00Z" },
+        { "name": "Hisar", "arrivalTime": "2025-09-20T17:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 41,
+    "operator": "Doaba Motors",
+    "phoneNumber": "+91 1860 30010251",
+    "headsign": "Jalandhar-Nawanshahr",
+    "frequency": 127,
+    "currentLocation": { "lat": 31.3260, "lng": 75.5762 },
+    "startTime": "2025-09-20T17:00:00Z",
+    "eta": "1h 15m",
+    "route": [
+        { "name": "Jalandhar Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T17:00:00Z" },
+        { "name": "Phagwara", "arrivalTime": "2025-09-20T17:30:00Z", "departureTime": "2025-09-20T17:35:00Z" },
+        { "name": "Banga", "arrivalTime": "2025-09-20T18:00:00Z", "departureTime": "2025-09-20T18:02:00Z" },
+        { "name": "Nawanshahr", "arrivalTime": "2025-09-20T18:15:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 42,
+    "operator": "Rajasthan State Roadways",
+    "phoneNumber": "+91 1860 30010252",
+    "headsign": "Jaipur-Bikaner",
+    "frequency": 127,
+    "currentLocation": { "lat": 26.9124, "lng": 75.7873 },
+    "startTime": "2025-09-20T07:00:00Z",
+    "eta": "5h 30m",
+    "route": [
+        { "name": "Jaipur (Sindhi Camp)", "arrivalTime": null, "departureTime": "2025-09-20T07:00:00Z" },
+        { "name": "Sikar", "arrivalTime": "2025-09-20T09:00:00Z", "departureTime": "2025-09-20T09:10:00Z" },
+        { "name": "Fatehpur", "arrivalTime": "2025-09-20T10:00:00Z", "departureTime": "2025-09-20T10:05:00Z" },
+        { "name": "Ratangarh", "arrivalTime": "2025-09-20T10:50:00Z", "departureTime": "2025-09-20T10:55:00Z" },
+        { "name": "Bikaner", "arrivalTime": "2025-09-20T12:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 43,
+    "operator": "Goldline Express",
+    "phoneNumber": "+91 1860 30010253",
+    "headsign": "Ludhiana-Ambala",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.900965, "lng": 75.85727 },
+    "startTime": "2025-09-20T08:15:00Z",
+    "eta": "2h 15m",
+    "route": [
+        { "name": "Ludhiana Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T08:15:00Z" },
+        { "name": "Khanna", "arrivalTime": "2025-09-20T09:00:00Z", "departureTime": "2025-09-20T09:05:00Z" },
+        { "name": "Sirhind", "arrivalTime": "2025-09-20T09:40:00Z", "departureTime": "2025-09-20T09:42:00Z" },
+        { "name": "Rajpura", "arrivalTime": "2025-09-20T10:05:00Z", "departureTime": "2025-09-20T10:10:00Z" },
+        { "name": "Ambala Cantt", "arrivalTime": "2025-09-20T10:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 44,
+    "operator": "PEPSU (PRTC)",
+    "phoneNumber": "+91 1860 30010254",
+    "headsign": "Patiala-Bathinda",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.3398, "lng": 76.3869 },
+    "startTime": "2025-09-20T11:30:00Z",
+    "eta": "3h 00m",
+    "route": [
+        { "name": "Patiala Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T11:30:00Z" },
+        { "name": "Sangrur", "arrivalTime": "2025-09-20T12:30:00Z", "departureTime": "2025-09-20T12:40:00Z" },
+        { "name": "Barnala", "arrivalTime": "2025-09-20T13:30:00Z", "departureTime": "2025-09-20T13:35:00Z" },
+        { "name": "Rampura Phul", "arrivalTime": "2025-09-20T14:10:00Z", "departureTime": "2025-09-20T14:12:00Z" },
+        { "name": "Bathinda Bus Stand", "arrivalTime": "2025-09-20T14:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 45,
+    "operator": "Delhi Metro Corporation",
+    "phoneNumber": "+91 1860 30010255",
+    "headsign": "Gurugram Connect",
+    "frequency": 127,
+    "currentLocation": { "lat": 28.6672, "lng": 77.2323 },
+    "startTime": "2025-09-20T09:00:00Z",
+    "eta": "1h 30m",
+    "route": [
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": null, "departureTime": "2025-09-20T09:00:00Z" },
+        { "name": "Dhaula Kuan", "arrivalTime": "2025-09-20T09:40:00Z", "departureTime": "2025-09-20T09:45:00Z" },
+        { "name": "Gurugram (IFFCO Chowk)", "arrivalTime": "2025-09-20T10:15:00Z", "departureTime": "2025-09-20T10:20:00Z" },
+        { "name": "Huda City Centre", "arrivalTime": "2025-09-20T10:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 46,
+    "operator": "Haryana Roadways",
+    "phoneNumber": "+91 1860 30010256",
+    "headsign": "Ambala-Delhi",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.3782, "lng": 76.7767 },
+    "startTime": "2025-09-20T04:30:00Z",
+    "eta": "4h 00m",
+    "route": [
+        { "name": "Ambala Cantt", "arrivalTime": null, "departureTime": "2025-09-20T04:30:00Z" },
+        { "name": "Pipli", "arrivalTime": "2025-09-20T05:20:00Z", "departureTime": "2025-09-20T05:22:00Z" },
+        { "name": "Karnal", "arrivalTime": "2025-09-20T06:00:00Z", "departureTime": "2025-09-20T06:05:00Z" },
+        { "name": "Panipat", "arrivalTime": "2025-09-20T06:45:00Z", "departureTime": "2025-09-20T06:50:00Z" },
+        { "name": "Sonipat", "arrivalTime": "2025-09-20T07:40:00Z", "departureTime": "2025-09-20T07:42:00Z" },
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": "2025-09-20T08:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 47,
+    "operator": "Capital Travels",
+    "phoneNumber": "+91 1860 30010257",
+    "headsign": "Jammu-Pathankot",
+    "frequency": 127,
+    "currentLocation": { "lat": 32.7056, "lng": 74.8560 },
+    "startTime": "2025-09-20T15:00:00Z",
+    "eta": "2h 30m",
+    "route": [
+        { "name": "Jammu Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T15:00:00Z" },
+        { "name": "Samba", "arrivalTime": "2025-09-20T16:00:00Z", "departureTime": "2025-09-20T16:02:00Z" },
+        { "name": "Kathua", "arrivalTime": "2025-09-20T16:45:00Z", "departureTime": "2025-09-20T16:50:00Z" },
+        { "name": "Pathankot", "arrivalTime": "2025-09-20T17:30:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 48,
+    "operator": "White Line Tours",
+    "phoneNumber": "+91 1860 30010258",
+    "headsign": "Chandigarh-Jalandhar",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.7333, "lng": 76.7794 },
+    "startTime": "2025-09-20T18:30:00Z",
+    "eta": "2h 30m",
+    "route": [
+        { "name": "Chandigarh (ISBT Sector 43)", "arrivalTime": null, "departureTime": "2025-09-20T18:30:00Z" },
+        { "name": "Kharar", "arrivalTime": "2025-09-20T19:00:00Z", "departureTime": "2025-09-20T19:02:00Z" },
+        { "name": "Phagwara", "arrivalTime": "2025-09-20T20:15:00Z", "departureTime": "2025-09-20T20:20:00Z" },
+        { "name": "Jalandhar Bus Stand", "arrivalTime": "2025-09-20T21:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 49,
+    "operator": "Moga Road Lines",
+    "phoneNumber": "+91 1860 30010259",
+    "headsign": "Moga-Ferozepur",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.8172, "lng": 75.1704 },
+    "startTime": "2025-09-20T07:45:00Z",
+    "eta": "1h 15m",
+    "route": [
+        { "name": "Moga Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T07:45:00Z" },
+        { "name": "Talwandi Bhai", "arrivalTime": "2025-09-20T08:20:00Z", "departureTime": "2025-09-20T08:22:00Z" },
+        { "name": "Ferozepur Bus Stand", "arrivalTime": "2025-09-20T09:00:00Z", "departureTime": null }
+    ]
+  },
+  {
+    "busId": 50,
+    "operator": "Kingfisher Travels",
+    "phoneNumber": "+91 1860 30010260",
+    "headsign": "Ludhiana-Delhi Airport",
+    "frequency": 127,
+    "currentLocation": { "lat": 30.900965, "lng": 75.85727 },
+    "startTime": "2025-09-20T23:55:00Z",
+    "eta": "6h 00m",
+    "route": [
+        { "name": "Ludhiana Bus Stand", "arrivalTime": null, "departureTime": "2025-09-20T23:55:00Z" },
+        { "name": "Ambala Cantt", "arrivalTime": "2025-09-21T01:45:00Z", "departureTime": "2025-09-21T01:50:00Z" },
+        { "name": "Panipat", "arrivalTime": "2025-09-21T03:30:00Z", "departureTime": "2025-09-21T03:32:00Z" },
+        { "name": "Delhi (ISBT Kashmiri Gate)", "arrivalTime": "2025-09-21T05:00:00Z", "departureTime": "2025-09-21T05:05:00Z" },
+        { "name": "IGI Airport T3", "arrivalTime": "2025-09-21T05:55:00Z", "departureTime": null }
     ]
   }
 ];
@@ -628,6 +1458,7 @@ admin.initializeApp({
 
 // Initialize Firebase Admin SDK
 // admin.initializeApp();
+>>>>>>> ca0ab0dae21e23684ade04470ec1a2898982798e
 const db = admin.firestore();
 
 async function importDirectData() {
@@ -641,6 +1472,20 @@ async function importDirectData() {
   
   console.log(`Preparing to import ${busesData.length} bus documents...`);
 
+<<<<<<< HEAD
+  busesData.forEach(bus => {
+    bus.startTime = admin.firestore.Timestamp.fromDate(new Date(bus.startTime));
+    bus.route.start.location = new admin.firestore.GeoPoint(bus.route.start.lat, bus.route.start.lng);
+    bus.route.end.location = new admin.firestore.GeoPoint(bus.route.end.lat, bus.route.end.lng);
+    
+    const docRef = collectionRef.doc(); 
+    batch.set(docRef, bus);
+  });
+
+  try {
+    await batch.commit();
+    console.log('✅ Successfully imported all bus data into Firestore!');
+=======
   // Process each bus object to be Firestore-compatible
   busesData.forEach(bus => {
     // Create a deep copy to avoid modifying the original object in memory
@@ -689,6 +1534,7 @@ async function importDirectData() {
   try {
     await batch.commit();
     console.log(`✅ Successfully imported all ${busesData.length} bus documents into Firestore!`);
+>>>>>>> ca0ab0dae21e23684ade04470ec1a2898982798e
   } catch (error) {
     console.error('❌ Error while importing data:', error);
   }
