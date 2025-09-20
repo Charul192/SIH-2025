@@ -32,9 +32,9 @@ export default function Header() {
 
   return (
     // FIX: Main header background is now theme-aware and has a subtle bottom border
-    <header className={`sticky top-0 z-50 w-full transition-colors duration-300 ${Dark ? 'bg-black border-b border-slate-700 backdrop-blur-md' : 'bg-white/80 border-b border-slate-200 backdrop-blur-md'}`}>
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8">
-        <Link to="/" className="flex items-center" onClick={() => setIsMenuOpen(false)}>
+    <header className={`sticky top-0 z-50 w-full transition-colors duration-300 ${Dark ? 'bg-black border-b border-slate-700 ' : 'bg-white border-b border-slate-200 '}`}>
+      <nav className={`mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8`}>
+        <Link to="/" className={`flex items-center ${isMenuOpen?'hidden top-0':''}`} onClick={() => setIsMenuOpen(false)}>
           <Logo />
         </Link>
 
@@ -56,9 +56,9 @@ export default function Header() {
 
         {/* --- Navigation Links & Controls --- */}
         {/* FIX: Mobile menu background is now handled by the main header's styles */}
-        <div className={`absolute top-full left-0 w-full lg:static lg:flex lg:w-auto lg:items-center transition-all duration-300 ease-in-out ${ isMenuOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-4 lg:opacity-100 lg:visible lg:translate-y-0"}`}>
+        <div className={`absolute top-full left-0 w-full lg:static lg:flex lg:w-auto lg:items-center transition-all duration-300 ease-in-out ${ isMenuOpen ? "opacity-100 visible translate-y-0 " : "opacity-0 invisible -translate-y-4 lg:opacity-100 lg:visible lg:translate-y-0"}`}>
           {/* FIX: Added a background for the mobile menu itself for better separation */}
-          <ul className={`flex flex-col items-center gap-y-4 py-4 lg:flex-row lg:items-center lg:gap-x-6 lg:py-0 font-medium w-full lg:w-auto ${Dark ? 'bg-slate-900 lg:bg-transparent' : 'bg-white lg:bg-transparent'}`}>
+          <ul className={`flex flex-col items-center gap-y-4 py-4 lg:flex-row lg:items-center lg:gap-x-6 lg:py-0 font-medium w-full lg:w-auto ${Dark ? 'bg-black lg:bg-transparent' : 'bg-white lg:bg-transparent'} ${isMenuOpen?'h-[100vh]':''}`}>
             <li>
               <NavLink to="/" onClick={() => setIsMenuOpen(false)} className={getNavLinkClass}>Home</NavLink>
             </li>

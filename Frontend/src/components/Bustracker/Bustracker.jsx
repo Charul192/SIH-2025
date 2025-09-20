@@ -122,7 +122,7 @@ export default function Bustracker() {
               value={searchTerm}
               onChange={recommendation}
               className={`block w-full rounded-md border-0 py-3 px-4 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6 ${Dark ? 'bg-white/5 text-white ring-white/10' : 'bg-slate-100 text-slate-900 ring-slate-300'}`}
-              placeholder="Enter Bus ID (e.g., 1, 2, 3...)"
+              placeholder="Enter Bus Number..."
             />
             <button
               type="submit"

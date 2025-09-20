@@ -14,9 +14,8 @@ export default function Footer() {
   return (
     // CHANGE: Footer background and top border are now dynamic
     <footer
-      className={`border-t ${
-        Dark ? "bg-black border-gray-700" : "bg-white border-gray-200"
-      }`}
+      className={`border-t ${Dark ? "bg-black border-gray-700" : "bg-white border-gray-200"
+        }`}
     >
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
@@ -37,18 +36,6 @@ export default function Footer() {
                     Home
                   </Link>
                 </li>
-                <li>
-                  <Link to="/about" className={`transition-colors ${linkHoverClass}`}>
-                    About
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className={`mb-6 text-sm font-semibold uppercase ${headingColorClass}`}>
-                Follow us
-              </h2>
-              <ul className={`font-medium ${textColorClass}`}>
                 <li className="mb-4">
                   <a
                     href="https://github.com/Bhavukmittal20/SIH-2025" // Updated your repo link
@@ -58,6 +45,18 @@ export default function Footer() {
                   >
                     Github
                   </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 className={`mb-6 text-sm font-semibold uppercase ${headingColorClass}`}>
+                About us
+              </h2>
+              <ul className={`font-medium ${textColorClass} flex flex-col space-y-4`}>
+                <li>
+                  <Link to="/about" className={`transition-colors ${linkHoverClass}`}>
+                    About
+                  </Link>
                 </li>
                 <li>
                   <Link to="/feedback" className={`transition-colors ${linkHoverClass}`}>
@@ -88,14 +87,13 @@ export default function Footer() {
         </div>
         {/* CHANGE: Horizontal rule border color is dynamic */}
         <hr
-          className={`my-6 sm:mx-auto lg:my-8 ${
-            Dark ? "border-gray-700" : "border-gray-200"
-          }`}
+          className={`my-6 sm:mx-auto lg:my-8 ${Dark ? "border-gray-700" : "border-gray-200"
+            }`}
         />
         <div className="sm:flex sm:items-center sm:justify-between">
           {/* CHANGE: Copyright text color is dynamic */}
           <span className={`text-sm ${textColorClass} sm:text-center`}>
-            © 2025{" "}
+            ©️ 2025{" "}
             <Link to="/devpage" className={`transition-colors ${linkHoverClass}`}>
               LoremIpsum
             </Link>

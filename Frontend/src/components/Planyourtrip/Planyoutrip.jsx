@@ -195,7 +195,7 @@ export default function PlanyouTrip() {
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
 
                   {/* FIX: Input field is theme-aware */}
-                  <input type="text" value={startLocation} onChange={(e) => setStartLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g., Amritsar" required />
+                  <input type="text" value={startLocation} onChange={(e) => setStartLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g. Amritsar" required />
                 </div>
               </div>
               {/* FIX: Swap button is theme-aware */}
@@ -208,7 +208,7 @@ export default function PlanyouTrip() {
                 <div className="relative mt-2">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
                   {/* FIX: Input field is theme-aware */}
-                  <input type="text" value={endLocation} onChange={(e) => setEndLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g., Ludhiana" required />
+                  <input type="text" value={endLocation} onChange={(e) => setEndLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g. Ludhiana" required />
 
                 </div>
               </div>

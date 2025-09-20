@@ -81,11 +81,12 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             
+            {/* ========= CARD CONTENT HAS BEEN UPDATED HERE ========= */}
             {[
-              { to: "/bus-tracker", icon: <><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></>, color: "bg-blue-500", hover: "hover:border-blue-500/50", title: "Live Bus Tracking", desc: "See the exact, real-time location of your bus on a map. No more guessing if it's late or has already passed." },
-              { to: "/plan-your-trip", icon: <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />, color: "bg-red-500", hover: "hover:border-red-500/50", title: "Accurate Arrival Times", desc: "Get reliable Estimated Times of Arrival (ETAs) for your stop, so you can plan your time and avoid long waits." },
-              { to: "/schedule", icon: <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M12 14.25h.008v.008H12v-.008z" />, color: "bg-yellow-500", hover: "hover:border-yellow-500/50", title: "Route & Schedule Info", desc: "Access complete route details and updated timetables for all buses. Know every stop and timing at your fingertips." },
-              { to: "/about", icon: <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />, color: "bg-purple-500", hover: "hover:border-purple-500/50", title: "Low-Bandwidth Friendly", desc: "Our platform is optimized to work seamlessly on slow internet, ensuring accessibility for everyone in smaller towns." }
+              { to: "/bus-tracker", icon: <><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></>, color: "bg-blue-500", hover: "hover:border-blue-500/50", title: "Bus Tracker", desc: "See the exact, real-time location of your bus on a map. No more guessing if it's late or has already passed." },
+              { to: "/plan-your-trip", icon: <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />, color: "bg-red-500", hover: "hover:border-red-500/50", title: "Plan your trip", desc: "Get reliable ETAs and see all route options to plan your journey from start to finish." },
+              { to: "/schedule", icon: <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M12 14.25h.008v.008H12v-.008z" />, color: "bg-yellow-500", hover: "hover:border-yellow-500/50", title: "Schedule", desc: "Access complete route details and updated timetables for all buses. Know every stop and timing at your fingertips." },
+              { to: "/about", icon: <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />, color: "bg-purple-500", hover: "hover:border-purple-500/50", title: "About Us", desc: "Learn about our mission to improve commutes. Our platform is optimized for low-bandwidth areas, ensuring accessibility for all." }
             ].map((card) => (
               <Link key={card.to} to={card.to} className="block rounded-xl">
                 <div className={`h-full space-y-3 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 ${card.hover} ${Dark ? 'border border-white/10 bg-white/5 hover:bg-white/10' : 'border border-gray-200 bg-gray-50 hover:bg-gray-100'}`}>
@@ -110,7 +111,6 @@ export default function Home() {
             </p>
           </div>
           
-          {/* FIX: CTA Card removed, and the parent container is simplified. */}
           <div className="mt-16">
             <div className="flex flex-col items-center justify-center gap-10 sm:flex-row sm:gap-6 lg:gap-12">
               {[
@@ -133,4 +133,3 @@ export default function Home() {
     </div>
   );
 }
-
