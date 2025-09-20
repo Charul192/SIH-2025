@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const CheckIcon = () => <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clipRule="evenodd" /></svg>;
 const BusIcon = () => <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 003.375-3.375h1.5a1.125 1.125 0 011.125 1.125v-1.5a3.375 3.375 0 00-3.375-3.375H3.375m15.75 9V14.25A3.375 3.375 0 0015.75 10.5h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 009.75 4.5H4.5m15 15v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H4.5" /></svg>;
 const CircleIcon = () => <div className="h-2.5 w-2.5 rounded-full bg-white" />;
-
+const recommendations = ["12", "1113420", "2"];
 const API_URL = "http://localhost:8000";
 
 // Helper function to format data from Firestore
@@ -21,6 +21,7 @@ const formatFirestoreBusData = (busData) => {
       ...stop,
       arrivalTime: toDate(stop.arrivalTime),
       departureTime: toDate(stop.departureTime),
+        location: stop.location,
     })),
     // Correctly format the GeoPoint object
     currentLocation: {
@@ -37,6 +38,7 @@ export default function Bustracker() {
   const [foundBus, setFoundBus] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [suggestion, setSuggestion] = useState([]);
 
   // Update current time every 30 seconds for more real-time feel
   useEffect(() => {
@@ -49,7 +51,25 @@ export default function Bustracker() {
     if (!date) return "--:--";
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   };
+  const setter=(val)=>{
 
+      val = val + 0;
+
+  }
+  const recommendation = (event)=>{
+      const val = event.target.value;
+      setSearchTerm(val);
+      setter(val);
+      if(val.length > 0){
+          const lowercased = val.toLowerCase().trim();
+          const filteredSuggestions = recommendations.filter(item =>
+              item.toLowerCase().startsWith(lowercased)
+          );
+          setSuggestion(filteredSuggestions);
+      }
+      else setSuggestion([]);
+      console.log(suggestion);
+  }
   const handleSearch = async (event) => {
     event.preventDefault();
     if (!searchTerm.trim()) return;
@@ -151,7 +171,7 @@ export default function Bustracker() {
             <input
               type="text"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={recommendation}
               className="block w-full rounded-md border-0 bg-white/5 py-3 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6"
               placeholder="Enter Bus ID (e.g., 1, 2, 3...)"
             />
@@ -172,7 +192,7 @@ export default function Bustracker() {
                <p className="text-xl">Bus not found. Please check the Bus ID and try again.</p>
              </div>
           )}
-
+            {/*console.log(foundBus);*/}
           {foundBus && (
             <div className="rounded-lg border border-gray-700 bg-zinc-900 p-6">
               {/* --- Header --- */}

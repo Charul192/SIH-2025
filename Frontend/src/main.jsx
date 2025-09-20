@@ -18,7 +18,8 @@ import Schedule from "./components/Schedule/Schedule.jsx";
 import Planyoutrip from "./components/Planyourtrip/Planyoutrip.jsx";
 import Developer from "./components/Developers_Page/developer.jsx"
 import MapPage from "./components/Bustracker/MapPage.jsx";
-import Feedback from "./Feedback/Feedback.jsx";
+import Feedback from "./components/Feedback/Feedback.jsx";
+import PrivacyPolicy from "./components/PrivacyPolicy/Privacy.jsx";
 
 // 1. Create the router configuration
 const router = createBrowserRouter(
@@ -27,13 +28,14 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       {/* Child routes are nested and will be rendered in the Outlet */}
       <Route path="" element={<Home />} />
-      <Route path="bus-tracker" element={<Bustracker />} />
-      <Route path="schedule" element={<Schedule />} />
-      <Route path="plan-your-trip" element={<Planyoutrip />} />
+      <Route path="/bus-tracker" element={<Bustracker />} />
+      <Route path="/schedule" element={<Schedule />} />
+      <Route path="/plan-your-trip" element={<Planyoutrip />} />
        <Route path="/map" element={<MapPage />} />
-      <Route path="about" element={<About />} />
-      <Route path="devpage" element={<Developer />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/devpage" element={<Developer />} />
       <Route path="/feedback" element={<Feedback />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
     </Route>
   )
 );
@@ -41,9 +43,9 @@ const router = createBrowserRouter(
 // 2. Render the app using the RouterProvider
 const root = createRoot(document.getElementById("root"));
 root.render(
-  // <StrictMode>
+  <StrictMode>
     <AppContextProvider>
     <RouterProvider router={router} />
     </AppContextProvider>
-  // </StrictMode>
+  </StrictMode>
 );

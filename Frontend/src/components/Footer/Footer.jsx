@@ -59,7 +59,7 @@ export default function Footer() {
               </h2>
               <ul className="font-medium text-gray-400">
                 <li className="mb-4">
-                  <Link to="#" className="transition-colors hover:text-white">
+                  <Link to="/privacy-policy" className="transition-colors hover:text-white">
                     Privacy Policy
                   </Link>
                 </li>

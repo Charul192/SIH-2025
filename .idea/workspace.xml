@@ -6,12 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="89dbc646-840d-4fa0-b593-e2ad23d3ec6c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/firebase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/components/Bustracker/Bustracker.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Bustracker/Bustracker.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/Bustracker/MapPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Bustracker/MapPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,7 +87,7 @@
       <workItem from="1758333417253" duration="5033000" />
       <workItem from="1758351344848" duration="299000" />
       <workItem from="1758352578392" duration="10000" />
-      <workItem from="1758352602189" duration="402000" />
+      <workItem from="1758352602189" duration="3778000" />
     </task>
     <servers />
   </component>
