@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 // CHANGED: Removed the incorrect Polyline import, added useMap
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
-const MAPS_KEY = import.meta.env.VITE_MAPS_KEY;
+const API_KEY = "AIzaSyARSqYspchcCQGDRl1izB0_GaqQ6A2Yz6w";
+const MAPS_KEY = "43b870af48005989f31cfc28";
 
 // A simple SVG for a bus icon (no changes)
 const BusIcon = () => (
@@ -86,9 +86,14 @@ export default function MapPage() {
           {/* Use the new RoutePolyline component */}
           <RoutePolyline path={pathCoordinates} />
 
-          <AdvancedMarker position={busLocation}>
-            <BusIcon />
-          </AdvancedMarker>
+            <AdvancedMarker position={busLocation}>
+                <div className="relative w-6 h-6">
+                    {/* Outer pulsing circle */}
+                    <div className="absolute inset-0 rounded-full bg-blue-400 opacity-50 animate-ping"></div>
+                    {/* Inner solid circle */}
+                    <div className="absolute inset-1 rounded-full bg-blue-600 border-2 border-white"></div>
+                </div>
+            </AdvancedMarker>
         </Map>
       </APIProvider>
 
