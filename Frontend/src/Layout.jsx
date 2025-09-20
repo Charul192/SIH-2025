@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header/Header"; // Header ka path check kar lein
 import Footer from "./components/Footer/Footer"; // Footer ka path check kar lein
+import { AppContext } from "./context/AppContext";
 
 export default function Layout() {
   // useEffect(() => {
@@ -12,9 +13,9 @@ export default function Layout() {
   //   }
   //   localStorage.setItem('theme', theme);
   // }, [theme]);
-
+  const {Dark}=useContext(AppContext)
   return (
-    <div className="">
+    <div className={`${Dark?'bg-black':'bg-white'}`}>
       {/* Yahan se Header ko props mil rahe hain */}
       <Header/>
       <main>
