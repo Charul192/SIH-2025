@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 // CHANGED: Removed the incorrect Polyline import, added useMap
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
+import {routePoints} from "../../../../Backend/GPS.js"
 
 const API_KEY = "AIzaSyARSqYspchcCQGDRl1izB0_GaqQ6A2Yz6w";
 const MAPS_KEY = "43b870af48005989f31cfc28";
@@ -32,7 +33,7 @@ const RoutePolyline = ({ path }) => {
     const newPolyline = new google.maps.Polyline({
       path: path,
       strokeColor: "#8E44AD", // Purple
-      strokeOpacity: 0.8,
+      strokeOpacity: 1,
       strokeWeight: 4,
     });
 
@@ -71,7 +72,8 @@ export default function MapPage() {
     );
   }
 
-  const pathCoordinates = busRoute.map(stop => ({ lat: stop.lat, lng: stop.lng }));
+    let pathCoordinates;
+    pathCoordinates = routePoints;
 
   return (
     <div className="relative w-full h-screen bg-black">
