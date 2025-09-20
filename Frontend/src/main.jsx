@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import {BrowserRouter} from 'react-router-dom'
-
+import AppContextProvider from "./context/AppContext.jsx";
 // Import your components
 import Layout from "./Layout.jsx";
 import Home from "./components/Home/Home";
@@ -18,7 +18,9 @@ import Schedule from "./components/Schedule/Schedule.jsx";
 import Planyoutrip from "./components/Planyourtrip/Planyoutrip.jsx";
 import Developer from "./components/Developers_Page/developer.jsx"
 import MapPage from "./components/Bustracker/MapPage.jsx";
-import Feedback from "./Feedback/Feedback.jsx";
+import Feedback from "./components/Feedback/Feedback.jsx";
+import PrivacyPolicy from "./components/PrivacyPolicy/Privacy.jsx";
+import TermsAndConditions from "./components/TnC/Terms.jsx";
 
 // 1. Create the router configuration
 const router = createBrowserRouter(
@@ -34,6 +36,9 @@ const router = createBrowserRouter(
       <Route path="/about" element={<About />} />
       <Route path="/devpage" element={<Developer />} />
       <Route path="/feedback" element={<Feedback />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/TnC" element={<TermsAndConditions />} />
+
     </Route>
   )
 );
@@ -42,6 +47,8 @@ const router = createBrowserRouter(
 const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
+    <AppContextProvider>
     <RouterProvider router={router} />
+    </AppContextProvider>
   </StrictMode>
 );

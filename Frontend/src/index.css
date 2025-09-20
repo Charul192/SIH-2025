@@ -1,1 +1,23 @@
 @import "tailwindcss";
+/* --- Force Hide Google Translate Banner (Stronger Version) --- */
+
+/* Hide the banner frame and its wrapper */
+.goog-te-banner-frame, .skiptranslate {
+    display: none !important;
+    visibility: hidden !important; /* Extra rule for hiding */
+}
+
+/* Reset body styles that Google modifies */
+body {
+    top: 0px !important;
+    position: static !important; /* Prevents Google from shifting the page */
+    box-sizing: border-box !important; /* Prevents padding issues */
+}
+::-webkit-scrollbar {
+    @apply hidden;
+  }
+
+/* Sometimes the banner is the first child of the body */
+body > .skiptranslate {
+    display: none !important;
+}

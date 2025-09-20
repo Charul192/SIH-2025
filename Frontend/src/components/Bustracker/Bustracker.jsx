@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react"; // FIX: useContext import kiya
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from "../../context/AppContext"; // FIX: AppContext import kiya
 
-// --- ICONS ---
 const CheckIcon = () => <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clipRule="evenodd" /></svg>;
 const BusIcon = () => <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 003.375-3.375h1.5a1.125 1.125 0 011.125 1.125v-1.5a3.375 3.375 0 00-3.375-3.375H3.375m15.75 9V14.25A3.375 3.375 0 0015.75 10.5h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 009.75 4.5H4.5m15 15v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H4.5" /></svg>;
 const CircleIcon = () => <div className="h-2.5 w-2.5 rounded-full bg-white" />;
 
 const API_URL = "http://localhost:8000";
 
-// Helper function to format data from Firestore
 const formatFirestoreBusData = (busData) => {
   const toDate = (timestamp) => timestamp ? new Date(timestamp._seconds * 1000) : null;
   return {
@@ -31,6 +30,7 @@ const formatFirestoreBusData = (busData) => {
 };
 
 export default function Bustracker() {
+  const { Dark } = useContext(AppContext); // FIX: Get theme state from context
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [foundBus, setFoundBus] = useState(null);
@@ -82,6 +82,7 @@ export default function Bustracker() {
     setFoundBus(null);
     setSuggestions([]);
 
+
     try {
       const response = await fetch(`${API_URL}/api/bus/${searchTerm}`);
       if (!response.ok) throw new Error('Bus not found');
@@ -122,20 +123,24 @@ export default function Bustracker() {
     }
     const lastStop = route[route.length - 1];
     if (lastStop && currentTime > lastStop.arrivalTime) {
+
       return { routeName, statusText: "Journey Completed", nextStopInfo: "N/A", etaInfo: "N/A", activeStopIndex: route.length };
     }
     return {};
   }, [foundBus, currentTime]);
 
   return (
-    <div className="w-full min-h-screen bg-black text-white">
+    // FIX: Main container is now theme-aware
+    <div className={`w-full min-h-screen transition-colors duration-300 ${Dark ? 'bg-black text-slate-50' : 'bg-white text-slate-900'}`}>
       <div className="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8">
         <div className="text-center">
             <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">Track Your Bus</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-400">Enter a bus ID below to get its real-time location and arrival information.</p>
+            {/* FIX: Paragraph text is now theme-aware */}
+            <p className={`mx-auto mt-4 max-w-2xl text-xl ${Dark ? 'text-slate-400' : 'text-slate-600'}`}>Enter a bus ID below to get its real-time location and arrival information.</p>
         </div>
         <div className="mx-auto mt-10 max-w-xl relative">
           <form className="flex items-center gap-x-4" onSubmit={handleSearch}>
+            {/* FIX: Input is now theme-aware */}
             <input
               type="text"
               value={searchTerm}
@@ -169,28 +174,31 @@ export default function Bustracker() {
 
         <div className="mx-auto mt-16 max-w-4xl">
           {foundBus === false && (
-             <div className="rounded-lg border border-red-700/40 bg-red-900/20 p-8 text-center text-red-300">
+            // FIX: Error box is now theme-aware
+             <div className={`rounded-lg border p-8 text-center ${Dark ? 'border-red-700/40 bg-red-900/20 text-red-300' : 'border-red-400 bg-red-100 text-red-700'}`}>
                <p className="text-xl">Bus not found. Please check the Bus ID and try again.</p>
              </div>
           )}
-
+          
           {foundBus && (
-            <div className="rounded-lg border border-gray-700 bg-zinc-900 p-6">
+            // FIX: Results card is now theme-aware
+            <div className={`rounded-lg border p-6 ${Dark ? 'border-slate-700 bg-zinc-900' : 'border-slate-200 bg-slate-50'}`}>
               <div className="sm:flex sm:items-start sm:justify-between">
                 <div>
-                  <h2 className="text-4xl font-bold text-white">{`Bus ${foundBus.busId} - ${foundBus.headsign}`}</h2>
-                  <p className="mt-2 text-lg text-gray-400">Operated by {foundBus.operator}</p>
+                  <h2 className={`text-4xl font-bold ${Dark ? 'text-white' : 'text-slate-900'}`}>{`Bus ${foundBus.busId} - ${foundBus.headsign}`}</h2>
+                  <p className={`mt-2 text-lg ${Dark ? 'text-slate-400' : 'text-slate-600'}`}>Operated by {foundBus.operator}</p>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-6 sm:text-right">
                   <p className="text-2xl font-medium text-green-400">On Time</p>
-                  <p className="mt-1 text-lg text-gray-300">Last updated: {formatTime(currentTime)}</p>
+                  <p className={`mt-1 text-lg ${Dark ? 'text-slate-300' : 'text-slate-500'}`}>Last updated: {formatTime(currentTime)}</p>
                 </div>
               </div>
               
-              <div className="mt-6 flex justify-between items-center border-t border-gray-700 pt-6">
-                <p className="text-lg font-medium text-gray-400">{busStatus.routeName}</p>
+              <div className={`mt-6 flex justify-between items-center border-t pt-6 ${Dark ? 'border-slate-700' : 'border-slate-200'}`}>
+                <p className={`text-lg font-medium ${Dark ? 'text-slate-400' : 'text-slate-600'}`}>{busStatus.routeName}</p>
                 <button
                     onClick={() => navigate('/map', { state: { busId: foundBus.busId, route: foundBus.route } })}
+
                     className="rounded-md bg-blue-600 px-4 py-2 text-lg font-semibold text-white shadow-sm hover:bg-blue-500"
                 >
                     View on Map
@@ -214,6 +222,7 @@ export default function Bustracker() {
 
               <div className="mt-6 border-t border-gray-700 pt-6">
                 <h3 className="text-3xl font-semibold text-white mb-4">Route Timeline</h3>
+
                 <div className="flow-root">
                   <ul className="-mb-8">
                     {foundBus.route.map((stop, stopIdx) => {
@@ -221,36 +230,36 @@ export default function Bustracker() {
                       const isInProgress = stopIdx === busStatus.activeStopIndex;
                       const isLastStop = stopIdx === foundBus.route.length - 1;
                       
+                      // FIX: Timeline styles are now theme-aware
                       const statusStyles = {
                         completed: { line: 'bg-blue-600', ring: 'bg-blue-600', icon: <CheckIcon /> },
                         inProgress: { line: 'bg-green-500', ring: 'bg-green-500 animate-pulse', icon: <BusIcon /> },
-                        upcoming: { line: 'bg-gray-600', ring: 'bg-gray-600', icon: <CircleIcon /> },
+                        upcoming: { line: Dark ? 'bg-gray-600' : 'bg-slate-300', ring: Dark ? 'bg-gray-600' : 'bg-slate-400', icon: <CircleIcon /> },
                       };
 
                       let currentStatus = 'upcoming';
-                      if (isCompleted) currentStatus = 'completed';
+                      if (isCompleted || busStatus.activeStopIndex > foundBus.route.length - 1) currentStatus = 'completed';
                       if (isInProgress) currentStatus = 'inProgress';
                       if (busStatus.activeStopIndex > foundBus.route.length - 1) currentStatus = 'completed';
+
 
                       const { line, ring, icon } = statusStyles[currentStatus];
 
                       return (
                         <li key={stop.name}>
                           <div className="relative pb-8">
-                            {!isLastStop && (
-                              <span className={`absolute top-4 left-4 -ml-px h-full w-0.5 ${line}`} aria-hidden="true" />
-                            )}
+                            {!isLastStop && <span className={`absolute top-4 left-4 -ml-px h-full w-0.5 ${line}`} aria-hidden="true" />}
                             <div className="relative flex items-start space-x-3">
                               <div>
-                                <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-zinc-900 ${ring}`}>
+                                <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ${Dark ? 'ring-zinc-900' : 'ring-slate-50'} ${ring}`}>
                                   {icon}
                                 </span>
                               </div>
                               <div className="min-w-0 flex-1 md:flex justify-between items-center">
                                 <div>
-                                  <p className="text-xl font-semibold text-white">{stop.name}</p>
+                                  <p className={`text-xl font-semibold ${Dark ? 'text-white' : 'text-slate-900'}`}>{stop.name}</p>
                                 </div>
-                                <div className="mt-2 md:mt-0 text-lg text-gray-400 text-left md:text-right">
+                                <div className={`mt-2 md:mt-0 text-lg text-left md:text-right ${Dark ? 'text-slate-400' : 'text-slate-500'}`}>
                                   <p>Arrival: {formatTime(stop.arrivalTime)}</p>
                                   <p>Departure: {formatTime(stop.departureTime)}</p>
                                 </div>
