@@ -19,9 +19,18 @@
   "homepage": "https://github.com/Charul192/SIH-2025#readme",
   "description": "",
   "dependencies": {
+<<<<<<< HEAD
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "firebase-admin": "^13.5.0",
+=======
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "firebase": "^12.2.1",
+    "firebase-admin": "^13.5.0",
+    "fs": "^0.0.1-security",
+>>>>>>> ca0ab0dae21e23684ade04470ec1a2898982798e
     "mongoose": "^8.18.0",
     "nodemon": "^3.1.10",
     "path": "^0.12.7"

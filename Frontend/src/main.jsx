@@ -1,11 +1,45 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 import "./index.css";
 import {BrowserRouter} from 'react-router-dom'
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+// Import your components
+import Layout from "./Layout.jsx";
+import Home from "./components/Home/Home";
+import About from "./components/About/About";
+import Bustracker from "./components/Bustracker/Bustracker.jsx";
+import Schedule from "./components/Schedule/Schedule.jsx";
+import Planyoutrip from "./components/Planyourtrip/Planyoutrip.jsx";
+import Developer from "./components/Developers_Page/developer.jsx"
+import MapPage from "./components/Bustracker/MapPage.jsx";
+
+// 1. Create the router configuration
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    // The parent route uses the Layout component
+    <Route path="/" element={<Layout />}>
+      {/* Child routes are nested and will be rendered in the Outlet */}
+      <Route path="" element={<Home />} />
+      <Route path="bus-tracker" element={<Bustracker />} />
+      <Route path="schedule" element={<Schedule />} />
+      <Route path="plan-your-trip" element={<Planyoutrip />} />
+       <Route path="/map" element={<MapPage />} />
+      <Route path="about" element={<About />} />
+      <Route path="devpage" element={<Developer />} />
+    </Route>
+  )
+);
+
+// 2. Render the app using the RouterProvider
+const root = createRoot(document.getElementById("root"));
+root.render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>
 );
