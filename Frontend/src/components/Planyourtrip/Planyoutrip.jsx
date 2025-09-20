@@ -9,8 +9,7 @@ const TransferIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none"
 const SwapIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 sm:rotate-90"><path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" /></svg> );
 const ClockIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-13a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 0 0 0-1.5h-3.25V5Z" clipRule="evenodd" /></svg>);
 
-const API_BASE_URL = "http://localhost:8000";
-
+const API_BASE_URL = "http://localhost:8000"
 // Helper function to format time from Firestore object or string
 const formatTime = (timeData) => {
   if (!timeData) return "--:--";
@@ -63,7 +62,27 @@ export default function PlanyouTrip() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
+  const [suggestion, setSuggestion] = useState([]);
+  const recommendations = ["Abohar Bus Stand", "Adampur Doaba", "Aerocity", "Agra (ISBT)", "Ambala Cantt", "Ambala Cantt Bus Stand", "Amritsar (Opp. Bus Stand)", "Amritsar Bus Stand", "Banga", "Banikhet", "Banur", "Barnala", "Batala", "Bathinda Bus Stand", "Beas", "Behror", "Bhawanigarh", "Bikaner", "Bilaspur (HP)", "Chandigarh (ISBT Sector 17)", "Chandigarh (ISBT Sector 43)", "Dalhousie Bus Stand", "Dasuya", "Delhi (Anand Vihar ISBT)", "Delhi (Dhaula Kuan)", "Delhi (ISBT Kashmiri Gate)", "Dera Bassi", "Dhaula Kuan", "Dharamshala", "Dharampur", "Dinanagar", "Doraha", "Dunera", "Faridkot", "Fatehpur", "Fazilka", "Ferozepur Bus Stand", "Ferozepur Cantt", "Golden Temple", "Goniana", "Gurdaspur", "Gurdaspur Bypass", "Gurugram (IFFCO Chowk)", "Haridwar", "Harike", "Hisar", "Hoshiarpur Bus Stand", "Huda City Centre", "IGI Airport T3", "Jagraon", "Jaipur (Sindhi Camp)", "Jalalabad", "Jalandhar (Rama Mandi Chowk)", "Jalandhar Bus Stand", "Jalandhar Bypass", "Jalandhar Cantt", "Jallianwala Bagh", "Jammu Bus Stand", "Kaithal", "Kalanwali", "Kalka", "Kangra", "Kapurthala", "Karnal", "Karnal Bypass", "Kathua", "Keylong", "Khanna", "Kharar", "Kiratpur Sahib", "Kot Kapura", "Kullu", "Leh", "Ludhiana (Samrala Chowk)", "Ludhiana Bus Stand", "Manali (Private Bus Stand)", "Mandi", "Mandi Dabwali", "Mansa", "Mathura", "Maur", "Meerut Bypass", "Moga Bus Stand", "Mohali Bus Stand", "Mohali Bus Stand Phase 8", "Mukerian", "Mullanpur Dakha", "Nawanshahr", "New Delhi Metro Station", "Noida Sector 37", "Nurpur", "Panchkula Bus Stand", "Panipat", "Pathankot", "Pathankot Bus Stand", "Pathankot Cantt", "Patiala Bus Stand", "Phagwara", "Phillaur", "Pipli", "Punjabi Bagh", "Raj Ghat", "Rajpura", "Rajpura Town", "Rampura Phul", "Ratangarh", "Rishikesh", "Roorkee", "Samba", "Samrala", "Sangrur", "Sangrur Bus Stand", "Sarai Kale Khan ISBT", "Sarchu", "Shimla (ISBT Tutikandi)", "Shivaji Stadium", "Sikar", "Sirhind", "Sirsa Bus Stand", "Solan", "Sonipat", "Sonipat (Murthal Dhaba)", "South Extension", "Talwandi Bhai", "Tarn Taran", "Una", "Wagah Border", "Zirakpur Crossing"]
+  const recommendation = (event)=>{
+    const val = event.target.value;
 
+    if(event.target.id === "st"){
+      setStartLocation(val);
+    }
+    else if(event.target.id === "end"){
+      setEndLocation(val);
+    }
+    if(val.length > 0){
+      const lowercased = val.toLowerCase().trim();
+      const filteredSuggestions = recommendations.filter(item =>
+          item.toLowerCase().startsWith(lowercased)
+      );
+      setSuggestion(filteredSuggestions);
+    }
+    else setSuggestion([]);
+    console.log(suggestion);
+  }
   const handleFindBuses = async (event) => {
     event.preventDefault();
     if (!startLocation.trim() || !endLocation.trim()) return;
@@ -169,17 +188,17 @@ export default function PlanyouTrip() {
                 <label htmlFor="start-location" className="block text-lg font-medium leading-6">From</label>
                 <div className="relative mt-2">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
-                  <input type="text" value={startLocation} onChange={(e) => setStartLocation(e.target.value)} className="block w-full rounded-md border-0 bg-gray-100 dark:bg-white/5 py-3 pl-10 pr-3 text-lg" placeholder="e.g., Amritsar" required />
+                  <input type="text" value={startLocation} id="st" onChange={(e) => recommendation(e)} className="block w-full rounded-md border-0 bg-gray-100 dark:bg-white/5 py-3 pl-10 pr-3 text-lg" placeholder="e.g., Amritsar" required />
                 </div>
               </div>
-              <button type="button" onClick={handleSwap} className="mt-8 rounded-full p-2 text-gray-500 dark:text-gray-400 transition hover:bg-gray-200 dark:hover:bg-white/10" aria-label="Swap locations">
+              <button type="button" onClick={handleSwap} id="end" className="mt-8 rounded-full p-2 text-gray-500 dark:text-gray-400 transition hover:bg-gray-200 dark:hover:bg-white/10" aria-label="Swap locations">
                 <SwapIcon />
               </button>
               <div className="w-full">
                 <label htmlFor="end-location" className="block text-lg font-medium leading-6">To</label>
                 <div className="relative mt-2">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
-                  <input type="text" value={endLocation} onChange={(e) => setEndLocation(e.target.value)} className="block w-full rounded-md border-0 bg-gray-100 dark:bg-white/5 py-3 pl-10 pr-3 text-lg" placeholder="e.g., Ludhiana" required />
+                  <input type="text" value={endLocation} onChange={(e) => recommendation(e)} className="block w-full rounded-md border-0 bg-gray-100 dark:bg-white/5 py-3 pl-10 pr-3 text-lg" placeholder="e.g., Ludhiana" required />
                 </div>
               </div>
             </div>
