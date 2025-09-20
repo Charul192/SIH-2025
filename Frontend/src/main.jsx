@@ -27,12 +27,12 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       {/* Child routes are nested and will be rendered in the Outlet */}
       <Route path="" element={<Home />} />
-      <Route path="bus-tracker" element={<Bustracker />} />
-      <Route path="schedule" element={<Schedule />} />
-      <Route path="plan-your-trip" element={<Planyoutrip />} />
+      <Route path="/bus-tracker" element={<Bustracker />} />
+      <Route path="/schedule" element={<Schedule />} />
+      <Route path="/plan-your-trip" element={<Planyoutrip />} />
        <Route path="/map" element={<MapPage />} />
-      <Route path="about" element={<About />} />
-      <Route path="devpage" element={<Developer />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/devpage" element={<Developer />} />
       <Route path="/feedback" element={<Feedback />} />
     </Route>
   )
