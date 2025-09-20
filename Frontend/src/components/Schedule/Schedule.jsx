@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const base_URL = import.meta.env.VITE_API_URL;
+const base_URL = "http://localhost:8000";
 
 export default function Schedule() {
   const [bus, setBus] = useState(null);
   const [schedule, setSchedule] = useState([]);
-  const [bus_num, setBus_num] = useState("");
+  const [bus_num, setBusnum] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [searchedBus, setSearchedBus] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 30000);
@@ -68,8 +69,11 @@ export default function Schedule() {
     try {
       const response = await axios.get(`${base_URL}/api/bus/${bus_num}`);
       setBus(response.data);
+
       // We store the raw route data, the new formatTime will handle it
       setSchedule(response.data.route);
+
+      // console.log(response.data);
     } catch (err) {
       console.log(err);
     } finally {
@@ -94,8 +98,8 @@ export default function Schedule() {
             <input
               type="text"
               name="search"
-              value={busNum}
-              onChange={(e) => setBusNum(e.target.value)}
+              value={bus_num}
+              onChange={(e) => setBusnum(e.target.value)}
               className="block w-full rounded-md border-0 bg-white/5 py-3 px-4 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6"
 
               placeholder="Enter bus number..."
@@ -117,8 +121,8 @@ export default function Schedule() {
               <p className="mt-1 text-gray-400">
                 Showing schedule for:{" "}
                 <span className="font-medium text-white">
-        {`${bus.busId} - ${bus.headsign}`}
-      </span>
+                  {`${bus.busId} - ${bus.headsign}`}
+                </span>
               </p>
               <p className="mt-1 text-gray-400">
                 Frequency:{" "}
