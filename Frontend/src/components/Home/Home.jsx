@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
+import FAQ from "../FAQs/faqs";
 
 // Helper components
 const CheckIcon = ({ className }) => (
@@ -127,6 +128,7 @@ export default function Home() {
                   </div>
               ))}
             </div>
+            <FAQ/>
           </div>
         </div>
       </main>
