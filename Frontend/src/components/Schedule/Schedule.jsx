@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react"; // FIX: useContext import kiya
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { AppContext } from "../../context/AppContext"; // FIX: AppContext import kiya
+import { AppContext } from "../../context/AppContext";
 
 const base_URL = "http://localhost:8000";
 
 export default function Schedule() {
-  // FIX: AppContext se Dark theme ka state liya
   const { Dark } = useContext(AppContext);
 
   const [bus, setBus] = useState(null);
@@ -13,6 +12,12 @@ export default function Schedule() {
   const [bus_num, setBusnum] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // --- NEW ---: State for suggestions
+  const [suggestion, setSuggestion] = useState([]);
+
+  // --- NEW ---: Mock data for bus number recommendations
+  const busNumberRecommendations = ["1", "2", "3A", "7", "10", "15B", "22", "101", "125", "251", "501", "502", "707", "715", "801"];
 
   // Helper functions remain unchanged.
   const formatTime = (timeData) => {
@@ -55,6 +60,7 @@ export default function Schedule() {
     setBus(null);
     setError(null);
     setSchedule([]);
+    setSuggestion([]); // Hide suggestions on search
 
     try {
       const response = await axios.get(`${base_URL}/api/bus/${bus_num}`);
@@ -68,54 +74,85 @@ export default function Schedule() {
     }
   };
 
+  // --- NEW ---: Handler for input change to show suggestions
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setBusnum(value);
+
+    if (value.length > 0) {
+      const filteredSuggestions = busNumberRecommendations.filter(num =>
+        num.toLowerCase().startsWith(value.toLowerCase())
+      );
+      setSuggestion(filteredSuggestions);
+    } else {
+      setSuggestion([]);
+    }
+  };
+
+  // --- NEW ---: Handler for clicking a suggestion
+  const handleSuggestionClick = (num) => {
+    setBusnum(num);
+    setSuggestion([]);
+  };
+
   return (
-    // FIX: Main container ab theme-aware hai
     <div className={`w-full min-h-screen transition-colors duration-300 ${Dark ? 'bg-black text-slate-50' : 'bg-white text-slate-900'}`}>
       <div className="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">
             View Bus Schedules
           </h1>
-          {/* FIX: Paragraph ka color dynamic hai */}
           <p className={`mx-auto mt-4 max-w-2xl text-xl ${Dark ? 'text-slate-400' : 'text-slate-600'}`}>
             Find the complete schedule for any bus by entering its number.
           </p>
         </div>
         <div className="mx-auto mt-10 max-w-xl">
-          <form onSubmit={handleQuery} className="flex items-center gap-x-4">
-            {/* FIX: Input field ab theme-aware hai */}
-            <input
-              type="text"
-              name="search"
-              value={bus_num}
-              onChange={(e) => setBusnum(e.target.value)}
-              className={`block w-full rounded-md border-0 py-3 px-4 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6 ${Dark ? 'bg-white/5 text-white ring-white/10' : 'bg-slate-100 text-slate-900 ring-slate-300'}`}
-              placeholder="Enter Bus Number..."
-            />
+          <form onSubmit={handleQuery} className="flex items-start gap-x-4">
+            {/* --- FIX ---: Wrapped input in a relative div for dropdown positioning */}
+            <div className="relative w-full">
+              <input
+                type="text"
+                name="search"
+                value={bus_num}
+                onChange={handleInputChange} // Changed to new handler
+                className={`block w-full rounded-md border-0 py-3 px-4 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-blue-500 text-lg sm:leading-6 ${Dark ? 'bg-white/5 text-white ring-white/10' : 'bg-slate-100 text-slate-900 ring-slate-300'}`}
+                placeholder="Enter Bus Number..."
+                autoComplete="off" // Prevent browser's default autocomplete
+              />
+              {/* --- NEW ---: Suggestions Dropdown */}
+              {suggestion.length > 0 && (
+                <ul className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ${Dark ? 'bg-slate-800' : 'bg-white'}`}>
+                  {suggestion.map((item) => (
+                    <li key={item} onClick={() => handleSuggestionClick(item)} className={`relative cursor-pointer select-none py-2 px-4 ${Dark ? 'text-slate-200 hover:bg-slate-700' : 'text-gray-900 hover:bg-slate-100'}`}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             <button
               type="submit"
               disabled={isLoading}
-              className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-lg font-semibold text-white shadow-sm transition-transform hover:scale-105 disabled:opacity-50 disabled:scale-100"
+              className="flex-shrink-0 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-lg font-semibold text-white shadow-sm transition-transform hover:scale-105 disabled:opacity-50 disabled:scale-100"
             >
               {isLoading ? 'Searching...' : 'Find'}
             </button>
           </form>
         </div>
 
+        {/* --- REST OF THE COMPONENT (No changes here) --- */}
         <div className="mt-16">
           {isLoading && (
             <p className={`text-center text-lg ${Dark ? 'text-slate-400' : 'text-slate-600'}`}>Loading schedule...</p>
           )}
 
           {error && (
-            // FIX: Error message box ab theme-aware hai
             <div className={`rounded-lg border p-8 text-center ${Dark ? 'border-red-700/40 bg-red-900/20 text-red-300' : 'border-red-400 bg-red-100 text-red-700'}`}>
               <p className="text-xl">{error}</p>
             </div>
           )}
 
           {!isLoading && !error && !bus && (
-            // FIX: Initial placeholder box ab theme-aware hai
             <div className={`rounded-lg border border-dashed p-8 text-center ${Dark ? 'border-gray-700 text-gray-500' : 'border-gray-300 text-gray-500'}`}>
               <p className="text-xl">Enter a bus number to view its schedule.</p>
             </div>
@@ -140,7 +177,6 @@ export default function Schedule() {
               <div className="mt-8 flow-root">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    {/* FIX: Table dividers ab theme-aware hain */}
                     <table className={`min-w-full divide-y ${Dark ? 'divide-gray-700' : 'divide-gray-200'}`}>
                       <thead>
                         <tr>
@@ -155,7 +191,6 @@ export default function Schedule() {
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-lg font-medium sm:pl-0">
                               {stop.name}
                             </td>
-                            {/* FIX: Table cell text color ab dynamic hai */}
                             <td className={`whitespace-nowrap px-3 py-4 text-lg ${Dark ? 'text-gray-300' : 'text-gray-600'}`}>
                               {formatTime(stop.arrivalTime)}
                             </td>

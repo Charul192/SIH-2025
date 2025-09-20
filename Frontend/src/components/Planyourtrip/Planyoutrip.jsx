@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react"; // FIX: useContext import kiya
+import React, { useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from "../../context/AppContext"; // FIX: AppContext import kiya
+import { AppContext } from "../../context/AppContext";
 
 // --- Icon Components (No changes needed) ---
 const LocationPinIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.1.4-.223.654-.369.623-.359 1.445-.835 2.343-1.441a10.025 10.025 0 002.146-2.25C17.75 11.202 18 10.205 18 9.25C18 6.097 14.433 3.5 10 3.5S2 6.097 2 9.25c0 .955.25 1.952.76 3.142a10.025 10.025 0 002.146 2.25c.898.606 1.72 1.082 2.343 1.441.255.146.468.269.654-.369a5.741 5.741 0 00.281.14l.018.008.006.003zM10 11.25a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg> );
@@ -26,7 +26,6 @@ const formatTime = (timeData) => {
   return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 };
 
-// FIX: JourneyStops is now theme-aware
 const JourneyStops = ({ route, startStopName, endStopName, Dark }) => {
   const startIndex = route.findIndex(s => s.name.toLowerCase() === startStopName.toLowerCase());
   const endIndex = route.findIndex(s => s.name.toLowerCase() === endStopName.toLowerCase());
@@ -56,7 +55,7 @@ const JourneyStops = ({ route, startStopName, endStopName, Dark }) => {
 };
 
 export default function PlanyouTrip() {
-  const { Dark } = useContext(AppContext); // FIX: Get theme state from context
+  const { Dark } = useContext(AppContext);
   const navigate = useNavigate();
   const [startLocation, setStartLocation] = useState("");
   const [endLocation, setEndLocation] = useState("");
@@ -65,26 +64,41 @@ export default function PlanyouTrip() {
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
   const [suggestion, setSuggestion] = useState([]);
-  const recommendations = ["Abohar Bus Stand", "Adampur Doaba", "Aerocity", "Agra (ISBT)", "Ambala Cantt", "Ambala Cantt Bus Stand", "Amritsar (Opp. Bus Stand)", "Amritsar Bus Stand", "Banga", "Banikhet", "Banur", "Barnala", "Batala", "Bathinda Bus Stand", "Beas", "Behror", "Bhawanigarh", "Bikaner", "Bilaspur (HP)", "Chandigarh (ISBT Sector 17)", "Chandigarh (ISBT Sector 43)", "Dalhousie Bus Stand", "Dasuya", "Delhi (Anand Vihar ISBT)", "Delhi (Dhaula Kuan)", "Delhi (ISBT Kashmiri Gate)", "Dera Bassi", "Dhaula Kuan", "Dharamshala", "Dharampur", "Dinanagar", "Doraha", "Dunera", "Faridkot", "Fatehpur", "Fazilka", "Ferozepur Bus Stand", "Ferozepur Cantt", "Golden Temple", "Goniana", "Gurdaspur", "Gurdaspur Bypass", "Gurugram (IFFCO Chowk)", "Haridwar", "Harike", "Hisar", "Hoshiarpur Bus Stand", "Huda City Centre", "IGI Airport T3", "Jagraon", "Jaipur (Sindhi Camp)", "Jalalabad", "Jalandhar (Rama Mandi Chowk)", "Jalandhar Bus Stand", "Jalandhar Bypass", "Jalandhar Cantt", "Jallianwala Bagh", "Jammu Bus Stand", "Kaithal", "Kalanwali", "Kalka", "Kangra", "Kapurthala", "Karnal", "Karnal Bypass", "Kathua", "Keylong", "Khanna", "Kharar", "Kiratpur Sahib", "Kot Kapura", "Kullu", "Leh", "Ludhiana (Samrala Chowk)", "Ludhiana Bus Stand", "Manali (Private Bus Stand)", "Mandi", "Mandi Dabwali", "Mansa", "Mathura", "Maur", "Meerut Bypass", "Moga Bus Stand", "Mohali Bus Stand", "Mohali Bus Stand Phase 8", "Mukerian", "Mullanpur Dakha", "Nawanshahr", "New Delhi Metro Station", "Noida Sector 37", "Nurpur", "Panchkula Bus Stand", "Panipat", "Pathankot", "Pathankot Bus Stand", "Pathankot Cantt", "Patiala Bus Stand", "Phagwara", "Phillaur", "Pipli", "Punjabi Bagh", "Raj Ghat", "Rajpura", "Rajpura Town", "Rampura Phul", "Ratangarh", "Rishikesh", "Roorkee", "Samba", "Samrala", "Sangrur", "Sangrur Bus Stand", "Sarai Kale Khan ISBT", "Sarchu", "Shimla (ISBT Tutikandi)", "Shivaji Stadium", "Sikar", "Sirhind", "Sirsa Bus Stand", "Solan", "Sonipat", "Sonipat (Murthal Dhaba)", "South Extension", "Talwandi Bhai", "Tarn Taran", "Una", "Wagah Border", "Zirakpur Crossing"]
-  const recommendation = (event)=>{
-    const val = event.target.value;
+  const [activeInput, setActiveInput] = useState(null);
 
-    if(event.target.id === "st"){
+  const recommendations = ["Abohar Bus Stand", "Adampur Doaba", "Aerocity", "Agra (ISBT)", "Ambala Cantt", "Ambala Cantt Bus Stand", "Amritsar (Opp. Bus Stand)", "Amritsar Bus Stand", "Banga", "Banikhet", "Banur", "Barnala", "Batala", "Bathinda Bus Stand", "Beas", "Behror", "Bhawanigarh", "Bikaner", "Bilaspur (HP)", "Chandigarh (ISBT Sector 17)", "Chandigarh (ISBT Sector 43)", "Dalhousie Bus Stand", "Dasuya", "Delhi (Anand Vihar ISBT)", "Delhi (Dhaula Kuan)", "Delhi (ISBT Kashmiri Gate)", "Dera Bassi", "Dhaula Kuan", "Dharamshala", "Dharampur", "Dinanagar", "Doraha", "Dunera", "Faridkot", "Fatehpur", "Fazilka", "Ferozepur Bus Stand", "Ferozepur Cantt", "Golden Temple", "Goniana", "Gurdaspur", "Gurdaspur Bypass", "Gurugram (IFFCO Chowk)", "Haridwar", "Harike", "Hisar", "Hoshiarpur Bus Stand", "Huda City Centre", "IGI Airport T3", "Jagraon", "Jaipur (Sindhi Camp)", "Jalalabad", "Jalandhar (Rama Mandi Chowk)", "Jalandhar Bus Stand", "Jalandhar Bypass", "Jalandhar Cantt", "Jallianwala Bagh", "Jammu Bus Stand", "Kaithal", "Kalanwali", "Kalka", "Kangra", "Kapurthala", "Karnal", "Karnal Bypass", "Kathua", "Keylong", "Khanna", "Kharar", "Kiratpur Sahib", "Kot Kapura", "Kullu", "Leh", "Ludhiana (Samrala Chowk)", "Ludhiana Bus Stand", "Manali (Private Bus Stand)", "Mandi", "Mandi Dabwali", "Mansa", "Mathura", "Maur", "Meerut Bypass", "Moga Bus Stand", "Mohali Bus Stand", "Mohali Bus Stand Phase 8", "Mukerian", "Mullanpur Dakha", "Nawanshahr", "New Delhi Metro Station", "Noida Sector 37", "Nurpur", "Panchkula Bus Stand", "Panipat", "Pathankot", "Pathankot Bus Stand", "Pathankot Cantt", "Patiala Bus Stand", "Phagwara", "Phillaur", "Pipli", "Punjabi Bagh", "Raj Ghat", "Rajpura", "Rajpura Town", "Rampura Phul", "Ratangarh", "Rishikesh", "Roorkee", "Samba", "Samrala", "Sangrur", "Sangrur Bus Stand", "Sarai Kale Khan ISBT", "Sarchu", "Shimla (ISBT Tutikandi)", "Shivaji Stadium", "Sikar", "Sirhind", "Sirsa Bus Stand", "Solan", "Sonipat", "Sonipat (Murthal Dhaba)", "South Extension", "Talwandi Bhai", "Tarn Taran", "Una", "Wagah Border", "Zirakpur Crossing"];
+
+  const handleInputChange = (event) => {
+    const val = event.target.value;
+    const inputId = event.target.id;
+
+    if (inputId === "st") {
       setStartLocation(val);
-    }
-    else if(event.target.id === "end"){
+    } else if (inputId === "end") {
       setEndLocation(val);
     }
-    if(val.length > 0){
+
+    if (val.length > 0) {
       const lowercased = val.toLowerCase().trim();
       const filteredSuggestions = recommendations.filter(item =>
-          item.toLowerCase().startsWith(lowercased)
+        item.toLowerCase().startsWith(lowercased)
       );
       setSuggestion(filteredSuggestions);
+    } else {
+      setSuggestion([]);
     }
-    else setSuggestion([]);
-    console.log(suggestion);
-  }
+  };
+
+  const handleSuggestionClick = (suggestionValue) => {
+    if (activeInput === 'start') {
+        setStartLocation(suggestionValue);
+    } else if (activeInput === 'end') {
+        setEndLocation(suggestionValue);
+    }
+    setSuggestion([]);
+    setActiveInput(null);
+  };
+
   const handleFindBuses = async (event) => {
     event.preventDefault();
     if (!startLocation.trim() || !endLocation.trim()) return;
@@ -113,7 +127,6 @@ export default function PlanyouTrip() {
     setEndLocation(startLocation);
   };
 
-  // FIX: BusCard is now theme-aware
   const BusCard = ({ bus, startStop, endStop }) => (
     <div className={`rounded-lg p-4 w-full ${Dark ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
       <div className="flex justify-between items-start">
@@ -138,7 +151,6 @@ export default function PlanyouTrip() {
     </div>
   );
   
-  // FIX: ConnectingRouteCard is now theme-aware
   const ConnectingRouteCard = ({ route, startStop, endStop }) => {
     const arrivalAtTransferStop = route.leg1.route.find(s => s.name.toLowerCase() === route.transferPoint.toLowerCase());
     const departureFromTransferStop = route.leg2.route.find(s => s.name.toLowerCase() === route.transferPoint.toLowerCase());
@@ -177,7 +189,6 @@ export default function PlanyouTrip() {
   };
 
   return (
-    // FIX: Main container is theme-aware
     <div className={`w-full min-h-screen transition-colors duration-300 ${Dark ? 'bg-black text-slate-50' : 'bg-white text-slate-900'}`}>
       <div className="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8">
         <div className="text-center">
@@ -188,31 +199,76 @@ export default function PlanyouTrip() {
         </div>
         <div className="mx-auto mt-10 max-w-xl">
           <form className="space-y-6" onSubmit={handleFindBuses}>
-            <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-end gap-4">
+              
               <div className="w-full">
-                <label htmlFor="start-location" className="block text-lg font-medium leading-6">From</label>
+                <label htmlFor="st" className="block text-lg font-medium leading-6">From</label>
                 <div className="relative mt-2">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
-
-                  {/* FIX: Input field is theme-aware */}
-                  <input type="text" value={startLocation} onChange={(e) => setStartLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g. Amritsar" required />
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                    <LocationPinIcon />
+                  </div>
+                  <input 
+                    type="text" 
+                    value={startLocation} 
+                    id="st" 
+                    onChange={handleInputChange} 
+                    onFocus={() => setActiveInput('start')} 
+                    className={`block w-full rounded-md border-0 h-12 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} 
+                    placeholder="e.g. Amritsar" 
+                    required 
+                    autoComplete="off" 
+                  />
+                  {activeInput === 'start' && suggestion.length > 0 && (
+                    <ul className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ${Dark ? 'bg-slate-800' : 'bg-white'}`}>
+                      {suggestion.map((item) => (
+                        <li key={item} onClick={() => handleSuggestionClick(item)} className={`relative cursor-pointer select-none py-2 px-4 ${Dark ? 'text-slate-200 hover:bg-slate-700' : 'text-gray-900 hover:bg-slate-100'}`}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
-              {/* FIX: Swap button is theme-aware */}
-              <button type="button" onClick={handleSwap} className={`mt-8 rounded-full p-2 transition ${Dark ? 'text-gray-400 hover:bg-white/10' : 'text-gray-500 hover:bg-slate-200'}`} aria-label="Swap locations">
 
+              <button 
+                type="button" 
+                onClick={handleSwap} 
+                className={`mb-1 flex-shrink-0 rounded-full p-2 transition ${Dark ? 'text-gray-400 hover:bg-white/10' : 'text-gray-500 hover:bg-slate-200'}`} 
+                aria-label="Swap locations"
+              >
                 <SwapIcon />
               </button>
-              <div className="w-full">
-                <label htmlFor="end-location" className="block text-lg font-medium leading-6">To</label>
-                <div className="relative mt-2">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
-                  {/* FIX: Input field is theme-aware */}
-                  <input type="text" value={endLocation} onChange={(e) => setEndLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g. Ludhiana" required />
 
+              <div className="w-full">
+                <label htmlFor="end" className="block text-lg font-medium leading-6">To</label>
+                <div className="relative mt-2">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                    <LocationPinIcon />
+                  </div>
+                  <input 
+                    type="text" 
+                    value={endLocation} 
+                    id="end" 
+                    onChange={handleInputChange} 
+                    onFocus={() => setActiveInput('end')} 
+                    className={`block w-full rounded-md border-0 h-12 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} 
+                    placeholder="e.g. Ludhiana" 
+                    required 
+                    autoComplete="off" 
+                  />
+                  {activeInput === 'end' && suggestion.length > 0 && (
+                    <ul className={`absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ${Dark ? 'bg-slate-800' : 'bg-white'}`}>
+                      {suggestion.map((item) => (
+                        <li key={item} onClick={() => handleSuggestionClick(item)} className={`relative cursor-pointer select-none py-2 px-4 ${Dark ? 'text-slate-200 hover:bg-slate-700' : 'text-gray-900 hover:bg-slate-100'}`}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>
+
             <div className="flex justify-center pt-4">
               <button type="submit" disabled={isLoading} className="flex items-center justify-center w-full sm:w-auto rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-lg font-semibold text-white shadow-sm transition-transform hover:scale-105 disabled:opacity-50">
                 {isLoading && <LoadingSpinner />}
@@ -228,7 +284,6 @@ export default function PlanyouTrip() {
             {isLoading && (<div className={`flex justify-center items-center gap-3 text-lg p-8 ${Dark ? 'text-slate-400' : 'text-slate-500'}`}><LoadingSpinner /><span>Finding the best routes for you...</span></div>)}
             {error && <p className="text-center text-lg text-red-600 dark:text-red-500">{error}</p>}
             
-            {/* FIX: Placeholder boxes are theme-aware */}
             {!isLoading && !error && searched && foundRoutes.length === 0 && (<div className={`rounded-lg border-2 border-dashed p-12 text-center text-gray-500 ${Dark ? 'border-slate-700' : 'border-slate-300'}`}><NoResultsIcon /><p className="text-lg mt-4">No direct or connecting buses found for this route.</p></div>)}
 
             {!isLoading && !error && foundRoutes.map((route, index) => {
