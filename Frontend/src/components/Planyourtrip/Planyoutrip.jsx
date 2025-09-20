@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-const base_URL = import.meta.env.VITE_API_URL;
 
 // --- Icon Components ---
 const LocationPinIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.1.4-.223.654-.369.623-.359 1.445-.835 2.343-1.441a10.025 10.025 0 002.146-2.25C17.75 11.202 18 10.205 18 9.25C18 6.097 14.433 3.5 10 3.5S2 6.097 2 9.25c0 .955.25 1.952.76 3.142a10.025 10.025 0 002.146 2.25c.898.606 1.72 1.082 2.343 1.441.255.146.468.269.654-.369a5.741 5.741 0 00.281.14l.018.008.006.003zM10 11.25a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg> );
 const LoadingSpinner = () => ( <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> );
 const NoResultsIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 mx-auto text-gray-500"><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg> );
 const TransferIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg> );
-// --- NEW SWAP ICON ---
 const SwapIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 sm:rotate-90"><path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" /></svg> );
 
 
@@ -31,6 +27,7 @@ export default function PlanyouTrip() {
     setSearched(true);
     setFoundRoutes([]);
 
+    // Mock API call
     setTimeout(() => {
         const mockData = [
             { type: 'direct', busId: '42A', operator: 'City Transit', headsign: 'Express', route: [{name: startLocation || 'Start'}, {name: endLocation || 'End'}] },
@@ -41,7 +38,6 @@ export default function PlanyouTrip() {
     }, 1500);
   };
 
-  // --- NEW SWAP FUNCTION ---
   const handleSwap = () => {
     setStartLocation(endLocation);
     setEndLocation(startLocation);
@@ -90,7 +86,6 @@ export default function PlanyouTrip() {
         </div>
         <div className="mx-auto mt-10 max-w-xl">
           <form className="space-y-6" onSubmit={handleFindBuses}>
-            {/* --- UPDATED FORM LAYOUT WITH SWAP BUTTON --- */}
             <div className="flex flex-col sm:flex-row items-center gap-4">
               {/* From Input */}
               <div className="w-full">
@@ -173,3 +168,4 @@ export default function PlanyouTrip() {
     </div>
   );
 }
+
