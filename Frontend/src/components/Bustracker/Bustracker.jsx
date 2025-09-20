@@ -172,7 +172,7 @@ export default function Bustracker() {
                <p className="text-xl">Bus not found. Please check the Bus ID and try again.</p>
              </div>
           )}
-
+            console.log(foundBus);
           {foundBus && (
             <div className="rounded-lg border border-gray-700 bg-zinc-900 p-6">
               {/* --- Header --- */}

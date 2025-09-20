@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 // CHANGED: Removed the incorrect Polyline import, added useMap
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import {routePoints} from "../../../../Backend/GPS.js"
+import {getRoute} from "../../../../Backend/gettingRoutes.js"
 
 const API_KEY = "AIzaSyARSqYspchcCQGDRl1izB0_GaqQ6A2Yz6w";
 const MAPS_KEY = "43b870af48005989f31cfc28";
@@ -57,6 +58,8 @@ export default function MapPage() {
 
   const busLocation = location.state?.location;
   const busRoute = location.state?.route;
+  console.log(busRoute);
+
 
   if (!busLocation || !busRoute) {
     return (
