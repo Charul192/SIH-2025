@@ -4,13 +4,35 @@ import Logo from "../logo/logo";
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 import '../../index.css'; 
 import GoogleTranslate from "./GoogleTranslate";
+import { AppContext } from "../../context/AppContext";
 
-export default function Header({ theme, toggleTheme }) {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-   // Removed unused 'changeLanguage'
+  const { Dark, setDark } = useContext(AppContext);
+
+  // Helper function to create dynamic NavLink classes
+  const getNavLinkClass = ({ isActive }) => {
+    const baseClass = "block py-2 text-lg transition-colors duration-300";
+    let activeClass = "";
+    let inactiveClass = "";
+    let hoverClass = "";
+
+    if (Dark) {
+      activeClass = "text-white";
+      inactiveClass = "text-slate-400";
+      hoverClass = "hover:text-white";
+    } else {
+      activeClass = "text-slate-900";
+      inactiveClass = "text-slate-500";
+      hoverClass = "hover:text-slate-900";
+    }
+
+    return `${baseClass} ${hoverClass} ${isActive ? activeClass : inactiveClass}`;
+  };
 
   return (
-    <header className="relative top-0 z-50 w-full bg-white/80 backdrop-blur-md dark:bg-black/80">
+    // FIX: Main header background is now theme-aware and has a subtle bottom border
+    <header className={`sticky top-0 z-50 w-full transition-colors duration-300 ${Dark ? 'bg-black border-b border-slate-700 backdrop-blur-md' : 'bg-white/80 border-b border-slate-200 backdrop-blur-md'}`}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8">
         <Link to="/" className="flex items-center" onClick={() => setIsMenuOpen(false)}>
           <Logo />
@@ -18,9 +40,10 @@ export default function Header({ theme, toggleTheme }) {
 
         {/* --- Hamburger Menu Button --- */}
         <div className="lg:hidden">
+          {/* FIX: Hamburger icon color is now dynamic */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="relative z-50 h-8 w-8 text-gray-800 dark:text-white focus:outline-none"
+            className={`relative z-50 h-8 w-8 focus:outline-none ${Dark ? 'text-white' : 'text-slate-800'}`}
           >
             <span className="sr-only">Open main menu</span>
             <div className="absolute left-1/2 top-1/2 block w-7 -translate-x-1/2 -translate-y-1/2 transform">
@@ -32,32 +55,36 @@ export default function Header({ theme, toggleTheme }) {
         </div>
 
         {/* --- Navigation Links & Controls --- */}
-        <div className={`absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md dark:bg-black/95 transition-all duration-300 ease-in-out lg:static lg:flex lg:w-auto lg:items-center lg:bg-transparent lg:dark:bg-transparent ${ isMenuOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-4 lg:opacity-100 lg:visible lg:translate-y-0"}`}>
-          <ul className="flex flex-col items-center gap-y-4 py-4 lg:flex-row lg:items-center lg:gap-x-6 lg:py-0 font-medium">
+        {/* FIX: Mobile menu background is now handled by the main header's styles */}
+        <div className={`absolute top-full left-0 w-full lg:static lg:flex lg:w-auto lg:items-center transition-all duration-300 ease-in-out ${ isMenuOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-4 lg:opacity-100 lg:visible lg:translate-y-0"}`}>
+          {/* FIX: Added a background for the mobile menu itself for better separation */}
+          <ul className={`flex flex-col items-center gap-y-4 py-4 lg:flex-row lg:items-center lg:gap-x-6 lg:py-0 font-medium w-full lg:w-auto ${Dark ? 'bg-slate-900 lg:bg-transparent' : 'bg-white lg:bg-transparent'}`}>
             <li>
-              <NavLink to="/" onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `block py-2 text-lg transition-colors duration-300 ${ isActive ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400" } hover:text-gray-900 dark:hover:text-white`}>Home</NavLink>
+              <NavLink to="/" onClick={() => setIsMenuOpen(false)} className={getNavLinkClass}>Home</NavLink>
             </li>
             <li>
-              <NavLink to="/bus-tracker" onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `block py-2 text-lg transition-colors duration-300 ${ isActive ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400" } hover:text-gray-900 dark:hover:text-white`}>Bus Tracker</NavLink>
+              <NavLink to="/bus-tracker" onClick={() => setIsMenuOpen(false)} className={getNavLinkClass}>Bus Tracker</NavLink>
             </li>
             <li>
-              <NavLink to="/schedule" onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `block py-2 text-lg transition-colors duration-300 ${ isActive ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400" } hover:text-gray-900 dark:hover:text-white`}>Schedule</NavLink>
+              <NavLink to="/schedule" onClick={() => setIsMenuOpen(false)} className={getNavLinkClass}>Schedule</NavLink>
             </li>
             <li>
-              <NavLink to="/plan-your-trip" onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `block py-2 text-lg transition-colors duration-300 ${ isActive ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400" } hover:text-gray-900 dark:hover:text-white`}>Plan your trip</NavLink>
+              <NavLink to="/plan-your-trip" onClick={() => setIsMenuOpen(false)} className={getNavLinkClass}>Plan your trip</NavLink>
             </li>
             
-            {/* CHANGE: GoogleTranslate is now in its own list item for proper separation */}
+            <li className="lg:ml-4">
               <GoogleTranslate />
-            {/* CHANGE: The theme toggle button is also in its own list item */}
+            </li>
+            
             <li>
+              {/* FIX: Theme toggle hover effect is now dynamic */}
               <button
-                onClick={toggleTheme}
-                className="rounded-full p-2 transition-colors duration-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                onClick={() => setDark(prev => !prev)}
+                className={`rounded-full p-2 transition-colors duration-300 ${Dark ? 'hover:bg-slate-700' : 'hover:bg-slate-200'}`}
                 aria-label="Toggle theme"
               >
-                {theme === "light" ? (
-                  <MoonIcon className="h-6 w-6 text-gray-800" />
+                {!Dark ? (
+                  <MoonIcon className="h-6 w-6 text-slate-800" />
                 ) : (
                   <SunIcon className="h-6 w-6 text-yellow-400" />
                 )}

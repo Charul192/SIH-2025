@@ -1,8 +1,8 @@
-import React from "react";
-// 1. Removed FaTwitter from this import
+import React, { useContext } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { AppContext } from "../../context/AppContext"; // FIX: AppContext import kiya
 
-// --- Team information without images ---
+// --- Team information (No changes needed) ---
 const developersData = [
   {
     id: 1,
@@ -12,7 +12,6 @@ const developersData = [
     socials: {
       github: "https://github.com/Aashwat11",
       linkedin: "https://linkedin.com/in/",
-      // 2. Removed twitter property from each object
     },
   },
   {
@@ -68,19 +67,18 @@ const developersData = [
 ];
 
 
-// Reusable component for a single developer card
-function DeveloperCard({ name, title, bio, socials }) {
+// FIX: DeveloperCard ab 'Dark' prop leta hai taaki theme ke hisaab se style badal sake
+function DeveloperCard({ name, title, bio, socials, Dark }) {
   return (
-    <div className="flex transform flex-col rounded-2xl bg-slate-900/50 p-6 text-center shadow-lg ring-1 ring-white/10 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20">
+    <div className={`flex transform flex-col rounded-2xl p-6 text-center shadow-lg ring-1 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 ${Dark ? 'bg-slate-900/50 ring-white/10' : 'bg-slate-50 ring-slate-200'}`}>
       <div className="flex-grow">
-        <h3 className="text-xl font-bold text-white">{name}</h3>
-        <p className="mt-1 text-base font-medium text-blue-400">{title}</p>
-        <p className="mt-3 text-sm text-gray-400">{bio}</p>
+        <h3 className={`text-xl font-bold ${Dark ? 'text-white' : 'text-slate-900'}`}>{name}</h3>
+        <p className={`mt-1 text-base font-medium ${Dark ? 'text-blue-400' : 'text-blue-600'}`}>{title}</p>
+        <p className={`mt-3 text-sm ${Dark ? 'text-gray-400' : 'text-slate-500'}`}>{bio}</p>
       </div>
-      <div className="mt-4 flex gap-4 pt-4 border-t border-white/10 w-full justify-center">
-        <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-gray-400 hover:text-white transition-colors"><FaGithub size={24} /></a>
-        <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-gray-400 hover:text-white transition-colors"><FaLinkedin size={24} /></a>
-        {/* 3. Removed the anchor tag for Twitter */}
+      <div className={`mt-4 flex gap-4 pt-4 border-t w-full justify-center ${Dark ? 'border-white/10' : 'border-slate-200'}`}>
+        <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className={`transition-colors ${Dark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-slate-900'}`}><FaGithub size={24} /></a>
+        <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className={`transition-colors ${Dark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-slate-900'}`}><FaLinkedin size={24} /></a>
       </div>
     </div>
   );
@@ -89,14 +87,17 @@ function DeveloperCard({ name, title, bio, socials }) {
 
 // The main page component
 export default function Developer() {
+  const { Dark } = useContext(AppContext); // FIX: Get theme state
+
   return (
-    <div className="w-full bg-black py-20 px-4 sm:px-6 lg:px-8">
+    // FIX: Main container ab theme-aware hai
+    <div className={`w-full py-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${Dark ? 'bg-black' : 'bg-white'}`}>
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
+          <h1 className={`text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl ${Dark ? 'text-white' : 'text-slate-900'}`}>
             Meet the <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">Team</span>
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
+          <p className={`mx-auto mt-4 max-w-2xl text-lg ${Dark ? 'text-gray-400' : 'text-slate-600'}`}>
             The passionate minds behind this project, dedicated to improving your daily commute.
           </p>
         </div>
@@ -108,6 +109,7 @@ export default function Developer() {
               title={dev.title}
               bio={dev.bio}
               socials={dev.socials}
+              Dark={Dark} // FIX: Pass theme state to card
             />
           ))}
         </div>
