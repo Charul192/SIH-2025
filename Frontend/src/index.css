@@ -13,6 +13,9 @@ body {
     position: static !important; /* Prevents Google from shifting the page */
     box-sizing: border-box !important; /* Prevents padding issues */
 }
+::-webkit-scrollbar {
+    @apply hidden;
+  }
 
 /* Sometimes the banner is the first child of the body */
 body > .skiptranslate {
