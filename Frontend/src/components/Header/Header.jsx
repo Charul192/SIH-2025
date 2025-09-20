@@ -8,7 +8,7 @@ export default function Header({ theme, toggleTheme }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md dark:bg-black/80">
+    <header className="relative top-0 z-50 w-full bg-white/80 backdrop-blur-md dark:bg-black/80">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8">
         <Link to="/" className="flex items-center" onClick={() => setIsMenuOpen(false)}>
           <Logo />
