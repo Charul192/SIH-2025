@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import {BrowserRouter} from 'react-router-dom'
-
+import AppContextProvider from "./context/AppContext.jsx";
 // Import your components
 import Layout from "./Layout.jsx";
 import Home from "./components/Home/Home";
@@ -41,7 +41,9 @@ const router = createBrowserRouter(
 // 2. Render the app using the RouterProvider
 const root = createRoot(document.getElementById("root"));
 root.render(
-  <StrictMode>
+  // <StrictMode>
+    <AppContextProvider>
     <RouterProvider router={router} />
-  </StrictMode>
+    </AppContextProvider>
+  // </StrictMode>
 );
