@@ -20,6 +20,7 @@ import Developer from "./components/Developers_Page/developer.jsx"
 import MapPage from "./components/Bustracker/MapPage.jsx";
 import Feedback from "./components/Feedback/Feedback.jsx";
 import PrivacyPolicy from "./components/PrivacyPolicy/Privacy.jsx";
+import TermsAndConditions from "./components/TnC/Terms.jsx";
 
 // 1. Create the router configuration
 const router = createBrowserRouter(
@@ -36,6 +37,8 @@ const router = createBrowserRouter(
       <Route path="/devpage" element={<Developer />} />
       <Route path="/feedback" element={<Feedback />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/TnC" element={<TermsAndConditions />} />
+
     </Route>
   )
 );
