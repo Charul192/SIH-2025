@@ -58,7 +58,16 @@ export default function MapPage() {
 
   const busLocation = location.state?.location;
   const busRoute = location.state?.route;
-  console.log(busRoute);
+  // console.log(busRoute);
+  const routes = [];
+  busRoute.forEach(route => {
+      routes.push({
+            lat: route.location._latitude,
+            lng: route.location._longitude,
+      });
+  })
+    console.log(routes);
+
 
 
   if (!busLocation || !busRoute) {
