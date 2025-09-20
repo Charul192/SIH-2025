@@ -12,6 +12,7 @@ app.use(cors());
 
 // API Endpoint to get a bus by its ID
 app.get('/api/bus/:id', async (req, res) => {
+  console.log("Hell");
   try {
     const busId = Number(req.params.id);
     if (isNaN(busId)) {
@@ -26,6 +27,7 @@ app.get('/api/bus/:id', async (req, res) => {
     }
     
     const busData = snapshot.docs[0].data();
+    console.log(busData);
     res.status(200).json(busData);
   } catch (error) {
     console.error('Error fetching bus from Firestore:', error);

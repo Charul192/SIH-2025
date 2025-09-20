@@ -110,73 +110,111 @@ export default function Schedule() {
             </button>
           </form>
         </div>
-        
+
         {bus && schedule.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold">Schedule Details</h2>
-            <p className="mt-1 text-gray-400">
-              Showing schedule for:{" "}
-              <span className="font-medium text-white">{`${bus.busId} - ${bus.headsign}`}</span>
-            </p>
-            <p className="mt-1 text-gray-400">
-              Frequency:{" "}
-              <span className="font-medium text-white">{formatFrequency(bus.frequency)}</span>
-            </p>
-            <div className="mt-8 flow-root">
-              <ul className="-mb-8">
-                {schedule.map((stop, stopIdx) => {
-                  // --- UPDATED: This logic now also handles both data types ---
-                  const departureDate = stop.departureTime ? (stop.departureTime._seconds ? new Date(stop.departureTime._seconds * 1000) : new Date(stop.departureTime)) : null;
-                  const hasDeparted = departureDate && departureDate.getTime() < currentTime.getTime();
-                  const isLastStop = stopIdx === schedule.length - 1;
-
-        <div className="mt-16">
-          <h2 className="text-4xl font-bold">Schedule Details</h2>
-          <p className="mt-2 text-lg text-gray-400">
-            {searchedBus && (
-              <>
+            <div className="mt-16">
+              <h2 className="text-2xl font-bold">Schedule Details</h2>
+              <p className="mt-1 text-gray-400">
                 Showing schedule for:{" "}
-                <span className="font-medium text-white">Bus {searchedBus}</span>
-              </>
-            )}
-          </p>
+                <span className="font-medium text-white">
+        {`${bus.busId} - ${bus.headsign}`}
+      </span>
+              </p>
+              <p className="mt-1 text-gray-400">
+                Frequency:{" "}
+                <span className="font-medium text-white">
+        {formatFrequency(bus.frequency)}
+      </span>
+              </p>
 
-          <div className="mt-6 flow-root">
-            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                <table className="min-w-full divide-y divide-gray-700">
-                  <thead>
-                    <tr>
-                      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-lg font-semibold text-white sm:pl-0">
-                        Stop Name
-                      </th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-lg font-semibold text-white">
-                        Scheduled Arrival
-                      </th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-lg font-semibold text-white">
-                        Scheduled Departure
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-800">
-                    {schedule.map((stop) => (
-                      <tr key={stop.name}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-lg font-medium text-white sm:pl-0">
-                          {stop.name}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-lg text-gray-300">
-                          {stop.arrival}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-lg text-gray-300">
-                          {stop.departure}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="mt-8 flow-root">
+                <ul className="-mb-8">
+                  {schedule.map((stop, stopIdx) => {
+                    // --- UPDATED: Handle Firestore timestamp or JS Date ---
+                    const departureDate = stop.departureTime
+                        ? stop.departureTime._seconds
+                            ? new Date(stop.departureTime._seconds * 1000)
+                            : new Date(stop.departureTime)
+                        : null;
+
+                    const hasDeparted =
+                        departureDate && departureDate.getTime() < currentTime.getTime();
+                    const isLastStop = stopIdx === schedule.length - 1;
+
+                    return (
+                        <li key={stop.name} className="mb-4">
+                          <div className="flex items-center justify-between">
+                <span className="text-white text-lg font-medium">
+                  {stop.name}
+                </span>
+                            <span className="text-gray-400">
+                  {hasDeparted ? "Departed" : "Upcoming"}
+                </span>
+                          </div>
+                          {!isLastStop && <div className="ml-4 h-6 border-l border-gray-600"></div>}
+                        </li>
+                    );
+                  })}
+                </ul>
               </div>
+
+              {/* Extra table for searchedBus */}
+              {searchedBus && (
+                  <div className="mt-16">
+                    <h2 className="text-4xl font-bold">Schedule Details</h2>
+                    <p className="mt-2 text-lg text-gray-400">
+                      Showing schedule for:{" "}
+                      <span className="font-medium text-white">Bus {searchedBus}</span>
+                    </p>
+
+                    <div className="mt-6 flow-root">
+                      <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                          <table className="min-w-full divide-y divide-gray-700">
+                            <thead>
+                            <tr>
+                              <th
+                                  scope="col"
+                                  className="py-3.5 pl-4 pr-3 text-left text-lg font-semibold text-white sm:pl-0"
+                              >
+                                Stop Name
+                              </th>
+                              <th
+                                  scope="col"
+                                  className="px-3 py-3.5 text-left text-lg font-semibold text-white"
+                              >
+                                Scheduled Arrival
+                              </th>
+                              <th
+                                  scope="col"
+                                  className="px-3 py-3.5 text-left text-lg font-semibold text-white"
+                              >
+                                Scheduled Departure
+                              </th>
+                            </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-800">
+                            {schedule.map((stop) => (
+                                <tr key={stop.name}>
+                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-lg font-medium text-white sm:pl-0">
+                                    {stop.name}
+                                  </td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-lg text-gray-300">
+                                    {stop.arrival}
+                                  </td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-lg text-gray-300">
+                                    {stop.departure}
+                                  </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              )}
             </div>
-          </div>
         )}
       </div>
     </div>

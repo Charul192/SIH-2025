@@ -33,6 +33,7 @@ export default function Bustracker() {
       const response = await fetch(`${API_URL}/api/bus/${searchTerm}`);
       if (!response.ok) throw new Error('Bus not found');
       const busData = await response.json();
+      console.log(busData);
 
       const formattedBusData = {
         ...busData,
