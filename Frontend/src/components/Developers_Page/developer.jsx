@@ -1,5 +1,6 @@
 import React from "react";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+// 1. Removed FaTwitter from this import
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 // --- Team information without images ---
 const developersData = [
@@ -11,7 +12,7 @@ const developersData = [
     socials: {
       github: "https://github.com/Aashwat11",
       linkedin: "https://linkedin.com/in/",
-      twitter: "https://twitter.com/",
+      // 2. Removed twitter property from each object
     },
   },
   {
@@ -22,7 +23,6 @@ const developersData = [
     socials: {
       github: "https://github.com/",
       linkedin: "https://linkedin.com/in/",
-      twitter: "https://twitter.com/",
     },
   },
   {
@@ -33,7 +33,6 @@ const developersData = [
     socials: {
       github: "https://github.com/",
       linkedin: "https://linkedin.com/in/",
-      twitter: "https://twitter.com/",
     },
   },
   {
@@ -44,7 +43,6 @@ const developersData = [
     socials: {
       github: "https://github.com/",
       linkedin: "https://linkedin.com/in/",
-      twitter: "https://twitter.com/",
     },
   },
   {
@@ -55,7 +53,6 @@ const developersData = [
     socials: {
       github: "https://github.com/",
       linkedin: "https://linkedin.com/in/",
-      twitter: "https://twitter.com/",
     },
   },
   {
@@ -66,7 +63,6 @@ const developersData = [
     socials: {
       github: "https://github.com/",
       linkedin: "https://linkedin.com/in/",
-      twitter: "https://twitter.com/",
     },
   },
 ];
@@ -84,7 +80,7 @@ function DeveloperCard({ name, title, bio, socials }) {
       <div className="mt-4 flex gap-4 pt-4 border-t border-white/10 w-full justify-center">
         <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-gray-400 hover:text-white transition-colors"><FaGithub size={24} /></a>
         <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-gray-400 hover:text-white transition-colors"><FaLinkedin size={24} /></a>
-        <a href={socials.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-gray-400 hover:text-white transition-colors"><FaTwitter size={24} /></a>
+        {/* 3. Removed the anchor tag for Twitter */}
       </div>
     </div>
   );
