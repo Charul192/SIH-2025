@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-// --- Icon Components ---
-const LocationPinIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.1.4-.223.654-.369.623-.359 1.445-.835 2.343-1.441a10.025 10.025 0 002.146-2.25C17.75 11.202 18 10.205 18 9.25C18 6.097 14.433 3.5 10 3.5S2 6.097 2 9.25c0 .955.25 1.952.76 3.142a10.025 10.025 0 002.146 2.25c.898.606 1.72 1.082 2.343 1.441.255.146.468.269.654-.369a5.741 5.741 0 00.281.14l.018.008.006.003zM10 11.25a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg> );
+// --- Icon Components (UPDATED) ---
+// Sirf ToLocationIcon rakha hai, jo dono jagah use hoga
+const ToLocationIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg> );
 const LoadingSpinner = () => ( <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> );
 const NoResultsIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 mx-auto text-gray-500"><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg> );
 const TransferIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg> );
@@ -89,9 +90,9 @@ export default function PlanyouTrip() {
             <div className="flex flex-col sm:flex-row items-center gap-4">
               {/* From Input */}
               <div className="w-full">
-                <label htmlFor="start-location" className="block text-lg font-medium leading-6">From</label>
+                <label htmlFor="start-location" className="block text-lg font-medium leading-6">Source</label>
                 <div className="relative mt-2">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <ToLocationIcon /> </div>
                   <input type="text" value={startLocation} onChange={(e) => setStartLocation(e.target.value)} className="block w-full rounded-md border-0 bg-gray-100 dark:bg-white/5 py-3 pl-10 pr-3 text-lg" placeholder="e.g., Amritsar" required />
                 </div>
               </div>
@@ -108,9 +109,9 @@ export default function PlanyouTrip() {
               
               {/* To Input */}
               <div className="w-full">
-                <label htmlFor="end-location" className="block text-lg font-medium leading-6">To</label>
+                <label htmlFor="end-location" className="block text-lg font-medium leading-6">Destination</label>
                 <div className="relative mt-2">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <ToLocationIcon /> </div>
                   <input type="text" value={endLocation} onChange={(e) => setEndLocation(e.target.value)} className="block w-full rounded-md border-0 bg-gray-100 dark:bg-white/5 py-3 pl-10 pr-3 text-lg" placeholder="e.g., Ludhiana" required />
                 </div>
               </div>
@@ -168,4 +169,3 @@ export default function PlanyouTrip() {
     </div>
   );
 }
-

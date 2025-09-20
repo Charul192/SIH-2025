@@ -8,8 +8,8 @@ const CheckIcon = ({ className }) => (
   </svg>
 );
 
+// THIS IS THE CORRECTED COMPONENT
 const FeatureIcon = ({ color, path }) => (
-  // Yeh line theek kar di gayi hai
   <div className={`flex h-12 w-12 items-center justify-center rounded-lg ${color}`}>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6 text-white">
       {path}
@@ -30,10 +30,14 @@ export default function Home() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8 pt-24 sm:pt-32">
             <div className="mx-auto max-w-2xl text-center">
               
-              {/* === THIS IS THE UPDATED BADGE === */}
-              <div className="z-10 mb-6 inline-flex items-center justify-center rounded-full border border-white/10 bg-gray-900/50 px-4 py-1.5 text-sm font-medium text-blue-200 backdrop-blur-sm shadow-lg shadow-blue-500/40">
-                <span className="mr-2 h-2 w-2 animate-pulse rounded-full bg-blue-400"></span>
-                Live tracking for smarter travel
+              {/* === THIS IS THE NEW & IMPROVED BADGE === */}
+              <div className="mb-6 inline-block rounded-full bg-gradient-to-r from-blue-500/80 via-purple-500/80 to-blue-500/80 p-px shadow-lg shadow-blue-500/30">
+                <div className="inline-flex items-center justify-center rounded-full bg-gray-950/90 px-5 py-1.5">
+                  <span className="mr-2 h-2 w-2 rounded-full bg-blue-500"></span>
+                  <span className="text-sm font-medium text-gray-300">
+                    Live tracking for smarter travel
+                  </span>
+                </div>
               </div>
 
               <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
@@ -54,7 +58,7 @@ export default function Home() {
                   Start Tracking Now <span className="ml-2">→</span>
                 </Link>
                 <Link
-                  to="/learn-more"
+                  to="/about"
                   className="text-base font-semibold leading-7"
                 >
                   Learn More <span aria-hidden="true">→</span>
@@ -69,50 +73,50 @@ export default function Home() {
         {/* =============================================================== */}
         <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-32 sm:mt-40">
           <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Everything You Need for Smart Tracking</h2>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Everything You Need for a Smarter Commute</h2>
             <p className="mt-4 text-lg text-gray-400">
-              Powerful features designed to make vehicle and fleet management simple, effective, and efficient.
+              Features designed to tackle unpredictable schedules and long waits, even in low-bandwidth areas.
             </p>
           </div>
           {/* Feature Cards Grid */}
           <div className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             
-            {/* Card 1: Live Location Tracking */}
+            {/* Card 1: Live Bus Tracking */}
             <Link to="/bus-tracker" className="block rounded-xl">
               <div className="h-full space-y-3 rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-blue-500/50 hover:bg-white/10 hover:-translate-y-1">
                 <FeatureIcon color="bg-blue-500" path={<>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </>} />
-                <h3 className="font-semibold">Live Location Tracking</h3>
-                <p className="text-gray-400">Pinpoint the exact location of your vehicles in real-time on an interactive map for complete visibility.</p>
+                <h3 className="font-semibold">Live Bus Tracking</h3>
+                <p className="text-gray-400">See the exact, real-time location of your bus on a map. No more guessing if it's late or has already passed.</p>
               </div>
             </Link>
 
-            {/* Card 2: Plan Your Trip */}
+            {/* Card 2: Accurate Arrival Times */}
             <Link to="/plan-your-trip" className="block rounded-xl">
               <div className="h-full space-y-3 rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-red-500/50 hover:bg-white/10 hover:-translate-y-1">
-                <FeatureIcon color="bg-red-500" path={<path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503-12.495l-4.252 4.252a.75.75 0 01-1.06 0l-4.252-4.252M2.25 12l8.25-8.25 8.25 8.25" />} />
-                <h3 className="font-semibold">Plan Your Trip</h3>
-                <p className="text-gray-400">Easily plan your journey from start to finish. Find the best routes, check timings, and set reminders for your trip.</p>
+                <FeatureIcon color="bg-red-500" path={<path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />} />
+                <h3 className="font-semibold">Accurate Arrival Times</h3>
+                <p className="text-gray-400">Get reliable Estimated Times of Arrival (ETAs) for your stop, so you can plan your time and avoid long waits.</p>
               </div>
             </Link>
             
-            {/* Card 3: View Schedules (Moved from 4th position) */}
+            {/* Card 3: Route & Schedule Info */}
             <Link to="/schedule" className="block rounded-xl">
               <div className="h-full space-y-3 rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-yellow-500/50 hover:bg-white/10 hover:-translate-y-1">
                 <FeatureIcon color="bg-yellow-500" path={<path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M12 14.25h.008v.008H12v-.008z" />} />
-                <h3 className="font-semibold">View Schedules</h3>
-                <p className="text-gray-400">Access up-to-date bus schedules, view route timings, and check for any delays to plan your travel effectively.</p>
+                <h3 className="font-semibold">Route & Schedule Info</h3>
+                <p className="text-gray-400">Access complete route details and updated timetables for all buses. Know every stop and timing at your fingertips.</p>
               </div>
             </Link>
 
-            {/* Card 4: About Us (Moved from 3rd position) */}
+            {/* Card 4: Low-Bandwidth Friendly */}
             <Link to="/about" className="block rounded-xl">
               <div className="h-full space-y-3 rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-purple-500/50 hover:bg-white/10 hover:-translate-y-1">
-                <FeatureIcon color="bg-purple-500" path={<path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-4.663c.11-.32.22-.627.328-.928m-9.012-3.97a4.125 4.125 0 015.548 0c.192.205.37.42.537.645m-6.085-2.29a4.125 4.125 0 00-5.548 0c-.192.205-.37.42-.537.645m6.085 2.29a4.125 4.125 0 00-5.548 0" />} />
-                <h3 className="font-semibold">About Us</h3>
-                <p className="text-gray-400">Learn more about our mission, the team behind this project, and the technology that powers our tracking system.</p>
+                <FeatureIcon color="bg-purple-500" path={<path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />} />
+                <h3 className="font-semibold">Low-Bandwidth Friendly</h3>
+                <p className="text-gray-400">Our platform is optimized to work seamlessly on slow internet, ensuring accessibility for everyone in smaller towns.</p>
               </div>
             </Link>
 
@@ -124,9 +128,9 @@ export default function Home() {
         {/* =============================================================== */}
         <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-32 sm:mt-40 mb-24">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Why Choose Our Platform?</h2>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Transforming Commutes in Growing Cities</h2>
             <p className="mt-4 text-lg text-gray-400">
-              Join thousands of businesses and commuters who have improved their efficiency and peace of mind.
+              We're dedicated to solving transport inefficiencies in tier-2 towns, promoting sustainable travel and reducing commuter stress.
             </p>
           </div>
           <div className="mt-16 grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-8">
@@ -135,22 +139,22 @@ export default function Home() {
               <div className="flex gap-4">
                 <CheckIcon className="h-8 w-8 flex-shrink-0 text-green-500" />
                 <div>
-                  <h3 className="text-lg font-semibold">Increase Efficiency</h3>
-                  <p className="mt-1 text-gray-400">Optimize routes, reduce idle time, and ensure timely arrivals to save both time and fuel costs.</p>
+                  <h3 className="text-lg font-semibold">Save Your Precious Time</h3>
+                  <p className="mt-1 text-gray-400">Stop wasting time at the bus stop. With precise ETAs, you can arrive just in time to catch your bus, every single time.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <CheckIcon className="h-8 w-8 flex-shrink-0 text-blue-500" />
                 <div>
-                  <h3 className="text-lg font-semibold">Enhance Safety & Security</h3>
-                  <p className="mt-1 text-gray-400">Monitor driver behavior, prevent unauthorized usage, and improve the security of your assets.</p>
+                  <h3 className="text-lg font-semibold">Travel with Confidence</h3>
+                  <p className="mt-1 text-gray-400">By knowing exactly when the next bus is arriving, you can choose less crowded options and avoid the stress of unpredictable travel.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <CheckIcon className="h-8 w-8 flex-shrink-0 text-purple-500" />
                 <div>
-                  <h3 className="text-lg font-semibold">Data-Driven Decisions</h3>
-                  <p className="mt-1 text-gray-400">Utilize comprehensive analytics and reports to make informed decisions and improve your operations.</p>
+                  <h3 className="text-lg font-semibold">For Smarter Cities</h3>
+                  <p className="mt-1 text-gray-400">Our platform provides valuable data to local authorities, helping them optimize routes and improve public transport for everyone.</p>
                 </div>
               </div>
             </div>
@@ -163,13 +167,13 @@ export default function Home() {
                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 003.375-3.375h1.5a1.125 1.125 0 011.125 1.125v-1.5a3.375 3.375 0 00-3.375-3.375H3.375m15.75 9V14.25M3.375 14.25v-1.875a3.375 3.375 0 013.375-3.375h1.5a1.125 1.125 0 001.125-1.125v-1.5a3.375 3.375 0 01-3.375-3.375H3.375m15.75 9L12 12m0 0l-3.375-3.375M12 12l3.375 3.375M12 12l3.375-3.375M12 12l-3.375 3.375" />
                         </svg>
                     </div>
-                    <h3 className="text-2xl font-bold">Optimize Your Operations Today</h3>
+                    <h3 className="text-2xl font-bold">Join the Movement</h3>
                     <p className="mt-2 text-gray-400">
-                        Whether you manage a large fleet or just want to track a single vehicle, our platform is built to scale with your needs.
+                        Be a part of building a more reliable and sustainable public transport system for India's growing cities.
                     </p>
                     <div className="mt-6 flex justify-center gap-x-6 text-sm text-gray-400">
-                        <span className="flex items-center gap-2"><CheckIcon className="h-5 w-5 text-green-500" /> Free trial available</span>
-                        <span className="flex items-center gap-2"><CheckIcon className="h-5 w-5 text-green-500" /> No long-term contracts</span>
+                        <span className="flex items-center gap-2"><CheckIcon className="h-5 w-5 text-green-500" /> For Commuters</span>
+                        <span className="flex items-center gap-2"><CheckIcon className="h-5 w-5 text-green-500" /> For Authorities</span>
                     </div>
                 </div>
             </div>
