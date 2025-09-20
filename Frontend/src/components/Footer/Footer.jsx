@@ -77,7 +77,8 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className={`transition-colors ${linkHoverClass}`}>
+                  <Link to="/TnC" className={`transition-colors ${linkHoverClass}`}>
+
                     Terms &amp; Conditions
                   </Link>
                 </li>

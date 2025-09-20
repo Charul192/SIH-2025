@@ -64,7 +64,27 @@ export default function PlanyouTrip() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
+  const [suggestion, setSuggestion] = useState([]);
+  const recommendations = ["Abohar Bus Stand", "Adampur Doaba", "Aerocity", "Agra (ISBT)", "Ambala Cantt", "Ambala Cantt Bus Stand", "Amritsar (Opp. Bus Stand)", "Amritsar Bus Stand", "Banga", "Banikhet", "Banur", "Barnala", "Batala", "Bathinda Bus Stand", "Beas", "Behror", "Bhawanigarh", "Bikaner", "Bilaspur (HP)", "Chandigarh (ISBT Sector 17)", "Chandigarh (ISBT Sector 43)", "Dalhousie Bus Stand", "Dasuya", "Delhi (Anand Vihar ISBT)", "Delhi (Dhaula Kuan)", "Delhi (ISBT Kashmiri Gate)", "Dera Bassi", "Dhaula Kuan", "Dharamshala", "Dharampur", "Dinanagar", "Doraha", "Dunera", "Faridkot", "Fatehpur", "Fazilka", "Ferozepur Bus Stand", "Ferozepur Cantt", "Golden Temple", "Goniana", "Gurdaspur", "Gurdaspur Bypass", "Gurugram (IFFCO Chowk)", "Haridwar", "Harike", "Hisar", "Hoshiarpur Bus Stand", "Huda City Centre", "IGI Airport T3", "Jagraon", "Jaipur (Sindhi Camp)", "Jalalabad", "Jalandhar (Rama Mandi Chowk)", "Jalandhar Bus Stand", "Jalandhar Bypass", "Jalandhar Cantt", "Jallianwala Bagh", "Jammu Bus Stand", "Kaithal", "Kalanwali", "Kalka", "Kangra", "Kapurthala", "Karnal", "Karnal Bypass", "Kathua", "Keylong", "Khanna", "Kharar", "Kiratpur Sahib", "Kot Kapura", "Kullu", "Leh", "Ludhiana (Samrala Chowk)", "Ludhiana Bus Stand", "Manali (Private Bus Stand)", "Mandi", "Mandi Dabwali", "Mansa", "Mathura", "Maur", "Meerut Bypass", "Moga Bus Stand", "Mohali Bus Stand", "Mohali Bus Stand Phase 8", "Mukerian", "Mullanpur Dakha", "Nawanshahr", "New Delhi Metro Station", "Noida Sector 37", "Nurpur", "Panchkula Bus Stand", "Panipat", "Pathankot", "Pathankot Bus Stand", "Pathankot Cantt", "Patiala Bus Stand", "Phagwara", "Phillaur", "Pipli", "Punjabi Bagh", "Raj Ghat", "Rajpura", "Rajpura Town", "Rampura Phul", "Ratangarh", "Rishikesh", "Roorkee", "Samba", "Samrala", "Sangrur", "Sangrur Bus Stand", "Sarai Kale Khan ISBT", "Sarchu", "Shimla (ISBT Tutikandi)", "Shivaji Stadium", "Sikar", "Sirhind", "Sirsa Bus Stand", "Solan", "Sonipat", "Sonipat (Murthal Dhaba)", "South Extension", "Talwandi Bhai", "Tarn Taran", "Una", "Wagah Border", "Zirakpur Crossing"]
+  const recommendation = (event)=>{
+    const val = event.target.value;
 
+    if(event.target.id === "st"){
+      setStartLocation(val);
+    }
+    else if(event.target.id === "end"){
+      setEndLocation(val);
+    }
+    if(val.length > 0){
+      const lowercased = val.toLowerCase().trim();
+      const filteredSuggestions = recommendations.filter(item =>
+          item.toLowerCase().startsWith(lowercased)
+      );
+      setSuggestion(filteredSuggestions);
+    }
+    else setSuggestion([]);
+    console.log(suggestion);
+  }
   const handleFindBuses = async (event) => {
     event.preventDefault();
     if (!startLocation.trim() || !endLocation.trim()) return;
@@ -173,12 +193,14 @@ export default function PlanyouTrip() {
                 <label htmlFor="start-location" className="block text-lg font-medium leading-6">From</label>
                 <div className="relative mt-2">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
+
                   {/* FIX: Input field is theme-aware */}
                   <input type="text" value={startLocation} onChange={(e) => setStartLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g., Amritsar" required />
                 </div>
               </div>
               {/* FIX: Swap button is theme-aware */}
               <button type="button" onClick={handleSwap} className={`mt-8 rounded-full p-2 transition ${Dark ? 'text-gray-400 hover:bg-white/10' : 'text-gray-500 hover:bg-slate-200'}`} aria-label="Swap locations">
+
                 <SwapIcon />
               </button>
               <div className="w-full">
@@ -187,6 +209,7 @@ export default function PlanyouTrip() {
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
                   {/* FIX: Input field is theme-aware */}
                   <input type="text" value={endLocation} onChange={(e) => setEndLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g., Ludhiana" required />
+
                 </div>
               </div>
             </div>

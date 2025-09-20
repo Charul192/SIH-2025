@@ -1,4 +1,6 @@
-import React, { useEffect, useContext } from "react"; // FIX: useContext import kiya
+
+import React, { useState,useEffect, useContext } from "react"; // FIX: useContext import kiya
+
 import { GlobeAltIcon } from '@heroicons/react/24/outline';
 import { AppContext } from "../../context/AppContext"; // FIX: AppContext import kiya
 
@@ -11,9 +13,27 @@ export default function GoogleTranslate() {
     { value: "/auto/pa", label: "ਪੰਜਾਬੀ" },
     { value: "/auto/bn", label: "বাংলা" },
   ];
-  
+
+
+  const getCookie = (name) => {
+    // Corrected this function's syntax
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    const cookieLang = getCookie('googtrans');
+    // Ensure the cookie value exists in our language list
+    if (cookieLang && languages.some(lang => lang.value === cookieLang)) {
+      return cookieLang;
+    }
+    return '/auto/en'; // Default to English
+  });
+
   useEffect(() => {
-    // Define the callback function
+    // Define the callback function for the Google Translate script
     window.googleTranslateElementInit = () => {
       new window.google.translate.TranslateElement(
         { pageLanguage: "en", autoDisplay: false },
@@ -21,7 +41,7 @@ export default function GoogleTranslate() {
       );
     };
 
-    // Check if the script already exists and add it if it doesn't
+    // Add the Google Translate script to the page if it doesn't exist
     if (!document.getElementById('google-translate-script')) {
       const script = document.createElement("script");
       script.id = 'google-translate-script';
@@ -39,6 +59,7 @@ export default function GoogleTranslate() {
     document.cookie = `googtrans=${langCode}; path=/`;
     
     // Reload the page to apply the translation
+
     window.location.reload();
   };
   
@@ -48,20 +69,23 @@ export default function GoogleTranslate() {
     : "text-gray-800 bg-gray-100 border-gray-300 focus:ring-blue-500";
 
   return (
-    <div className="relative inline-block text-left">
-      {/* The original widget is still needed but remains hidden */}
+    <div className="relative inline-block text-left notranslate">
+      {/* This div is used by Google Translate, it should be hidden */}
       <div id="google_translate_element" style={{ display: 'none' }}></div>
 
       <div className="flex items-center">
         {/* FIX: Icon color is now theme-aware */}
         <GlobeAltIcon className={`absolute left-3 h-5 w-5 pointer-events-none ${Dark ? 'text-gray-400' : 'text-gray-500'}`} />
         <select
+          value={selectedLanguage}
           onChange={handleLanguageChange}
           // FIX: All theme-related classes are now handled by the 'selectClasses' variable
           className={`pl-10 pr-4 py-2 text-sm font-medium rounded-md appearance-none cursor-pointer focus:outline-none focus:ring-2 border transition-colors duration-200 ${selectClasses}`}
         >
+
           {/* Set an empty value for the default option */}
           <option value="">Language</option>
+
           {languages.map((lang) => (
             <option key={lang.value} value={lang.value}>
               {lang.label}
