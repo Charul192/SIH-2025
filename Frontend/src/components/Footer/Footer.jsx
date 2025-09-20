@@ -47,8 +47,8 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <Link to="/" className="transition-colors hover:text-white">
-                    Discord
+                  <Link to="/feedback" className="transition-colors hover:text-white">
+                    Feedback
                   </Link>
                 </li>
               </ul>
