@@ -66,7 +66,7 @@ export default function MapPage() {
             lng: route.location._longitude,
       });
   })
-    console.log(routes);
+    getRoute(routes);
 
 
 

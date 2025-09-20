@@ -13,18 +13,17 @@ export async function getRoute(waypoints) {
             // Request Body
             {
                 origin: {
-                    "placeId": "ChIJ88J-yM9wDjkR25iO42FRY1k" // Jodhpur
+                    location: {
+                        lat: waypoints[0].latitude,
+                        lng: waypoints[0].longitude
+                    }
+                    // "placeId": "ChIJ88J-yM9wDjkR25iO42FRY1k" // Jodhpur
                 },
                 destination: {
                     "placeId": "ChIJlZ-N3f8IQTkR52IlcaQt2V4" // Thanesar
                 },
                 intermediates: [
-                    {
-                        placeId: "ChIJge_S5YkAZjkR-eZ23u4e3-A" // Jaipur
-                    },
-                    {
 
-                    }
                 ],
                 travelMode: "DRIVE",
                 routingPreference: "TRAFFIC_AWARE"
