@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89dbc646-840d-4fa0-b593-e2ad23d3ec6c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Backend/gettingRoutes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/firebase.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/Bustracker/Bustracker.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Bustracker/Bustracker.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/components/Bustracker/MapPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/components/Bustracker/MapPage.jsx" afterDir="false" />
     </list>
