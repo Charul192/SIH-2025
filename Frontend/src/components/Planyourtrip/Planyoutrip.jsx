@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react"; // FIX: useContext import kiya
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from "../../context/AppContext"; // FIX: AppContext import kiya
 
-// --- Icon Components ---
+// --- Icon Components (No changes needed) ---
 const LocationPinIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.1.4-.223.654-.369.623-.359 1.445-.835 2.343-1.441a10.025 10.025 0 002.146-2.25C17.75 11.202 18 10.205 18 9.25C18 6.097 14.433 3.5 10 3.5S2 6.097 2 9.25c0 .955.25 1.952.76 3.142a10.025 10.025 0 002.146 2.25c.898.606 1.72 1.082 2.343 1.441.255.146.468.269.654-.369a5.741 5.741 0 00.281.14l.018.008.006.003zM10 11.25a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg> );
 const LoadingSpinner = () => ( <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> );
 const NoResultsIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 mx-auto text-gray-500"><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg> );
@@ -11,7 +12,6 @@ const ClockIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20
 
 const API_BASE_URL = "http://localhost:8000";
 
-// Helper function to format time from Firestore object or string
 const formatTime = (timeData) => {
   if (!timeData) return "--:--";
   let date;
@@ -26,25 +26,25 @@ const formatTime = (timeData) => {
   return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 };
 
-// Reusable component to display the list of stops for a journey
-const JourneyStops = ({ route, startStopName, endStopName }) => {
+// FIX: JourneyStops is now theme-aware
+const JourneyStops = ({ route, startStopName, endStopName, Dark }) => {
   const startIndex = route.findIndex(s => s.name.toLowerCase() === startStopName.toLowerCase());
   const endIndex = route.findIndex(s => s.name.toLowerCase() === endStopName.toLowerCase());
   if (startIndex === -1 || endIndex === -1) return null;
   const relevantStops = route.slice(startIndex, endIndex + 1);
 
   return (
-    <div className="mt-4 border-t border-gray-200 dark:border-zinc-700 pt-4">
+    <div className={`mt-4 border-t pt-4 ${Dark ? 'border-slate-700' : 'border-slate-200'}`}>
       <ul className="space-y-3">
         {relevantStops.map((stop, index) => (
           <li key={index} className="flex items-start text-sm">
             <div className="flex flex-col items-center mr-4">
-              <div className={`w-3 h-3 rounded-full ${index === 0 || index === relevantStops.length - 1 ? 'bg-blue-500' : 'bg-gray-400 dark:bg-gray-600'}`}></div>
-              {index < relevantStops.length - 1 && <div className="w-px h-6 bg-gray-300 dark:bg-gray-700"></div>}
+              <div className={`w-3 h-3 rounded-full ${index === 0 || index === relevantStops.length - 1 ? 'bg-blue-500' : (Dark ? 'bg-slate-600' : 'bg-slate-400')}`}></div>
+              {index < relevantStops.length - 1 && <div className={`w-px h-6 ${Dark ? 'bg-slate-700' : 'bg-slate-300'}`}></div>}
             </div>
             <div className="flex-1 flex justify-between">
-              <span className="font-medium text-gray-800 dark:text-gray-200">{stop.name}</span>
-              <span className="text-gray-500 dark:text-gray-400">
+              <span className={`font-medium ${Dark ? 'text-slate-200' : 'text-slate-800'}`}>{stop.name}</span>
+              <span className={`${Dark ? 'text-slate-400' : 'text-slate-500'}`}>
                 {formatTime(stop.arrivalTime) || formatTime(stop.departureTime)}
               </span>
             </div>
@@ -56,6 +56,7 @@ const JourneyStops = ({ route, startStopName, endStopName }) => {
 };
 
 export default function PlanyouTrip() {
+  const { Dark } = useContext(AppContext); // FIX: Get theme state from context
   const navigate = useNavigate();
   const [startLocation, setStartLocation] = useState("");
   const [endLocation, setEndLocation] = useState("");
@@ -81,7 +82,7 @@ export default function PlanyouTrip() {
       setFoundRoutes(routes);
     } catch (err) {
       console.error(err);
-      setError("Could not find routes. Please check the server connection and try again.");
+      setError("Could not find routes. Please check the server and try again.");
     } finally {
       setIsLoading(false);
     }
@@ -92,12 +93,13 @@ export default function PlanyouTrip() {
     setEndLocation(startLocation);
   };
 
+  // FIX: BusCard is now theme-aware
   const BusCard = ({ bus, startStop, endStop }) => (
-    <div className="rounded-lg bg-gray-50 dark:bg-zinc-800/50 p-4 w-full">
+    <div className={`rounded-lg p-4 w-full ${Dark ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">{bus.operator} • {bus.headsign}</p>
-          <p className="text-lg font-bold text-gray-900 dark:text-white">Bus {bus.busId}</p>
+          <p className={`text-sm ${Dark ? 'text-slate-400' : 'text-slate-500'}`}>{bus.operator} • {bus.headsign}</p>
+          <p className={`text-lg font-bold ${Dark ? 'text-white' : 'text-slate-900'}`}>Bus {bus.busId}</p>
         </div>
         <button
           onClick={() => navigate(`/schedule?busId=${bus.busId}`)}
@@ -111,17 +113,18 @@ export default function PlanyouTrip() {
           <span className="group-open:hidden">View Stops</span>
           <span className="hidden group-open:inline">Hide Stops</span>
         </summary>
-        <JourneyStops route={bus.route} startStopName={startStop} endStopName={endStop} />
+        <JourneyStops route={bus.route} startStopName={startStop} endStopName={endStop} Dark={Dark} />
       </details>
     </div>
   );
-
+  
+  // FIX: ConnectingRouteCard is now theme-aware
   const ConnectingRouteCard = ({ route, startStop, endStop }) => {
     const arrivalAtTransferStop = route.leg1.route.find(s => s.name.toLowerCase() === route.transferPoint.toLowerCase());
     const departureFromTransferStop = route.leg2.route.find(s => s.name.toLowerCase() === route.transferPoint.toLowerCase());
     let layoverMinutes = null;
 
-    if (arrivalAtTransferStop && departureFromTransferStop) {
+    if (arrivalAtTransferStop?.arrivalTime?._seconds && departureFromTransferStop?.departureTime?._seconds) {
         const arrivalTime = new Date(arrivalAtTransferStop.arrivalTime._seconds * 1000);
         const departureTime = new Date(departureFromTransferStop.departureTime._seconds * 1000);
         if(!isNaN(arrivalTime) && !isNaN(departureTime)) {
@@ -130,23 +133,23 @@ export default function PlanyouTrip() {
     }
 
     return (
-      <div className="rounded-xl border border-purple-500/30 dark:border-purple-500/50 bg-purple-50 dark:bg-zinc-900/50 p-6">
+      <div className={`rounded-xl border p-6 ${Dark ? 'border-purple-500/50 bg-black' : 'border-purple-300 bg-purple-50'}`}>
         <div className="flex flex-col items-center">
           <BusCard bus={route.leg1} startStop={startStop} endStop={route.transferPoint} />
-          <div className="h-8 w-px bg-purple-300 dark:bg-purple-700 my-2"></div>
+          <div className={`h-8 w-px my-2 ${Dark ? 'bg-purple-700' : 'bg-purple-300'}`}></div>
           <div className="flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2 rounded-full bg-purple-100 dark:bg-purple-900/50 px-3 py-1 text-sm text-purple-800 dark:text-purple-300">
+            <div className={`flex items-center gap-2 rounded-full px-3 py-1 text-sm ${Dark ? 'bg-purple-900/50 text-purple-300' : 'bg-purple-100 text-purple-800'}`}>
               <TransferIcon />
               <span>Change buses at <strong>{route.transferPoint}</strong></span>
             </div>
             {layoverMinutes !== null && layoverMinutes >= 0 && (
-              <div className="flex items-center gap-1.5 text-xs text-purple-600 dark:text-purple-400">
+              <div className={`flex items-center gap-1.5 text-xs ${Dark ? 'text-purple-400' : 'text-purple-600'}`}>
                 <ClockIcon />
                 <span>Waiting time: ~{layoverMinutes} minutes</span>
               </div>
             )}
           </div>
-          <div className="h-8 w-px bg-purple-300 dark:bg-purple-700 my-2"></div>
+          <div className={`h-8 w-px my-2 ${Dark ? 'bg-purple-700' : 'bg-purple-300'}`}></div>
           <BusCard bus={route.leg2} startStop={route.transferPoint} endStop={endStop} />
         </div>
       </div>
@@ -154,11 +157,12 @@ export default function PlanyouTrip() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white">
+    // FIX: Main container is theme-aware
+    <div className={`w-full min-h-screen transition-colors duration-300 ${Dark ? 'bg-black text-slate-50' : 'bg-white text-slate-900'}`}>
       <div className="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">Plan Your Trip</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-600 dark:text-gray-400">
+          <p className={`mx-auto mt-4 max-w-2xl text-xl ${Dark ? 'text-slate-400' : 'text-slate-600'}`}>
             Enter your starting point and final destination to find all available bus routes.
           </p>
         </div>
@@ -169,17 +173,20 @@ export default function PlanyouTrip() {
                 <label htmlFor="start-location" className="block text-lg font-medium leading-6">From</label>
                 <div className="relative mt-2">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
-                  <input type="text" value={startLocation} onChange={(e) => setStartLocation(e.target.value)} className="block w-full rounded-md border-0 bg-gray-100 dark:bg-white/5 py-3 pl-10 pr-3 text-lg" placeholder="e.g., Amritsar" required />
+                  {/* FIX: Input field is theme-aware */}
+                  <input type="text" value={startLocation} onChange={(e) => setStartLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g., Amritsar" required />
                 </div>
               </div>
-              <button type="button" onClick={handleSwap} className="mt-8 rounded-full p-2 text-gray-500 dark:text-gray-400 transition hover:bg-gray-200 dark:hover:bg-white/10" aria-label="Swap locations">
+              {/* FIX: Swap button is theme-aware */}
+              <button type="button" onClick={handleSwap} className={`mt-8 rounded-full p-2 transition ${Dark ? 'text-gray-400 hover:bg-white/10' : 'text-gray-500 hover:bg-slate-200'}`} aria-label="Swap locations">
                 <SwapIcon />
               </button>
               <div className="w-full">
                 <label htmlFor="end-location" className="block text-lg font-medium leading-6">To</label>
                 <div className="relative mt-2">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500"> <LocationPinIcon /> </div>
-                  <input type="text" value={endLocation} onChange={(e) => setEndLocation(e.target.value)} className="block w-full rounded-md border-0 bg-gray-100 dark:bg-white/5 py-3 pl-10 pr-3 text-lg" placeholder="e.g., Ludhiana" required />
+                  {/* FIX: Input field is theme-aware */}
+                  <input type="text" value={endLocation} onChange={(e) => setEndLocation(e.target.value)} className={`block w-full rounded-md border-0 py-3 pl-10 pr-3 text-lg ${Dark ? 'bg-white/5' : 'bg-slate-100'}`} placeholder="e.g., Ludhiana" required />
                 </div>
               </div>
             </div>
@@ -195,29 +202,30 @@ export default function PlanyouTrip() {
         <div className="mx-auto mt-16 max-w-4xl">
             <h2 className="text-4xl font-bold text-center">Available Routes</h2>
             <div className="mt-6 space-y-4">
-            {isLoading && (<div className="flex justify-center items-center gap-3 text-lg text-gray-500 dark:text-gray-400 p-8"><LoadingSpinner /><span>Finding the best routes for you...</span></div>)}
+            {isLoading && (<div className={`flex justify-center items-center gap-3 text-lg p-8 ${Dark ? 'text-slate-400' : 'text-slate-500'}`}><LoadingSpinner /><span>Finding the best routes for you...</span></div>)}
             {error && <p className="text-center text-lg text-red-600 dark:text-red-500">{error}</p>}
             
-            {!isLoading && !error && searched && foundRoutes.length === 0 && (<div className="rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center text-gray-500"><NoResultsIcon /><p className="text-lg mt-4">No direct or connecting buses found for this route.</p></div>)}
+            {/* FIX: Placeholder boxes are theme-aware */}
+            {!isLoading && !error && searched && foundRoutes.length === 0 && (<div className={`rounded-lg border-2 border-dashed p-12 text-center text-gray-500 ${Dark ? 'border-slate-700' : 'border-slate-300'}`}><NoResultsIcon /><p className="text-lg mt-4">No direct or connecting buses found for this route.</p></div>)}
 
             {!isLoading && !error && foundRoutes.map((route, index) => {
-              if (route.type === 'direct') {
+                if (route.type === 'direct') {
                 return (
-                    <div key={index} className="rounded-xl border border-gray-200 dark:border-gray-800 p-1">
+                    <div key={index} className={`rounded-xl border p-1 ${Dark ? 'border-slate-800' : 'border-slate-200'}`}>
                         <BusCard bus={route} startStop={startLocation} endStop={endLocation} />
                     </div>
                 );
-              }
-              if (route.type === 'connection') {
+                }
+                if (route.type === 'connection') {
                 return <ConnectingRouteCard key={index} route={route} startStop={startLocation} endStop={endLocation} />;
-              }
-              return null;
+                }
+                return null;
             })}
 
-            {!searched && !isLoading && (<div className="rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center text-gray-500"><p className="text-lg">Enter your locations to find available buses.</p></div>)}
+            {!searched && !isLoading && (<div className={`rounded-lg border-2 border-dashed p-12 text-center text-gray-500 ${Dark ? 'border-slate-700' : 'border-slate-300'}`}><p className="text-lg">Enter your locations to find available buses.</p></div>)}
             </div>
-          </div>
         </div>
+      </div>
     </div>
   );
 }
