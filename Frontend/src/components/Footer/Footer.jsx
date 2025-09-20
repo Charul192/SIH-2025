@@ -64,7 +64,7 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="transition-colors hover:text-white">
+                  <Link to="/TnC" className="transition-colors hover:text-white">
                     Terms &amp; Conditions
                   </Link>
                 </li>
