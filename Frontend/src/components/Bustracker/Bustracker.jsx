@@ -98,11 +98,11 @@ const {Dark}=useContext(AppContext)
         <div className={`w-full min-h-screen ${Dark? 'bg-black text-white':'bg-white text-slate-900'}`}>
             <div className="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8">
                 <div className="text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl text-slate-900">Track Your Bus</h1>
+                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl ">Track Your Bus</h1>
                     <p className="mx-auto mt-4 max-w-2xl text-lg sm:text-xl text-slate-600">Enter a bus number below to get its real-time location and arrival information.</p>
                 </div>
                 
-                <div className="mx-auto mt-10 max-w-xl">
+                <div className="mx-auto mt-10 max-w-xl ">
                     <form className="flex items-start gap-x-4" onSubmit={handleSearch}>
                         <input
                             type="text"
@@ -118,7 +118,7 @@ const {Dark}=useContext(AppContext)
                     </form>
                 </div>
 
-                <div className="mx-auto mt-16 max-w-4xl">
+                <div className={`mx-auto mt-16 max-w-4xl ${Dark?'bg-black':'bg-white'}`}>
                     {!isLoading && foundBus === null && (
                         <div className="rounded-lg border-2 border-dashed border-gray-300 p-12 text-center text-gray-500">
                             <p className="text-xl font-medium">Enter a bus number to track its journey.</p>
@@ -132,10 +132,10 @@ const {Dark}=useContext(AppContext)
                          </div>
                     )}
                     {foundBus && (
-                        <div className="rounded-lg border border-slate-200 bg-white p-6 sm:p-8 shadow-md">
-                            <div className="sm:flex sm:items-start sm:justify-between">
+                        <div className={`rounded-lg border border-slate-200 ${Dark?'bg-black text-white':'bg-white'} p-6 sm:p-8 shadow-md b  `}>
+                                <div className={`sm:flex sm:items-start sm:justify-between `}>
                                 <div>
-                                    <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">{`Bus ${foundBus.busId} - ${foundBus.headsign}`}</h2>
+                                    <h2 className="text-3xl sm:text-4xl font-bold ">{`Bus ${foundBus.busId} - ${foundBus.headsign}`}</h2>
                                     <p className="mt-2 text-lg text-slate-600">Operated by {foundBus.operator}</p>
                                 </div>
                                 <div className="mt-4 sm:mt-0 sm:ml-6 sm:text-right">
@@ -150,12 +150,12 @@ const {Dark}=useContext(AppContext)
                                 </button>
                             </div>
                             <div className="mt-6 grid grid-cols-1 gap-4 sm:gap-6 border-t border-slate-200 pt-6 sm:grid-cols-3">
-                                <div className="rounded-lg bg-slate-50 p-4 border border-slate-200"><p className="text-base font-medium text-slate-500">Current Status</p><p className="mt-1 text-xl font-semibold text-slate-900">{busStatus.statusText}</p></div>
-                                <div className="rounded-lg bg-slate-50 p-4 border border-slate-200"><p className="text-base font-medium text-slate-500">Next Stop</p><p className="mt-1 text-xl font-semibold text-slate-900">{busStatus.nextStopInfo}</p></div>
-                                <div className="rounded-lg bg-slate-50 p-4 border border-slate-200"><p className="text-base font-medium text-slate-500">ETA for Next Stop</p><p className="mt-1 text-xl font-semibold text-slate-900">{busStatus.etaInfo}</p></div>
+                                <div className={`rounded-lg ${Dark?'bg-black':'bg-white'} p-4 border border-slate-200`}><p className="text-base font-medium text-slate-500">Current Status</p><p className="mt-1 text-xl font-semibold ">{busStatus.statusText}</p></div>
+                                <div className={`rounded-lg ${Dark?'bg-black':'bg-white'} p-4 border border-slate-200`}><p className="text-base font-medium text-slate-500">Next Stop</p><p className="mt-1 text-xl font-semibold ">{busStatus.nextStopInfo}</p></div>
+                                <div className={`rounded-lg ${Dark?'bg-black':'bg-white'} p-4 border border-slate-200`}><p className="text-base font-medium text-slate-500">ETA for Next Stop</p><p className="mt-1 text-xl font-semibold ">{busStatus.etaInfo}</p></div>
                             </div>
                             <div className="mt-6 border-t border-slate-200 pt-6">
-                                <h3 className="text-2xl sm:text-3xl font-semibold mb-6 text-slate-900">Route Timeline</h3>
+                                <h3 className="text-2xl sm:text-3xl font-semibold mb-6 ">Route Timeline</h3>
                                 <div className="flow-root">
                                     <ul className="-mb-8">
                                         {foundBus.route.map((stop, stopIdx) => {
@@ -178,9 +178,9 @@ const {Dark}=useContext(AppContext)
                                                     <div className="relative pb-8">
                                                         {!isLastStop && <span className={`absolute top-4 left-4 -ml-px h-full w-0.5 ${line}`} aria-hidden="true" />}
                                                         <div className="relative flex items-start space-x-4">
-                                                            <div><span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white ${ring}`}>{icon}</span></div>
-                                                            <div className="min-w-0 flex-1 md:flex justify-between items-center pt-1">
-                                                                <div><p className="text-lg font-semibold text-slate-900">{stop.name}</p></div>
+                                                            <div><span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ${Dark?'ring-black':'ring-white'} ${ring}`}>{icon}</span></div>
+                                                            <div className="min-w-0 flex-1 md:flex justify-between +items-center pt-1">
+                                                                <div><p className="text-lg font-semibold">{stop.name}</p></div>
                                                                 <div className="mt-1 md:mt-0 text-base text-left md:text-right text-slate-500"><p>Arrival: {formatTime(stop.arrivalTime)}</p><p>Departure: {formatTime(stop.departureTime)}</p></div>
                                                             </div>
                                                         </div>
