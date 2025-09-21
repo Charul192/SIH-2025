@@ -62,8 +62,14 @@ export default function MapPage() {
             <div ref={mapRef} className="w-full h-full" />
 
             <div className="absolute top-4 left-4 z-10">
-                <button onClick={() => navigate(-1)} className="rounded-full bg-black bg-opacity-70 px-4 py-2 text-md font-semibold text-white shadow-lg hover:bg-opacity-90 transition-colors">
+                <button onClick={() => navigate(-1)} className="rounded-full bg-black bg-opacity-70 px-4 py-2 text-md font-semibold text-white shadow-lg hover:bg-opacity-90 transition-colors cursor-pointer">
                     &larr; Back to Tracker
+                </button>
+                <br />
+                <br />
+                
+                <button onClick={() => (window.location.reload())} className="rounded-full bg-black bg-opacity-70 px-4 py-2 text-md font-semibold text-white shadow-lg hover:bg-opacity-90 transition-colors cursor-pointer">
+                    Refresh
                 </button>
             </div>
         </div>
