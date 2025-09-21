@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from "../../context/AppContext";
 
 // --- Icon Components ---
 const CheckIcon = () => <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clipRule="evenodd" /></svg>;
@@ -142,10 +143,10 @@ export default function Bustracker() {
         
         return { routeName, statusText: "Awaiting update...", nextStopInfo: "N/A", etaInfo: "N/A", activeStopIndex: -1 };
     }, [foundBus, currentTime]);
-
+const {Dark}=useContext(AppContext)
     // --- Render ---
     return (
-        <div className="w-full min-h-screen bg-white text-slate-900">
+        <div className={`w-full min-h-screen ${Dark? 'bg-black text-white':'bg-white text-slate-900'}`}>
             <div className="mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center">
