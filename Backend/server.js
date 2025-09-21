@@ -77,6 +77,10 @@ app.get('/api/directions', async (req, res) => {
     return res.status(400).json({ error: 'Origin and destination are required.' });
   }
 
+  if (!process.env.VITE_API_KEY) {
+        return res.status(500).json({ error: 'API key is not configured on the server.' });
+    }
+
   try {
     const response = await googleMapsClient.directions({
       params: {
