@@ -7,6 +7,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
+// import {RouteFinder} from './components/RouteFinder.jsx';
 import {BrowserRouter} from 'react-router-dom'
 import AppContextProvider from "./context/AppContext.jsx";
 // Import your components
@@ -49,6 +50,7 @@ root.render(
   <StrictMode>
     <AppContextProvider>
     <RouterProvider router={router} />
+    {/* <RouteFinder /> */}
     </AppContextProvider>
   </StrictMode>
 );
