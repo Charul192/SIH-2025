@@ -198,28 +198,94 @@ export default function Bustracker() {
                     )}
                     
                     {foundBus && (
-                        <div className="rounded-lg border p-6 border-slate-200 bg-slate-50">
+                        <div className="rounded-lg border p-6 sm:p-8 border-slate-200 bg-slate-50">
                             {/* Bus Info Header */}
                             <div className="sm:flex sm:items-start sm:justify-between">
                                 <div>
-                                    <h2 className="text-4xl font-bold text-slate-900">{`Bus ${foundBus.busId} - ${foundBus.headsign}`}</h2>
+                                    <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">{`Bus ${foundBus.busId} - ${foundBus.headsign}`}</h2>
                                     <p className="mt-2 text-lg text-slate-600">Operated by {foundBus.operator}</p>
                                 </div>
                                 <div className="mt-4 sm:mt-0 sm:ml-6 sm:text-right">
-                                    <p className="text-2xl font-medium text-green-400">On Time</p>
-                                    <p className="mt-1 text-lg text-slate-500">Last updated: {formatTime(currentTime)}</p>
+                                    <p className="text-2xl font-medium text-green-500">On Time</p>
+                                    <p className="mt-1 text-base text-slate-500">Last updated: {formatTime(currentTime)}</p>
                                 </div>
                             </div>
                             
                             {/* Map Button */}
                             <div className="mt-6 flex justify-between items-center border-t pt-6 border-slate-200">
                                 <p className="text-lg font-medium text-slate-600">{busStatus.routeName}</p>
-                                <button onClick={handleViewOnMap} className="rounded-md bg-blue-600 px-4 py-2 text-lg font-semibold text-white shadow-sm hover:bg-blue-500">
+                                <button onClick={handleViewOnMap} className="rounded-md bg-blue-600 px-4 py-2 text-base font-semibold text-white shadow-sm hover:bg-blue-500">
                                     View on Map
                                 </button>
                             </div>
 
-                            {/* Status Cards & Timeline... */}
+                            {/* Status Cards */}
+                            <div className="mt-6 grid grid-cols-1 gap-6 border-t pt-6 sm:grid-cols-3 border-slate-200">
+                                <div>
+                                    <p className="text-base font-medium text-slate-500">Current Status</p>
+                                    <p className="mt-1 text-xl font-semibold text-slate-900">{busStatus.statusText}</p>
+                                </div>
+                                <div>
+                                    <p className="text-base font-medium text-slate-500">Next Stop</p>
+                                    <p className="mt-1 text-xl font-semibold text-slate-900">{busStatus.nextStopInfo}</p>
+                                </div>
+                                <div>
+                                    <p className="text-base font-medium text-slate-500">ETA for Next Stop</p>
+                                    <p className="mt-1 text-xl font-semibold text-slate-900">{busStatus.etaInfo}</p>
+                                </div>
+                            </div>
+                            
+                            {/* --- NEW: Route Timeline --- */}
+                            <div className="mt-6 border-t pt-6 border-slate-200">
+                                <h3 className="text-2xl sm:text-3xl font-semibold mb-6 text-slate-900">Route Timeline</h3>
+                                <div className="flow-root">
+                                    <ul className="-mb-8">
+                                        {foundBus.route.map((stop, stopIdx) => {
+                                            const activeIndex = Math.floor(busStatus.activeStopIndex);
+                                            const isCompleted = stopIdx < activeIndex;
+                                            const isBusBetweenStops = busStatus.activeStopIndex > activeIndex && stopIdx === activeIndex;
+                                            const isInProgress = stopIdx === activeIndex && !isBusBetweenStops;
+                                            const isLastStop = stopIdx === foundBus.route.length - 1;
+                                            
+                                            const statusStyles = {
+                                                completed: { line: 'bg-blue-600', ring: 'bg-blue-600', icon: <CheckIcon /> },
+                                                inProgress: { line: 'bg-green-500', ring: 'bg-green-500 animate-pulse', icon: <BusIcon /> },
+                                                upcoming: { line: 'bg-slate-300', ring: 'bg-slate-400', icon: <CircleIcon /> },
+                                            };
+
+                                            let currentStatus = 'upcoming';
+                                            if (isCompleted || busStatus.activeStopIndex >= foundBus.route.length) currentStatus = 'completed';
+                                            if (isInProgress || isBusBetweenStops) currentStatus = 'inProgress';
+
+                                            const { line, ring, icon } = statusStyles[currentStatus];
+
+                                            return (
+                                                <li key={stop.name}>
+                                                    <div className="relative pb-8">
+                                                        {!isLastStop && <span className={`absolute top-4 left-4 -ml-px h-full w-0.5 ${line}`} aria-hidden="true" />}
+                                                        <div className="relative flex items-start space-x-4">
+                                                            <div>
+                                                                <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-slate-50 ${ring}`}>
+                                                                    {icon}
+                                                                </span>
+                                                            </div>
+                                                            <div className="min-w-0 flex-1 md:flex justify-between items-center pt-1">
+                                                                <div>
+                                                                    <p className="text-lg font-semibold text-slate-900">{stop.name}</p>
+                                                                </div>
+                                                                <div className="mt-1 md:mt-0 text-base text-left md:text-right text-slate-500">
+                                                                    <p>Arrival: {formatTime(stop.arrivalTime)}</p>
+                                                                    <p>Departure: {formatTime(stop.departureTime)}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
