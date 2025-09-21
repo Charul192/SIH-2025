@@ -8,6 +8,7 @@ export interface IBusData {
   busNumber: string;
   operator: string;
   headsign: string;
+  startTime: Date;
   route: IBusRoute;
 }
 
@@ -54,7 +55,10 @@ class BusAnimator {
     try {
       const result = await directionsService.route(request);
       const route = result.routes[0];
-      if (!route || !route.legs || route.legs.length === 0) {
+      
+      // --- THIS IS THE FIX ---
+      // This is a cleaner way to check if the route and its legs are valid.
+      if (!route || !route.legs.length) {
         throw new Error("No route legs found.");
       }
 
@@ -63,12 +67,10 @@ class BusAnimator {
 
       this.routeCoordinates = [];
       route.legs[0].steps.forEach(step => {
-        step.path.forEach(point => {
-            this.routeCoordinates.push(point);
-        });
+        step.path.forEach(point => this.routeCoordinates.push(point));
       });
       
-      this.startAnimation();
+      this.startAnimation(route);
     } catch (e) {
       console.error(`Could not get route for bus ${this.busData.busNumber}:`, e);
       alert(`Error finding route for bus ${this.busData.busNumber}.`);
@@ -80,31 +82,13 @@ class BusAnimator {
     const endLocation = route.legs[0].end_location!;
 
     this.startMarker = new google.maps.Marker({
-      position: startLocation,
-      map: map,
-      title: `Start: ${route.legs[0].start_address}`,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillColor: '#22c55e',
-        fillOpacity: 1,
-        strokeColor: 'white',
-        strokeWeight: 2,
-      }
+      position: startLocation, map: map, title: `Start: ${route.legs[0].start_address}`,
+      icon: { path: google.maps.SymbolPath.CIRCLE, scale: 10, fillColor: '#22c55e', fillOpacity: 1, strokeColor: 'white', strokeWeight: 2 }
     });
 
     this.endMarker = new google.maps.Marker({
-      position: endLocation,
-      map: map,
-      title: `End: ${route.legs[0].end_address}`,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillColor: '#ef4444',
-        fillOpacity: 1,
-        strokeColor: 'white',
-        strokeWeight: 2,
-      }
+      position: endLocation, map: map, title: `End: ${route.legs[0].end_address}`,
+      icon: { path: google.maps.SymbolPath.CIRCLE, scale: 10, fillColor: '#ef4444', fillOpacity: 1, strokeColor: 'white', strokeWeight: 2 }
     });
 
     const bounds = new google.maps.LatLngBounds();
@@ -113,39 +97,64 @@ class BusAnimator {
     map.fitBounds(bounds, { top: 100, bottom: 100, left: 100, right: 100 });
   }
 
-  private startAnimation(): void {
+  private startAnimation(route: google.maps.DirectionsRoute): void {
     if (this.animationTimeout) clearTimeout(this.animationTimeout);
-    this.animationIndex = 0;
+
+    const totalDurationSeconds = route.legs[0].duration?.value || 0;
+    const timeElapsedSeconds = (new Date().getTime() - this.busData.startTime.getTime()) / 1000;
+    const progress = Math.min(timeElapsedSeconds / totalDurationSeconds, 1);
+
+    let cumulativeDistance = 0;
+    const totalDistance = route.legs[0].distance?.value || 0;
+    const startDistance = totalDistance * progress;
+    
+    let startIndex = 0;
+    for(let i = 0; i < this.routeCoordinates.length - 1; i++) {
+        cumulativeDistance += google.maps.geometry.spherical.computeDistanceBetween(
+            this.routeCoordinates[i],
+            this.routeCoordinates[i+1]
+        );
+        if (cumulativeDistance >= startDistance) {
+            startIndex = i + 1;
+            break;
+        }
+    }
+    this.animationIndex = startIndex;
 
     if (!this.marker) {
       this.marker = new google.maps.Marker({
-        position: this.routeCoordinates[0],
+        position: this.routeCoordinates[this.animationIndex],
         map: map,
         title: `${this.busData.operator} (${this.busData.headsign})`,
-        icon: {
-          url: "http://maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png",
-          scaledSize: new google.maps.Size(40, 40),
-          anchor: new google.maps.Point(20, 20),
-        },
+        icon: { url: "http://maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png", scaledSize: new google.maps.Size(40, 40), anchor: new google.maps.Point(20, 20) },
       });
     } else {
-      this.marker.setPosition(this.routeCoordinates[0]);
+      this.marker.setPosition(this.routeCoordinates[this.animationIndex]);
     }
-
-    this.animateNextStep();
+    
+    this.animateNextStep(route);
   }
 
-  private animateNextStep(): void {
+  private animateNextStep(route: google.maps.DirectionsRoute): void {
     if (this.animationIndex >= this.routeCoordinates.length - 1) {
       this.cleanup(false);
       return;
     }
 
+    const totalDistance = route.legs[0].distance?.value || 0;
+    const totalDuration = route.legs[0].duration?.value || 1;
+    const averageSpeedMps = totalDistance / totalDuration;
+
+    const currentPoint = this.routeCoordinates[this.animationIndex];
+    const nextPoint = this.routeCoordinates[this.animationIndex + 1];
+    const segmentDistance = google.maps.geometry.spherical.computeDistanceBetween(currentPoint, nextPoint);
+    const timeForSegmentMs = (segmentDistance / averageSpeedMps) * 1000;
+
     this.animationTimeout = window.setTimeout(() => {
       this.animationIndex++;
       this.marker!.setPosition(this.routeCoordinates[this.animationIndex]);
-      this.animateNextStep();
-    }, 50);
+      this.animateNextStep(route);
+    }, timeForSegmentMs);
   }
 
   cleanup(isNewAnimationStarting = true): void {
@@ -160,35 +169,23 @@ class BusAnimator {
   }
 }
 
-/**
- * Initializes the Google Map inside a specific HTML element.
- */
 export function initMap(mapContainer: HTMLElement): void {
   map = new google.maps.Map(mapContainer, {
-    zoom: 12,
-    center: { lat: 28.9845, lng: 77.0178 },
+    zoom: 12, center: { lat: 28.9845, lng: 77.0178 },
     mapId: import.meta.env.VITE_MAPS_KEY as string,
     disableDefaultUI: true,
   });
 }
 
-/**
- * Starts the animation for a single bus.
- */
 export function startBusAnimation(busData: IBusData): void {
   if (!map) {
     console.error("Map not initialized. Call initMap first.");
     return;
   }
-
   if (currentAnimator) {
     currentAnimator.cleanup();
   }
-
-  const onAnimationComplete = () => {
-    currentAnimator = null;
-  };
-
+  const onAnimationComplete = () => { currentAnimator = null; };
   currentAnimator = new BusAnimator(busData, map, onAnimationComplete);
   currentAnimator.initialize();
 }
